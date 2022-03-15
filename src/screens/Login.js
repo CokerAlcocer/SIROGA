@@ -13,14 +13,12 @@ export default function Login() {
         <View style={styles.container} >
           <Text style={styles.text} >SIROGA</Text>
           <Text>Sistema de Riego Autoático</Text>
-          <View styles={styles.formContainer} >
-            <Input
-                onChange={(event) => captureData(event, "email")}
-                placeholder="Correo Electrónico"
-                containerStyle={styles.formInput}
-            />
-            <Button />
-          </View>
+          <Input
+              onChange={(event) => captureData(event, "email")}
+              placeholder="Correo Electrónico"
+              containerStyle={styles.formInput}
+          />
+          <Button />
         </View>
       );
     }else{

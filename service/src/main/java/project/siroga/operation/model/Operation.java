@@ -14,21 +14,16 @@ public class Operation {
     @Column(nullable = false)
     private String description;
 
-    @ManyToMany(mappedBy = "operations")
-    private List<Sistem> sistems;
-
     public Operation() {
     }
 
-    public Operation(String description, List<Sistem> sistems) {
+    public Operation(String description) {
         this.description = description;
-        this.sistems = sistems;
     }
 
-    public Operation(long id, String description, List<Sistem> sistems) {
+    public Operation(long id, String description) {
         this.id = id;
         this.description = description;
-        this.sistems = sistems;
     }
 
     public long getId() {
@@ -45,13 +40,5 @@ public class Operation {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<Sistem> getSistems() {
-        return sistems;
-    }
-
-    public void setSistems(List<Sistem> sistems) {
-        this.sistems = sistems;
     }
 }

@@ -32,7 +32,6 @@ public class SistemController {
                 sistemDTO.getTempEarth(),
                 sistemDTO.getTempAir(),
                 sistemDTO.getUser(),
-                null,
                 sistemDTO.getStatus(),
                 null
         ));
@@ -48,7 +47,6 @@ public class SistemController {
                 sistemDTO.getTempEarth(),
                 sistemDTO.getTempAir(),
                 sistemDTO.getUser(),
-                null,
                 sistemDTO.getStatus(),
                 null
         ));

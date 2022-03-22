@@ -34,14 +34,6 @@ public class Sistem {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany
-    @JoinTable(
-            name = "operation_history",
-            joinColumns = @JoinColumn(name = "sistem_id"),
-            inverseJoinColumns = @JoinColumn(name = "operation_id")
-    )
-    private List<Operation> operations;
-
     @ManyToOne
     @JoinColumn(name = "status_id")
     private Status status;
@@ -53,19 +45,18 @@ public class Sistem {
     public Sistem() {
     }
 
-    public Sistem(String brokerLink, double humEarth, double humAir, double tempEarth, double tempAir, User user, List<Operation> operations, Status status, List<MeasureHistory> measureHistories) {
+    public Sistem(String brokerLink, double humEarth, double humAir, double tempEarth, double tempAir, User user, Status status, List<MeasureHistory> measureHistories) {
         this.brokerLink = brokerLink;
         this.humEarth = humEarth;
         this.humAir = humAir;
         this.tempEarth = tempEarth;
         this.tempAir = tempAir;
         this.user = user;
-        this.operations = operations;
         this.status = status;
         this.measureHistories = measureHistories;
     }
 
-    public Sistem(long id, String brokerLink, double humEarth, double humAir, double tempEarth, double tempAir, User user, List<Operation> operations, Status status, List<MeasureHistory> measureHistories) {
+    public Sistem(long id, String brokerLink, double humEarth, double humAir, double tempEarth, double tempAir, User user, Status status, List<MeasureHistory> measureHistories) {
         this.id = id;
         this.brokerLink = brokerLink;
         this.humEarth = humEarth;
@@ -73,7 +64,6 @@ public class Sistem {
         this.tempEarth = tempEarth;
         this.tempAir = tempAir;
         this.user = user;
-        this.operations = operations;
         this.status = status;
         this.measureHistories = measureHistories;
     }
@@ -132,14 +122,6 @@ public class Sistem {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public List<Operation> getOperations() {
-        return operations;
-    }
-
-    public void setOperations(List<Operation> operations) {
-        this.operations = operations;
     }
 
     public Status getStatus() {

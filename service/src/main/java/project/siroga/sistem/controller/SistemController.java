@@ -37,6 +37,7 @@ public class SistemController {
                 sistemDTO.getTempAirMax(),
                 sistemDTO.getUser(),
                 sistemDTO.getStatus(),
+                null,
                 null
         ));
     }
@@ -56,6 +57,7 @@ public class SistemController {
                 sistemDTO.getTempAirMax(),
                 sistemDTO.getUser(),
                 sistemDTO.getStatus(),
+                null,
                 null
         ));
     }

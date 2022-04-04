@@ -1,5 +1,7 @@
 package project.siroga.operation.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import project.siroga.operationHistory.model.OperationHistory;
 import project.siroga.sistem.model.Sistem;
 
 import javax.persistence.*;
@@ -13,6 +15,10 @@ public class Operation {
 
     @Column(nullable = false)
     private String description;
+
+    @OneToMany(mappedBy = "operation")
+    @JsonIgnore
+    private List<OperationHistory> operationHistories;
 
     public Operation() {
     }

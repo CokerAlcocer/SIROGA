@@ -3,6 +3,7 @@ package project.siroga.sistem.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import project.siroga.measureHistory.model.MeasureHistory;
 import project.siroga.operation.model.Operation;
+import project.siroga.operationHistory.model.OperationHistory;
 import project.siroga.status.model.Status;
 import project.siroga.user.model.User;
 
@@ -54,10 +55,14 @@ public class Sistem {
     @JsonIgnore
     private List<MeasureHistory> measureHistories;
 
+    @OneToMany(mappedBy = "sistem")
+    @JsonIgnore
+    private List<OperationHistory> operationHistories;
+
     public Sistem() {
     }
 
-    public Sistem(String broker, double humEarthMin, double humEarthMax, double humAirMin, double humAirMax, double tempEarthMin, double tempEarthMax, double tempAirMin, double tempAirMax, User user, Status status, List<MeasureHistory> measureHistories) {
+    public Sistem(String broker, double humEarthMin, double humEarthMax, double humAirMin, double humAirMax, double tempEarthMin, double tempEarthMax, double tempAirMin, double tempAirMax, User user, Status status, List<MeasureHistory> measureHistories, List<OperationHistory> operationHistories) {
         this.broker = broker;
         this.humEarthMin = humEarthMin;
         this.humEarthMax = humEarthMax;
@@ -70,9 +75,10 @@ public class Sistem {
         this.user = user;
         this.status = status;
         this.measureHistories = measureHistories;
+        this.operationHistories = operationHistories;
     }
 
-    public Sistem(long id, String broker, double humEarthMin, double humEarthMax, double humAirMin, double humAirMax, double tempEarthMin, double tempEarthMax, double tempAirMin, double tempAirMax, User user, Status status, List<MeasureHistory> measureHistories) {
+    public Sistem(long id, String broker, double humEarthMin, double humEarthMax, double humAirMin, double humAirMax, double tempEarthMin, double tempEarthMax, double tempAirMin, double tempAirMax, User user, Status status, List<MeasureHistory> measureHistories, List<OperationHistory> operationHistories) {
         this.id = id;
         this.broker = broker;
         this.humEarthMin = humEarthMin;
@@ -86,6 +92,7 @@ public class Sistem {
         this.user = user;
         this.status = status;
         this.measureHistories = measureHistories;
+        this.operationHistories = operationHistories;
     }
 
     public long getId() {

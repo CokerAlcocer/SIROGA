@@ -35,8 +35,8 @@ public class SistemService {
 
     @Transactional(readOnly = true)
     public ResponseEntity<Message> findByBrokerLink(String brokerLink){
-        if (sistemRepository.existsByBrokerLink(brokerLink)) {
-            return new ResponseEntity<>(new Message("OK", false, sistemRepository.findByBrokerLink(brokerLink)),
+        if (sistemRepository.existsByBroker(brokerLink)) {
+            return new ResponseEntity<>(new Message("OK", false, sistemRepository.findByBroker(brokerLink)),
                     HttpStatus.OK);
         }
         return new ResponseEntity<>(new Message("No encontrado", true, null), HttpStatus.BAD_REQUEST);
@@ -44,7 +44,7 @@ public class SistemService {
 
     @Transactional(rollbackFor = {SQLException.class})
     public ResponseEntity<Message> save(Sistem sistem){
-        Optional<Sistem> existingSistem = sistemRepository.findByBrokerLink(sistem.getBrokerLink());
+        Optional<Sistem> existingSistem = sistemRepository.findByBroker(sistem.getBroker());
         if (existingSistem.isPresent()){
             return new ResponseEntity<>(new Message("El sistema ya existe",true, null), HttpStatus.BAD_REQUEST);
         }
@@ -54,7 +54,7 @@ public class SistemService {
 
     @Transactional(rollbackFor = {SQLException.class})
     public ResponseEntity<Message> update(Sistem sistem){
-        if (sistemRepository.existsByBrokerLink(sistem.getBrokerLink()) || sistemRepository.existsById(sistem.getId())) {
+        if (sistemRepository.existsByBroker(sistem.getBroker()) || sistemRepository.existsById(sistem.getId())) {
             return new ResponseEntity<>(new Message("Sistema actualizado", false, sistemRepository.saveAndFlush(sistem)),
                     HttpStatus.OK);
         }

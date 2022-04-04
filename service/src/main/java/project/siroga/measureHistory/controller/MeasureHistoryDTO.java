@@ -7,25 +7,25 @@ import javax.persistence.Column;
 public class MeasureHistoryDTO {
     private long id;
     private Sistem sistem;
-    private String brokerLink;
+    private String broker;
     private double humEarth, humAir, tempEarth, tempAir;
 
     public MeasureHistoryDTO() {
     }
 
-    public MeasureHistoryDTO(Sistem sistem, String brokerLink, double humEarth, double humAir, double tempEarth, double tempAir) {
+    public MeasureHistoryDTO(Sistem sistem, String broker, double humEarth, double humAir, double tempEarth, double tempAir) {
         this.sistem = sistem;
-        this.brokerLink = brokerLink;
+        this.broker = broker;
         this.humEarth = humEarth;
         this.humAir = humAir;
         this.tempEarth = tempEarth;
         this.tempAir = tempAir;
     }
 
-    public MeasureHistoryDTO(long id, Sistem sistem, String brokerLink, double humEarth, double humAir, double tempEarth, double tempAir) {
+    public MeasureHistoryDTO(long id, Sistem sistem, String broker, double humEarth, double humAir, double tempEarth, double tempAir) {
         this.id = id;
         this.sistem = sistem;
-        this.brokerLink = brokerLink;
+        this.broker = broker;
         this.humEarth = humEarth;
         this.humAir = humAir;
         this.tempEarth = tempEarth;
@@ -48,12 +48,12 @@ public class MeasureHistoryDTO {
         this.sistem = sistem;
     }
 
-    public String getBrokerLink() {
-        return brokerLink;
+    public String getBroker() {
+        return broker;
     }
 
-    public void setBrokerLink(String brokerLink) {
-        this.brokerLink = brokerLink;
+    public void setBroker(String broker) {
+        this.broker = broker;
     }
 
     public double getHumEarth() {

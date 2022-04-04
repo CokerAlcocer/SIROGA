@@ -27,7 +27,24 @@ public class MeasureHistoryController {
     public ResponseEntity<Message> saveMH(@RequestBody MeasureHistoryDTO measureHistoryDTO){
         return measureHistoryService.save(new MeasureHistory(
                 measureHistoryDTO.getSistem(),
-                measureHistoryDTO.getBrokerLink()
+                measureHistoryDTO.getBroker(),
+                measureHistoryDTO.getHumEarth(),
+                measureHistoryDTO.getHumAir(),
+                measureHistoryDTO.getTempEarth(),
+                measureHistoryDTO.getTempAir()
+        ));
+    }
+
+    @PutMapping("/")
+    public ResponseEntity<Message> updateMH(@RequestBody MeasureHistoryDTO measureHistoryDTO){
+        return measureHistoryService.update(new MeasureHistory(
+                measureHistoryDTO.getId(),
+                measureHistoryDTO.getSistem(),
+                measureHistoryDTO.getBroker(),
+                measureHistoryDTO.getHumEarth(),
+                measureHistoryDTO.getHumAir(),
+                measureHistoryDTO.getTempEarth(),
+                measureHistoryDTO.getTempAir()
         ));
     }
 }

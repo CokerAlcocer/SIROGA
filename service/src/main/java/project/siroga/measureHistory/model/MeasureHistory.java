@@ -15,7 +15,7 @@ public class MeasureHistory {
     private Sistem sistem;
 
     @Column(nullable = false)
-    private String brokerLink;
+    private String broker;
 
     @Column(nullable = false)
     private double humEarth;
@@ -32,19 +32,19 @@ public class MeasureHistory {
     public MeasureHistory() {
     }
 
-    public MeasureHistory(Sistem sistem, String brokerLink, double humEarth, double humAir, double tempEarth, double tempAir) {
+    public MeasureHistory(Sistem sistem, String broker, double humEarth, double humAir, double tempEarth, double tempAir) {
         this.sistem = sistem;
-        this.brokerLink = brokerLink;
+        this.broker = broker;
         this.humEarth = humEarth;
         this.humAir = humAir;
         this.tempEarth = tempEarth;
         this.tempAir = tempAir;
     }
 
-    public MeasureHistory(long id, Sistem sistem, String brokerLink, double humEarth, double humAir, double tempEarth, double tempAir) {
+    public MeasureHistory(long id, Sistem sistem, String broker, double humEarth, double humAir, double tempEarth, double tempAir) {
         this.id = id;
         this.sistem = sistem;
-        this.brokerLink = brokerLink;
+        this.broker = broker;
         this.humEarth = humEarth;
         this.humAir = humAir;
         this.tempEarth = tempEarth;
@@ -67,12 +67,12 @@ public class MeasureHistory {
         this.sistem = sistem;
     }
 
-    public String getBrokerLink() {
-        return brokerLink;
+    public String getBroker() {
+        return broker;
     }
 
-    public void setBrokerLink(String brokerLink) {
-        this.brokerLink = brokerLink;
+    public void setBroker(String broker) {
+        this.broker = broker;
     }
 
     public double getHumEarth() {

@@ -26,11 +26,15 @@ public class SistemController {
     @PostMapping("/")
     public ResponseEntity<Message> saveSistem(@RequestBody SistemDTO sistemDTO){
         return sistemService.save(new Sistem(
-                sistemDTO.getBrokerLink(),
-                sistemDTO.getHumEarth(),
-                sistemDTO.getHumAir(),
-                sistemDTO.getTempEarth(),
-                sistemDTO.getTempAir(),
+                sistemDTO.getBroker(),
+                sistemDTO.getHumEarthMin(),
+                sistemDTO.getHumEarthMax(),
+                sistemDTO.getHumAirMin(),
+                sistemDTO.getHumAirMax(),
+                sistemDTO.getTempEarthMin(),
+                sistemDTO.getTempEarthMax(),
+                sistemDTO.getTempAirMin(),
+                sistemDTO.getTempAirMax(),
                 sistemDTO.getUser(),
                 sistemDTO.getStatus(),
                 null
@@ -41,11 +45,15 @@ public class SistemController {
     public ResponseEntity<Message> updateSistem(@RequestBody SistemDTO sistemDTO){
         return sistemService.update(new Sistem(
                 sistemDTO.getId(),
-                sistemDTO.getBrokerLink(),
-                sistemDTO.getHumEarth(),
-                sistemDTO.getHumAir(),
-                sistemDTO.getTempEarth(),
-                sistemDTO.getTempAir(),
+                sistemDTO.getBroker(),
+                sistemDTO.getHumEarthMin(),
+                sistemDTO.getHumEarthMax(),
+                sistemDTO.getHumAirMin(),
+                sistemDTO.getHumAirMax(),
+                sistemDTO.getTempEarthMin(),
+                sistemDTO.getTempEarthMax(),
+                sistemDTO.getTempAirMin(),
+                sistemDTO.getTempAirMax(),
                 sistemDTO.getUser(),
                 sistemDTO.getStatus(),
                 null

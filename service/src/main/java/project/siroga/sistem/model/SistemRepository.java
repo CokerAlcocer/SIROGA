@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface SistemRepository extends JpaRepository<Sistem, Long> {
     Optional<Sistem> findById (long id);
-    Optional<Sistem> findByBrokerLink (String brokerLink);
+    Optional<Sistem> findByBroker (String broker);
     boolean existsById (long id);
-    boolean existsByBrokerLink (String brokerLink);
+    boolean existsByBroker (String broker);
 }

@@ -8,7 +8,7 @@ import java.util.Optional;
 @Repository
 public interface MeasureHistoryRepository extends JpaRepository<MeasureHistory, Long> {
     Optional<MeasureHistory> findById (long id);
-    Optional<MeasureHistory> findByBrokerLink (String brokerLink);
+    Optional<MeasureHistory> findByBroker (String broker);
     boolean existsById (long id);
-    boolean existsByBrokerLink (String brokerLink);
+    boolean existsByBroker (String broker);
 }

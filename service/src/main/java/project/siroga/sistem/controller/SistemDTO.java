@@ -5,31 +5,39 @@ import project.siroga.user.model.User;
 
 public class SistemDTO {
     private long id;
-    private String brokerLink;
-    private double humEarth, humAir, tempEarth, tempAir;
+    private String broker;
+    private double humEarthMin, humEarthMax, humAirMin, humAirMax, tempEarthMin, tempEarthMax, tempAirMin, tempAirMax;
     private User user;
     private Status status;
 
     public SistemDTO() {
     }
 
-    public SistemDTO(String brokerLink, double humEarth, double humAir, double tempEarth, double tempAir, User user, Status status) {
-        this.brokerLink = brokerLink;
-        this.humEarth = humEarth;
-        this.humAir = humAir;
-        this.tempEarth = tempEarth;
-        this.tempAir = tempAir;
+    public SistemDTO(String broker, double humEarthMin, double humEarthMax, double humAirMin, double humAirMax, double tempEarthMin, double tempEarthMax, double tempAirMin, double tempAirMax, User user, Status status) {
+        this.broker = broker;
+        this.humEarthMin = humEarthMin;
+        this.humEarthMax = humEarthMax;
+        this.humAirMin = humAirMin;
+        this.humAirMax = humAirMax;
+        this.tempEarthMin = tempEarthMin;
+        this.tempEarthMax = tempEarthMax;
+        this.tempAirMin = tempAirMin;
+        this.tempAirMax = tempAirMax;
         this.user = user;
         this.status = status;
     }
 
-    public SistemDTO(long id, String brokerLink, double humEarth, double humAir, double tempEarth, double tempAir, User user, Status status) {
+    public SistemDTO(long id, String broker, double humEarthMin, double humEarthMax, double humAirMin, double humAirMax, double tempEarthMin, double tempEarthMax, double tempAirMin, double tempAirMax, User user, Status status) {
         this.id = id;
-        this.brokerLink = brokerLink;
-        this.humEarth = humEarth;
-        this.humAir = humAir;
-        this.tempEarth = tempEarth;
-        this.tempAir = tempAir;
+        this.broker = broker;
+        this.humEarthMin = humEarthMin;
+        this.humEarthMax = humEarthMax;
+        this.humAirMin = humAirMin;
+        this.humAirMax = humAirMax;
+        this.tempEarthMin = tempEarthMin;
+        this.tempEarthMax = tempEarthMax;
+        this.tempAirMin = tempAirMin;
+        this.tempAirMax = tempAirMax;
         this.user = user;
         this.status = status;
     }
@@ -42,44 +50,76 @@ public class SistemDTO {
         this.id = id;
     }
 
-    public String getBrokerLink() {
-        return brokerLink;
+    public String getBroker() {
+        return broker;
     }
 
-    public void setBrokerLink(String brokerLink) {
-        this.brokerLink = brokerLink;
+    public void setBroker(String broker) {
+        this.broker = broker;
     }
 
-    public double getHumEarth() {
-        return humEarth;
+    public double getHumEarthMin() {
+        return humEarthMin;
     }
 
-    public void setHumEarth(double humEarth) {
-        this.humEarth = humEarth;
+    public void setHumEarthMin(double humEarthMin) {
+        this.humEarthMin = humEarthMin;
     }
 
-    public double getHumAir() {
-        return humAir;
+    public double getHumEarthMax() {
+        return humEarthMax;
     }
 
-    public void setHumAir(double humAir) {
-        this.humAir = humAir;
+    public void setHumEarthMax(double humEarthMax) {
+        this.humEarthMax = humEarthMax;
     }
 
-    public double getTempEarth() {
-        return tempEarth;
+    public double getHumAirMin() {
+        return humAirMin;
     }
 
-    public void setTempEarth(double tempEarth) {
-        this.tempEarth = tempEarth;
+    public void setHumAirMin(double humAirMin) {
+        this.humAirMin = humAirMin;
     }
 
-    public double getTempAir() {
-        return tempAir;
+    public double getHumAirMax() {
+        return humAirMax;
     }
 
-    public void setTempAir(double tempAir) {
-        this.tempAir = tempAir;
+    public void setHumAirMax(double humAirMax) {
+        this.humAirMax = humAirMax;
+    }
+
+    public double getTempEarthMin() {
+        return tempEarthMin;
+    }
+
+    public void setTempEarthMin(double tempEarthMin) {
+        this.tempEarthMin = tempEarthMin;
+    }
+
+    public double getTempEarthMax() {
+        return tempEarthMax;
+    }
+
+    public void setTempEarthMax(double tempEarthMax) {
+        this.tempEarthMax = tempEarthMax;
+    }
+
+    public double getTempAirMin() {
+        return tempAirMin;
+    }
+
+    public void setTempAirMin(double tempAirMin) {
+        this.tempAirMin = tempAirMin;
+    }
+
+    public double getTempAirMax() {
+        return tempAirMax;
+    }
+
+    public void setTempAirMax(double tempAirMax) {
+        this.tempAirMax = tempAirMax;
     }
 
     public User getUser() {

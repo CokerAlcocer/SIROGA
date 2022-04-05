@@ -1,25 +1,84 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import CardInfo from '../components/CardInfo'
-import { ScrollView } from 'react-native-gesture-handler'
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, LogBox } from "react-native";
+import { firebaseApp } from "../utils/firebase";
+import * as firebase from "firebase";
+import {Text} from 'react-native-elements'
+import Login from "../screens/Login";
+import Loading from "../components/Loading";
+import colors from "../utils/colors";
 
-export default function Index() {
-  return (
-    <ScrollView>
-      <View style={styles.container} >
-        <CardInfo />
-        <CardInfo />
-        <CardInfo />
-        <CardInfo />
+import History from "../components/History";
+
+export default function Index(props) {
+  const { navigation } = props;
+  const [login, setLogin] = useState(null); //guardar el estado de la sesión
+  const [loading, setLoading] = useState(false)
+  const [renderComponent, setRenderComponent] = useState(null)
+
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      !user ? setLogin(false) : setLogin(true);
+      if(login){
+      
+        setRenderComponent(
+          <View>
+            <History/>
+            <History/>
+            <History/>
+          </View>
+        )
+      }else{
+        setRenderComponent(
+          <History/>
+        )
+      }
+    });
+
+   
+  }, [login]);
+
+  if (login === null) return <Loading isVisible={true} text={"Cargando"} />;
+
+  if (login) {
+    return (
+    
+      
+      <View style={{marginTop: 50}}>
+        <Text
+        h1
+        style={styles.title}
+        >SIROGA</Text>
+      
+       {renderComponent}
+
+
+      
+        
+
+
+       
       </View>
-    </ScrollView>
-  )
+    );
+  } else {
+    return <Login />;
+    
+  }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: 10,
+  containerBtn: {
+    margin: 20,
     marginTop: 10,
-    alignItems: 'center'
+  },
+  btnOption: {
+    backgroundColor: colors.PRIMARY_COLOR,
+    
+  },
+  title: {
+    textAlign: "center",
+    color: colors.PRIMARY_COLOR,
+    padding:10,
+    marginBottom: 100
   }
-})
+});

@@ -1,49 +1,86 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
-import LoginForm from '../components/LoginForm';
-import colors from '../utils/colors';
-import { Button, Input } from 'react-native-elements';
-import Navigation from '../navigations/Navigation'
+import { StyleSheet, View, Image, ScrollView } from "react-native";
+import React, {useRef} from "react";
+import { Text } from "react-native-elements";
+import { useNavigation } from "@react-navigation/native";
+import FormLogin from "../components/account/FormLogin";
+import Toast from "react-native-easy-toast";
+import colors from "../utils/colors";
+
+
 
 export default function Login() {
-    const [session, setSession] = useState(false)
+  const toastRef = useRef()
+  return (
+    <ScrollView>
+      
+      <View style={styles.viewContainer}>
+      <Text
+      h1
+      h1Style={styles.textTitle}
+      style={styles.title}
+      >SIROGA
+      </Text>
+        <FormLogin
+        toastRef={toastRef}
+        />
+        <CreateCuenta />
+      </View>
+      <Toast
+      ref={toastRef}
+      opacity={0.9}
+      position={"center"}
+      />
+    </ScrollView>
+  );
 
-    if(session){
-      return(
-        <View style={styles.container} >
-          <Text style={styles.text} >SIROGA</Text>
-          <Text>Sistema de Riego Autoático</Text>
-          <Input
-              onChange={(event) => captureData(event, "email")}
-              placeholder="Correo Electrónico"
-              containerStyle={styles.formInput}
-          />
-          <Button />
-        </View>
-      );
-    }else{
-      return (
-        <Navigation/>
-      );
-    }
+  function CreateCuenta() {
+    const navigation = useNavigation();
+
+    return (
+      <Text style={styles.textRegister}>
+        ¿Aun no tienes cuenta?{" "}
+        <Text
+          style={styles.btnRegistrar}
+          onPress={() => navigation.navigate('register')}
+        >
+          Registrate aquí
+        </Text>
+      </Text>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        marginTop: 100,
-        alignItems: 'center',
-        justifyContent: 'center'
-      },
-      text: {
-        fontSize: 50,
-        fontWeight: 'bold',
-        color: colors.PRIMARY_COLOR
-      },
-      formContainer: {
-        marginTop: 40,
-        width: '95%'
-      },
-      formInput: {
-          width: '95%'
-      }
-})
+  logo: {
+    height: 100,
+    width: 200,
+    alignSelf: "center",
+    marginTop: 50
+  },
+  viewContainer: {
+    marginRight: 40,
+    marginLeft: 40,
+  },
+  textRegister: {
+    marginTop: 15,
+    marginLeft: 10,
+    marginRight: 10,
+    textAlign: "center"
+  },
+  btnRegistrar: {
+    color: "#fcb823",
+    fontWeight: "bold",
+  },
+  title: {
+    textAlign: "center",
+    marginTop: 230
+  },
+  textTitle:{
+    color: colors.PRIMARY_COLOR
+  }
+});
+
+{
+  /* <Image style={styles.logo} resizeMode="contain" 
+         source={require(../../assets/utez.png)}/> */
+}

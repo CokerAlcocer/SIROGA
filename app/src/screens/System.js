@@ -4,6 +4,7 @@ import { Card, Overlay, Icon } from "react-native-elements";
 import CardSystem from "../components/CardSystem"
 import Colors from '../utils/colors';
 import CardSystemRegister from "../components/CardSystemRegister";
+import { ScrollView } from "react-native-gesture-handler";
 
 
 export default function System(props) {
@@ -11,36 +12,30 @@ export default function System(props) {
     const [renderComponent, setRenderComponent] = useState(null)
 
     useEffect(() => {
-        if(valor){
+        if (valor) {
+            setRenderComponent(
+                <ScrollView>
+                    <View style={styles.container}>
+                        <CardSystem />
+                        <CardSystem />
+                        <CardSystem />
+                    </View>
+                </ScrollView>
+            )
+        } else {
             setRenderComponent(
                 <View>
-                    <CardSystem/>
-                    <CardSystem/>
-                    <CardSystem/>
+                    <CardSystemRegister />
+                    <CardSystemRegister />
+                    <CardSystemRegister />
                 </View>
             )
-        }else{
-            setRenderComponent(
-            <View>
-                <CardSystemRegister/>
-                <CardSystemRegister/>
-                <CardSystemRegister/>
-            </View>
-            )
         }
-       
     }, [])
-    
+
 
     return (
-       
-            <View style={{ color: Colors.PRIMARY_COLOR }}>
-                
-                {
-                    renderComponent
-                }
-            </View>
-        
+        <View style={{ color: Colors.PRIMARY_COLOR }}>{renderComponent}</View>
     )
 }
 
@@ -51,4 +46,7 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         fontSize: 35,
     },
+    container: {
+        padding: 10
+    }
 })

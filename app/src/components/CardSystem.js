@@ -10,113 +10,84 @@ export default function CardSystem() {
   const toggleOverlay = () => {
     setVisible(!visible);
   };
-  console.log(navigation);
+
   return (
     <View style={styles.card}>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginEnd: 10,
-        }}
-      >
-        <Text style={styles.cardTitle}>Nombre del sistema</Text>
-        <Badge status="primary" value="Regando" badgeStyle={{ marginTop: 5 }} />
+      <View style={styles.cardHeader}>
+        <View style={styles.cardHeaderContainer}>
+          <Text style={styles.cardTitle} >Nombre</Text>
+        </View>
+        <View style={styles.cardHeaderContainer}>
+          <Badge value="Regando" badgeStyle={styles.badge} />
+        </View>
       </View>
       <Divider style={styles.divider} />
-      <View style={styles.cardBody}>
-        <Text style={styles.cardSubTitle}>Descripción</Text>
-        <Text style={styles.description}>
-          Ad veniam proident voluptate nulla. Eu magna sint nisi sit. Est Lorem
-          incididunt consequat.
-        </Text>
-        <View style={styles.divideButton}>
-          <Text style={styles.cardTitle}>
-            <Button
-              buttonStyle={styles.buttonRed}
-              title="Quitar"
-              icon={
-                <Icon
-                  type="material-community"
-                  name="cancel"
-                  color="#fff"
-                  iconStyle={{ marginRight: 5 }}
-                />
-              }
-              onPress={toggleOverlay}
-            ></Button>
-            <Button
-              buttonStyle={styles.button}
-              title="Mediciones"
-              icon={
-                <Icon
-                  type="material-community"
-                  name="coolant-temperature"
-                  color="#fff"
-                  iconStyle={{ marginRight: 6 }}
-                />
-              }
-              onPress={() => navigation.navigate("systemdata")}
-            />
-          </Text>
+      <View style={styles.cardBody} >
+        <Text style={styles.cardSubtitle} >Descripción</Text>
+        <Text style={styles.cardText} >Deshjkfdsahjfdal</Text>
+        <View style={styles.buttonsContainer} >
+          <View style={styles.buttonContainer}>
+            <Button containerStyle={styles.cardBtnL} buttonStyle={styles.cardBtnRemove} title={'Quitar'} onPress={toggleOverlay} />
+          </View>
+          <View style={styles.separator} ></View>
+          <View style={styles.buttonContainer}>
+            <Button containerStyle={styles.cardBtnR} buttonStyle={styles.cardBtnMeasure} title={'Mediciones'} onPress={() => navigation.navigate("systemdata")} />
+          </View>
         </View>
-        <Overlay
-          isVisible={visible}
-          onBackdropPress={toggleOverlay}
-          height={290}
-        >
-          <Text style={styles.textPrimary}>
-            ¿Estas securo de eliminar el sistema?
-          </Text>
-          <Text style={styles.textSecondary}>
-            ¡Esta opción no se puede deshacer si confirmas!
-          </Text>
-          <Button
-            icon={
-              <Icon
-                name="delete"
-                type="material-community"
-                color="white"
-                size={25}
-                iconStyle={{ marginRight: 10 }}
-              />
-            }
-            title="Eliminar"
-            onPress={toggleOverlay}
-            buttonStyle={{ backgroundColor: "red" }}
-          />
-          <Button
-          containerStyle={{marginTop:10}}
-            icon={
-              <Icon
-                name="cancel"
-                type="material-community"
-                color="white"
-                size={25}
-                iconStyle={{ marginRight: 10 }}
-              />
-            }
-            buttonStyle={{ backgroundColor: "grey" }}
-            title="Cancelar"
-            onPress={toggleOverlay}
-          />
-        </Overlay>
       </View>
+      <Overlay
+        isVisible={visible}
+        onBackdropPress={toggleOverlay}
+        height={185}
+      >
+        <Text style={styles.cardTitle} >Aviso</Text>
+        <Divider style={styles.divider} />
+        <Text style={styles.textPrimary}>
+          ¿Estas securo de eliminar el sistema? Esta opción no se puede deshacer si confirmas...
+        </Text>
+        <View style={styles.buttonsContainer} >
+          <View style={styles.buttonContainer} >
+            <Button
+              icon={
+                <Icon
+                  name="delete"
+                  type="material-community"
+                  color="white"
+                  size={25}
+                  iconStyle={{ marginRight: 10 }}
+                />
+              }
+              title="Eliminar"
+              onPress={toggleOverlay}
+              containerStyle={styles.cardBtnR}
+              buttonStyle={styles.cardBtnRemove}
+            />
+          </View>
+          <View style={styles.separator} ></View>
+          <View style={styles.buttonContainer} >
+            <Button
+              containerStyle={styles.cardBtnR}
+              icon={
+                <Icon
+                  name="cancel"
+                  type="material-community"
+                  color="white"
+                  size={25}
+                  iconStyle={{ marginRight: 10 }}
+                />
+              }
+              buttonStyle={styles.cardBtnCancel}
+              title="Cancelar"
+              onPress={toggleOverlay}
+            />
+          </View>
+        </View>
+      </Overlay>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  textPrimary: {
-    marginVertical: 20,
-    textAlign: "center",
-    fontSize: 20,
-  },
-  textSecondary: {
-    marginBottom: 10,
-    textAlign: "center",
-    fontSize: 17,
-  },
   card: {
     backgroundColor: "#fff",
     width: "100%",
@@ -126,36 +97,52 @@ const styles = StyleSheet.create({
     borderColor: "#ebebeb",
     marginBottom: 10,
   },
-  cardTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 5,
+  cardHeader: {
+    flexDirection: 'row',
+    width: "100%"
   },
-  cardBody: {
-    marginTop: 10,
+  cardHeaderContainer: {
+    width: '50%'
+  },
+  badge: {
+    alignSelf: 'flex-end'
+  },
+  cardTitle: {
+    fontWeight: 'bold',
+    fontSize: 20
+  },
+  cardSubtitle: {
+    fontWeight: 'bold',
+    fontSize: 15
+  },
+  cardText: {
+    marginTop: 5
   },
   divider: {
-    borderColor: "#ebebeb",
+    marginVertical: 10
   },
-  cardSubTitle: {
-    fontWeight: "bold",
-    marginBottom: 2,
-    fontSize: 15,
+  buttonsContainer: {
+    marginTop: 30,
+    flexDirection: 'row',
+    width: "100%"
   },
-  description: {
-    textAlign: "justify",
+  separator: {
+    width: '5%'
   },
-  button: {
-    width: 130,
-    height: 40,
-    marginLeft: 60,
+  buttonContainer: {
+    flexDirection: 'row',
+    width: "47.5%"
   },
-  divideButton: {
-    marginTop: 20,
-    alignItems: "center",
+  cardBtnL: {
+    width: '100%',
   },
-  buttonRed: {
-    backgroundColor: "red",
-    width: 100,
+  cardBtnR: {
+    width: '100%',
   },
+  cardBtnRemove: {
+    backgroundColor: '#f55'
+  },
+  cardBtnCancel: {
+    backgroundColor: 'grey'
+  }
 });

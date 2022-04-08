@@ -4,11 +4,12 @@ const pool = require('../database.js');
 const getValues = require('./mqtt');
 
 router.get('/', async (req, res) => {
+    let measures = await pool.query("SELECT * FROM measure_history")
     let measuring = getValues();
     res.json({
         status: 200,
         message: 'Service running on port 4000',
-        values: measuring
+        values: measures
     });
 });
 

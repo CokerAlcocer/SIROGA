@@ -22,7 +22,7 @@ export default function FormLogin(props) {
     } else {
       setLoading(true)
       firebase.auth()
-      .signInWithEmailAndPassword(formData.email, formData.password)
+        .signInWithEmailAndPassword(formData.email, formData.password)
         .then((response) => {
           setLoading(false)
           console.log(response);
@@ -38,6 +38,17 @@ export default function FormLogin(props) {
   const capturarDatos = (type, e) => {
     setFormData({ ...formData, [type]: e.nativeEvent.text });
   };
+
+
+  function test() {
+    setTimeout(() => {
+      return fetch('http://192.168.0.9:8080/siroga/api/mh/'). //No olvidar cambiar la ip por la del equipo
+      then(res => res.json())
+      .then(json => console.log(json))
+      .catch(e => console.log(e))
+    });
+  }
+
 
   return (
     <View style={styles.formContainer}>
@@ -71,6 +82,12 @@ export default function FormLogin(props) {
         containerStyle={styles.containerBtn}
         buttonStyle={styles.btnLogin}
         onPress={() => onSubmit()}
+      />
+      <Button
+        title={"Datos"}
+        containerStyle={styles.containerBtn}
+        buttonStyle={styles.btnLogin}
+        onPress={() => test()}
       />
       <Loading
         isVisible={loading}

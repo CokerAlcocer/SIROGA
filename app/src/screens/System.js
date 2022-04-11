@@ -1,36 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text, Button } from "react-native";
-import { Card, Overlay, Icon } from "react-native-elements";
-import CardSystem from "../components/CardSystem"
 import Colors from '../utils/colors';
-import CardSystemRegister from "../components/CardSystemRegister";
-import { ScrollView } from "react-native-gesture-handler";
 
 
 export default function System(props) {
-    const [valor, setValor] = useState(false)
+    const [valor, setValor] = useState(true)
     const [renderComponent, setRenderComponent] = useState(null)
+    const [data, setData] = useState([])
+    const [sistems, setSistems] = useState([])
+
+    const getSistems = async () => {
+        setData(fetch('http://10.0.0.8:8080/siroga/api/sistem/').then(res => res.json()).then(json => json).catch(e => console.log(e)));
+        for(let i = 0; i < data._W.data.length; i++){
+            console.log(data._W.data[i].user.id)
+            if(data._W.data[i].user.id === 1){
+                setSistems([...sistems, data._W.data[i]])
+            }
+        }
+    }
+
+    
 
     useEffect(() => {
-        if (valor) {
-            setRenderComponent(
-                <ScrollView>
-                    <View style={styles.container}>
-                        <CardSystem />
-                        <CardSystem />
-                        <CardSystem />
-                    </View>
-                </ScrollView>
-            )
-        } else {
-            setRenderComponent(
-                <View>
-                    <CardSystemRegister />
-                    <CardSystemRegister />
-                    <CardSystemRegister />
-                </View>
-            )
-        }
+        getSistems()
+        console.log(sistems)
     }, [])
 
 

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
-import { Button, Overlay, Icon ,Badge,Divider} from 'react-native-elements'
+import { Button, Overlay, Icon, Input, Divider } from 'react-native-elements'
 
 const toggleOverlay = () => {
     setVisible(!visible);
@@ -15,108 +15,124 @@ export default function CardSystemRegister() {
     };
 
     return (
-        <View style={styles.card} >
-            <View style={{ flexDirection: "row", justifyContent: "space-between", marginEnd: 10 }}>
-                <Text style={styles.cardTitle} >Nombre del sistema</Text>
+        <>
+            <View style={styles.card} onTouchStart={() => toggleOverlay()} >
+                <Icon
+                    name="plus"
+                    type="material-community"
+                    color="#d3d3d3"
+                    size={40}
+                />
+                <Text style={styles.text} >Añadir</Text>
             </View>
-            <Divider style={styles.divider} />
-            <View style={styles.cardBody}>
-                <Text style={styles.cardSubTitle} >Descripción</Text>
-                <Text style={styles.description}>Ad veniam proident voluptate nulla. Eu magna sint nisi sit. Est Lorem incididunt consequat.</Text>
-                <View style={styles.divideButton}>
-                    <Text style={styles.cardTitle}>
+            <Overlay
+                isVisible={visible}
+                onBackdropPress={toggleOverlay}
+                height={505}
+            >
+                <Text style={styles.cardTitle} >Aviso</Text>
+                <Divider style={styles.divider} />
+
+                <Input containerStyle={styles.cardInput} inputStyle={styles.cardInput} placeholder={'Broker'} />
+                <Input containerStyle={styles.cardInput} inputStyle={styles.cardInput} placeholder={'Broker'} />
+                <Input containerStyle={styles.cardInput} inputStyle={styles.cardInput} placeholder={'Broker'} />
+                <Input containerStyle={styles.cardInput} inputStyle={styles.cardInput} placeholder={'Broker'} />
+                <Input containerStyle={styles.cardInput} inputStyle={styles.cardInput} placeholder={'Broker'} />
+                <Input containerStyle={styles.cardInput} inputStyle={styles.cardInput} placeholder={'Broker'} />
+                <Input containerStyle={styles.cardInput} inputStyle={styles.cardInput} placeholder={'Broker'} />
+                <Input containerStyle={styles.cardInput} inputStyle={styles.cardInput} placeholder={'Broker'} />
+                <Input containerStyle={styles.cardInput} inputStyle={styles.cardInput} placeholder={'Broker'} />
+
+                <View style={styles.buttonsContainer} >
+                    <View style={styles.buttonContainer} >
                         <Button
-                            title="Agregar"
-                            onPress={toggleOverlay}
-                            buttonStyle={styles.button}
                             icon={
                                 <Icon
-                                    type='material-community'
-                                    name="home-plus"
+                                    name="delete"
+                                    type="material-community"
                                     color="white"
                                     size={25}
                                     iconStyle={{ marginRight: 10 }}
                                 />
                             }
+                            title="Eliminar"
+                            onPress={toggleOverlay}
+                            containerStyle={styles.cardBtnR}
+                            buttonStyle={styles.cardBtnRemove}
                         />
-                        <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
-                            <Text style={styles.textPrimary}>Agregar sistema!</Text>
-                            <Text style={styles.textSecondary}>
-                                ¡Aquí puedes agregar tu sistema!
-                            </Text>
-                            <Button
-                                icon={
-                                    <Icon
-                                        name="cancel"
-                                        type="material-community"
-                                        color="white"
-                                        size={25}
-                                        iconStyle={{ marginRight: 10 }}
-                                    />
-                                }
-                                title="Salir"
-                                onPress={toggleOverlay}
-                            />
-                        </Overlay>
-                    </Text>
+                    </View>
+                    <View style={styles.separator} ></View>
+                    <View style={styles.buttonContainer} >
+                        <Button
+                            containerStyle={styles.cardBtnR}
+                            icon={
+                                <Icon
+                                    name="cancel"
+                                    type="material-community"
+                                    color="white"
+                                    size={25}
+                                    iconStyle={{ marginRight: 10 }}
+                                />
+                            }
+                            buttonStyle={styles.cardBtnCancel}
+                            title="Cancelar"
+                            onPress={toggleOverlay}
+                        />
+                    </View>
                 </View>
-            </View>
-        </View>
-    )
+            </Overlay>
+        </>
+    );
 }
 
 const styles = StyleSheet.create({
-    textPrimary: {
-        marginVertical: 20,
-        textAlign: 'center',
-        fontSize: 20,
-    },
-    textSecondary: {
-        marginBottom: 10,
-        textAlign: 'center',
-        fontSize: 17,
-    },
     card: {
-        backgroundColor: '#fff',
+        backgroundColor: null,
         width: '100%',
         padding: 15,
+        borderStyle: 'dotted',
         borderRadius: 5,
-        borderWidth: 1,
-        borderColor: '#ebebeb',
-        marginBottom: 10
-    },
-    cardTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginBottom: 5
-    },
-    cardBody: {
-        marginTop: 10
-    },
-    divider: {
-        borderColor: '#ebebeb'
-    },
-    cardSubTitle: {
-        fontWeight: 'bold',
-        marginBottom: 2,
-        fontSize: 15
-    },
-    description: {
-        textAlign: 'justify'
-    },
-    button: {
-        width: 130,
-        height: 40,
-        backgroundColor:"green"
-    },
-    divideButton: {
-        marginTop: 20,
+        borderWidth: 3,
+        borderColor: '#d3d3d3',
+        marginBottom: 10,
         alignItems: 'center'
     },
-    buttonRed: {
-        backgroundColor: "red",
-        width: 100
+    text: {
+        color: "#d3d3d3",
+        fontSize: 20
     },
-
-
+    cardTitle: {
+        fontWeight: 'bold',
+        fontSize: 20
+    },
+    separator: {
+        width: '5%'
+    },
+    divider: {
+        marginVertical: 10
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        width: "47.5%"
+    },
+    cardBtnL: {
+        width: '100%',
+    },
+    cardBtnR: {
+        width: '100%',
+    },
+    buttonsContainer: {
+        marginTop: 30,
+        flexDirection: 'row',
+        width: "100%"
+    },
+    cardBtnRemove: {
+        backgroundColor: '#f55'
+    },
+    cardBtnCancel: {
+        backgroundColor: 'grey'
+    },
+    cardInputContainer: {
+        width: "100%",
+    },
 })

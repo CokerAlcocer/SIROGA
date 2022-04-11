@@ -1,0 +1,21 @@
+if (valor) {
+    setRenderComponent(
+        <ScrollView>
+            <View style={styles.container}>
+                <CardSystem />
+                <CardSystem />
+                <CardSystemRegister />
+            </View>
+        </ScrollView>
+    )
+} else {
+    setRenderComponent(
+        <ScrollView>
+            <View style={styles.container}>
+                
+                <CardSystemRegister />
+                <CardSystemRegister />
+            </View>
+        </ScrollView>
+    )
+}

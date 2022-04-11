@@ -34,35 +34,22 @@ export default function Index(props) {
         )
       }
     });
-
-   
   }, [login]);
 
   if (login === null) return <Loading isVisible={true} text={"Cargando"} />;
 
   if (login) {
     return (
-    
-      
       <View style={{marginTop: 50}}>
         <Text
         h1
         style={styles.title}
         >SIROGA</Text>
-      
        {renderComponent}
-
-
-      
-        
-
-
-       
       </View>
     );
   } else {
     return <Login />;
-    
   }
 }
 

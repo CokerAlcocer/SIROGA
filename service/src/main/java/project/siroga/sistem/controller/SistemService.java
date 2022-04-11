@@ -25,8 +25,8 @@ public class SistemService {
     }
 
     @Transactional(readOnly = true)
-    public ResponseEntity<Messsage> findByUseId(long id){
-
+    public ResponseEntity<Message> findByUserId(long id){
+        return new ResponseEntity<>(new Message("OK", false, sistemRepository.findAllByUser_Id(id)), HttpStatus.OK);
     }
 
     @Transactional(readOnly = true)

@@ -18,6 +18,11 @@ public class SistemController {
         return sistemService.findAll();
     }
 
+    @GetMapping("/u/{id}")
+    public ResponseEntity<Message> getByUserId(@PathVariable("id") long id){
+        return sistemService.findByUserId(id);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Message> getById(@PathVariable("id") long id){
         return sistemService.findById(id);

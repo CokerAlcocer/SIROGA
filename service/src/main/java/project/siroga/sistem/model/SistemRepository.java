@@ -7,8 +7,8 @@ import java.util.Optional;
 public interface SistemRepository extends JpaRepository<Sistem, Long> {
     Optional<Sistem> findById (long id);
     Optional<Sistem> findByBroker (String broker);
-    Optional<Sistem> findByUser_Id (long id);
+    Optional<Sistem> findAllBy (long id);
     boolean existsById (long id);
     boolean existsByBroker (String broker);
-    boolean existsByUser_Id (long id);
+    boolean existsAllByUser_Id (long id);
 }

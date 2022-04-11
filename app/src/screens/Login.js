@@ -1,5 +1,5 @@
 import { StyleSheet, View, Image, ScrollView } from "react-native";
-import React, {useRef} from "react";
+import React, { useRef } from "react";
 import { Text } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import FormLogin from "../components/account/FormLogin";
@@ -12,23 +12,17 @@ export default function Login() {
   const toastRef = useRef()
   return (
     <ScrollView>
-      
+
       <View style={styles.viewContainer}>
-      <Text
-      h1
-      h1Style={styles.textTitle}
-      style={styles.title}
-      >SIROGA
-      </Text>
-        <FormLogin
-        toastRef={toastRef}
-        />
+        <Text style={styles.title} >SIROGA</Text>
+        <Text style={styles.text} >Sistema de Riego Automático</Text>
+        <FormLogin toastRef={toastRef} />
         <CreateCuenta />
       </View>
       <Toast
-      ref={toastRef}
-      opacity={0.9}
-      position={"center"}
+        ref={toastRef}
+        opacity={0.9}
+        position={"center"}
       />
     </ScrollView>
   );
@@ -39,10 +33,7 @@ export default function Login() {
     return (
       <Text style={styles.textRegister}>
         ¿Aun no tienes cuenta?{" "}
-        <Text
-          style={styles.btnRegistrar}
-          onPress={() => navigation.navigate('register')}
-        >
+        <Text style={styles.btnRegistrar} onPress={() => navigation.navigate('register')} >
           Registrate aquí
         </Text>
       </Text>
@@ -68,19 +59,20 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   btnRegistrar: {
-    color: "#fcb823",
+    color: '#1e90ff',
     fontWeight: "bold",
   },
   title: {
     textAlign: "center",
-    marginTop: 230
+    color: colors.PRIMARY_COLOR,
+    marginTop: 130,
+    fontSize: 60,
+    fontWeight: 'bold'
   },
-  textTitle:{
-    color: colors.PRIMARY_COLOR
-  }
+  text: {
+    textAlign: "center",
+    color: colors.PRIMARY_COLOR,
+    marginTop: 0,
+    fontSize: 20
+  },
 });
-
-{
-  /* <Image style={styles.logo} resizeMode="contain" 
-         source={require(../../assets/utez.png)}/> */
-}

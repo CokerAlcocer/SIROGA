@@ -25,7 +25,12 @@ public class SistemService {
     }
 
     @Transactional(readOnly = true)
-    public ResponseEntity<Message> findById(Long id){
+    public ResponseEntity<Messsage> findByUseId(long id){
+
+    }
+
+    @Transactional(readOnly = true)
+    public ResponseEntity<Message> findById(long id){
         if (sistemRepository.existsById(id)) {
             return new ResponseEntity<>(new Message("Encontrado", false, sistemRepository.findById(id)),
                     HttpStatus.OK);

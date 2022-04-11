@@ -8,7 +8,7 @@ import { ScrollView } from "react-native-gesture-handler";
 
 
 export default function System(props) {
-    const [valor, setValor] = useState(true)
+    const [valor, setValor] = useState(false)
     const [renderComponent, setRenderComponent] = useState(null)
 
     useEffect(() => {

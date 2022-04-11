@@ -13,13 +13,13 @@ pool.getConnection((err, conn) => {
             console.log('connection_refused');
         }
     }
-
+ 
     if(conn){
         conn.release();
         console.log("database_connected");
         return;
     }
 });
-
+ 
 pool.query = promisify(pool.query);
 module.exports = pool;

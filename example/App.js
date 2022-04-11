@@ -1,7 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
+import { useEffect, useState } from 'react';
 
 export default function App() {
+  const [data, setData] = useState({})
+  useEffect(() => {
+    console.log(data)
+  }, [data])
   
   return (
     <View style={styles.container}>
@@ -14,9 +19,10 @@ export default function App() {
   );
 
   function test() {
-    setTimeout(() => {
-      return fetch('http://10.0.0.8:8080/siroga/api/user/').then(res => res.json()).then(json => console.log(json)).catch(e => console.log(e))
-    });
+    return fetch('http://localhost:4000/measure/')
+      .then(res => res.json())
+      .then(json => setData(json))
+      .catch(e => console.log(e))
   }
 
   function save() {
@@ -26,25 +32,26 @@ export default function App() {
       humEarth: 999,
       id: 999,
       sistem: {
-        id: 3
+        id: 1
       },
       tempAir: 999,
       tempEarth: 999,
     }
 
-    setTimeout(() => {
-      return fetch('http://10.0.0.8:8080/siroga/api/mh/', {
+    return fetch('http://localhost:8080/siroga/api/mh/', {
         method: 'POST',
         body: JSON.stringify(measure),
         headers: {
           "Content-Type": "application/json"
         }
       })
-      .then((response) => {
-        console.log('Guardado')
+      .then((response) => 
+        response.json()
+      )
+      .then((json)=>{
+        console.log(json)
       })
       .catch(e => console.log(e))
-    });
   }
 
   function update(id) {
@@ -59,7 +66,7 @@ export default function App() {
     }
 
     setTimeout(() => {
-      return fetch('http://10.0.0.8:8080/siroga/api/user/', {
+      return fetch('http://:8080/siroga/api/user/', {
         method: 'PUT',
         body: JSON.stringify(user),
         headers: {

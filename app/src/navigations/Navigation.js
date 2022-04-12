@@ -10,6 +10,7 @@ import * as firebase from "firebase";
 
 const Tab = createBottomTabNavigator();
 export default function Navigation() {
+  const [header, setHeader] = useState(true)
   const [login, setLogin] = useState(null)
 
   useEffect(() => {
@@ -24,9 +25,8 @@ export default function Navigation() {
         <Tab.Navigator
           initialRouteName="index"
           tabBarOptions={{
-            headerShown: false,
-            inactiveTintColor: "white",
-            activeTintColor: "green",
+            inactiveTintColor: "#d3d3d3",
+            activeTintColor: "#1e90ff",
           }}
           screenOptions={({ route }) => ({
             tabBarIcon: ({ color }) => screenOption(route, color),
@@ -35,19 +35,17 @@ export default function Navigation() {
           <Tab.Screen
             name="index"
             component={IndexStack}
-            options={({ route }) => ({
-              
-            })}
+            options={{title: 'Inicio'}}
           />
             <Tab.Screen
             name="system"
             component={SystemStack}
-            options={{ title: "Sistemas" }}
+            options={{ title: "Mis Sistemas" }}
           />
           <Tab.Screen
             name="profile"
             component={ProfileStack}
-            options={{ title: "Perfil" }}
+            options={{ title: "Mi Perfil" }}
           />
           
           
@@ -60,7 +58,7 @@ export default function Navigation() {
         <Tab.Navigator
           initialRouteName="index"
           tabBarOptions={{
-            headerShown: false,
+            headerShown: true,
             inactiveTintColor: "white",
             activeTintColor: "green",
           }}

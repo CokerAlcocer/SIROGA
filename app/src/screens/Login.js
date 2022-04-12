@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   btnRegistrar: {
-    color: '#1e90ff',
+    color: colors.COLOR_LINK,
     fontWeight: "bold",
   },
   title: {

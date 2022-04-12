@@ -13,13 +13,12 @@ export default function History() {
 
   return (
     <View style={styles.card}> 
-      <Text style={{fontSize:20}}>Nombre del sistema
-      
-      </Text>
-      
+      <View style={styles.cardHeader} >
+        <Text style={styles.cardTitle}>Nombre del sistema</Text>
+      </View>
       <Divider style={styles.divider} />
       <View style={styles.cardBody}>
-        <Text style={{ marginBottom: 20 }}>
+        <Text >
           El huerto tal ha alcanzado una temperatura de más de X grados
         </Text>
       </View>
@@ -38,15 +37,15 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   cardTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 5,
+    fontWeight: 'bold',
+    fontSize: 20
   },
-  cardBody: {
-    marginTop: 10,
+  cardHeader: {
+    flexDirection: 'row',
+    width: "100%"
   },
   divider: {
-    borderColor: "#ebebeb",
-  }
+    marginVertical: 10
+  },
 
 });

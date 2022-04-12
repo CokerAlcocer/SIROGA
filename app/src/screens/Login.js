@@ -1,4 +1,4 @@
-import { StyleSheet, View, Image, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import React, { useRef } from "react";
 import { Text } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
@@ -12,7 +12,6 @@ export default function Login() {
   const toastRef = useRef()
   return (
     <ScrollView>
-
       <View style={styles.viewContainer}>
         <Text style={styles.title} >SIROGA</Text>
         <Text style={styles.text} >Sistema de Riego Automático</Text>

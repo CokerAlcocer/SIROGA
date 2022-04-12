@@ -16,7 +16,7 @@ export default function Login() {
           <Text>S</Text>
           <Text>I</Text>
           <Text>R</Text>
-          <Text><Icon type="material-community" name="flower-poppy"/></Text>
+          <Icon type="material-community" name="flower-poppy" iconStyle={styles.icon}/>
           <Text>G</Text>
           <Text>A</Text>
         </Text>
@@ -80,4 +80,10 @@ const styles = StyleSheet.create({
     marginTop: 0,
     fontSize: 20
   },
+  icon: {
+    fontSize: 50,
+    
+    color: "green",
+    
+  }
 });

@@ -10,9 +10,8 @@ import Login from "../screens/Login";
 const Stack = createStackNavigator();
 
 export default function IndexStack(props) {
-
-
-     const {navigation} = props;
+  const {navigation} = props;
+  console.log(props)
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -21,15 +20,7 @@ export default function IndexStack(props) {
         options={{ 
              title: "Inicio",
              headerShown:false,
-             
-             headerLeft: () => 
-             <Icon 
-             onPress={() => navigation.openDrawer()}
-             type='material-community' 
-             name="menu" 
-             size={22}
-             color= {"black"}/> 
-          }}  
+            }  }
       />
       <Stack.Screen
         name="system"

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, LogBox } from "react-native";
+import { View, StyleSheet, LogBox, ScrollView } from "react-native";
 import { firebaseApp } from "../utils/firebase";
 import * as firebase from "firebase";
-import {Text} from 'react-native-elements'
+import { Text } from 'react-native-elements'
 import Login from "../screens/Login";
 import Loading from "../components/Loading";
 import colors from "../utils/colors";
@@ -19,18 +19,26 @@ export default function Index(props) {
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       !user ? setLogin(false) : setLogin(true);
-      if(login){
-      
+      if (login) {
+
         setRenderComponent(
-          <View>
-            <History/>
-            <History/>
-            <History/>
-          </View>
+          <ScrollView >
+            <View style={styles.container}>
+              <History />
+              <History />
+              <History />
+              <History />
+              <History />
+              <History />
+              <History />
+              <History />
+              <History />
+            </View>
+          </ScrollView>
         )
-      }else{
+      } else {
         setRenderComponent(
-          <History/>
+          <History />
         )
       }
     });
@@ -40,13 +48,10 @@ export default function Index(props) {
 
   if (login) {
     return (
-      <View style={{marginTop: 50}}>
-        <Text
-        h1
-        style={styles.title}
-        >SIROGA</Text>
-       {renderComponent}
-      </View>
+      <>
+        <Text style={styles.viewTitle} >Historial</Text>
+        {renderComponent}
+      </>
     );
   } else {
     return <Login />;
@@ -60,12 +65,23 @@ const styles = StyleSheet.create({
   },
   btnOption: {
     backgroundColor: colors.PRIMARY_COLOR,
-    
+
   },
   title: {
     textAlign: "center",
     color: colors.PRIMARY_COLOR,
-    padding:10,
+    padding: 10,
     marginBottom: 100
-  }
+  },
+  viewTitle: {
+    backgroundColor: colors.COLOR_BASE,
+    paddingTop: 40,
+    paddingLeft: 13,
+    paddingBottom: 10,
+    fontWeight: "bold",
+    fontSize: 30
+  },
+  container: {
+    padding: 10
+  },
 });

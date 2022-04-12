@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { Divider, Icon, Button, Badge, Overlay } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
+import colors from "../utils/colors";
 
 export default function CardSystem() {
   const navigation = useNavigation();
@@ -89,12 +90,12 @@ export default function CardSystem() {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.COLOR_BASE,
     width: "100%",
     padding: 15,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: "#ebebeb",
+    borderColor: colors.COLOR_DISABLED,
     marginBottom: 10,
   },
   cardHeader: {
@@ -140,7 +141,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   cardBtnRemove: {
-    backgroundColor: '#f55'
+    backgroundColor: colors.COLOR_DANGER
   },
   cardBtnCancel: {
     backgroundColor: 'grey'

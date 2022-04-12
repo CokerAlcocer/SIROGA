@@ -12,7 +12,7 @@ export default function ProfileStack() {
          <Stack.Screen 
                name="profile"
                component={Profile}
-               options={{title: "Peril"}}
+               options={{headerShown:false, title: "Perfil"}}
           />  
 
                   

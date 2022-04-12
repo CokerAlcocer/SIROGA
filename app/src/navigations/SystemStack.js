@@ -12,7 +12,7 @@ export default function SystemStack() {
           <Stack.Screen 
                name="system"
                component={System}
-               options={{title: "Sistema"}}
+               options={{headerShown:false, title: "Sistema"}}
           /> 
           
           <Stack.Screen 

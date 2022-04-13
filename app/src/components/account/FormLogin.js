@@ -73,7 +73,7 @@ export default function FormLogin(props) {
       // NOTA: Procura utilizar !== o === para evitar problemas en las validacions
       //setLoading(true)
       if(request.email !== "" && request.password !== ""){
-          /*//FIREBASE 
+          //FIREBASE 
           firebase.auth()
           .signInWithEmailAndPassword(formData.email, formData.password)
           .then((response) => {
@@ -84,7 +84,7 @@ export default function FormLogin(props) {
             setLoading(false)
             toastRef.current.show("Las credenciales no son correctas");
           });
-          //FIREBASE*/
+          //FIREBASE
       }else{
         setLoading(false)
         toastRef.current.show("El usuario no existe");

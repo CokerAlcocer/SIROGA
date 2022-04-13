@@ -37,6 +37,11 @@ public class User {
     public User() {
     }
 
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
     public User(String username, String email, String password, String name, String surname, String lastname, List<Sistem> sistems) {
         this.username = username;
         this.email = email;

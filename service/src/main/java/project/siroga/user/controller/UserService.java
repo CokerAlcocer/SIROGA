@@ -32,6 +32,15 @@ public class UserService {
         }
     }
 
+    @Transactional(readOnly = true)
+    public ResponseEntity<Message> findByEmailAndPassword(User user){
+        if(userRepository.existsByEmailAndPassword(user.getEmail(), user.getPassword())){
+            return new ResponseEntity<>(new Message("OK", false, userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword())), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(new Message("Usuario no encontrado", true, null), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @Transactional(rollbackFor = {SQLException.class})
     public ResponseEntity<Message> save(User user){
         Optional<User> exisitingUser = userRepository.findByUsername(user.getUsername());

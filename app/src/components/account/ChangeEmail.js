@@ -1,59 +1,67 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useState} from 'react'
+import React, { useState, useEffect} from 'react'
 import { Input, Button } from 'react-native-elements'
 import * as firebase from "firebase"
-import colors from '../../utils/colors';
+import colors from '../../utils/colors'
 
-export default function ChangeDisplayNameForm(props) {
+export default function ChangeEmail(props) {
      // console.log(props);
      const {displayName, toastRef, setShowModal, setReloadUserInfo} = props;
-     const [newDisplayName, setNewDisplayName] = useState(null);
+     const [newEmail, setNewEmail] = useState(null);
      const [error, setError] = useState(null)
      const [loading, setLoading] = useState(false)
+  
 
+    //  useEffect(() => {
+    //    firebase.auth().currentUser.reauthenticateWithCredential(credentials)
+    //    .then(() =>{
+    //        console.log("Holis")
+    //    })
+    //  }, [])
+     
+     
      const onSubmit =() =>{
-          // console.log(newDisplayName)
+          
           setError(null)
-          if(!newDisplayName){
+          if(!newEmail){
                setError("El campo no puede estar vacio")
-          }else if(displayName===newDisplayName){
-               setError("Los nombres pueden ser iguales")
+         
           }else{
+          
                setLoading(true)
-               const update ={
-                    displayName: newDisplayName
-               }
+               
                firebase
                .auth()
                .currentUser
-               .updateProfile(update)
+               .updateEmail(newEmail)
                .then(()=>{
                     setLoading(false)
                     setReloadUserInfo(true)
                     setShowModal(false)                   
                })
-               .catch(()=>{
-                    setError("Error al actualizar el nombre")
+               .catch((error)=>{
+                    setError("Error al actualizar el correo")
                     setLoading(false)
+                    console.log(error)
                })
           }
      }
   return (
     <View style={styles.view}>
       <Input 
-      placeholder="Nombre y Apellidos"
+      placeholder="Nuevo correo electrónico"
       containerStyle={styles.input}
       rightIcon={{
            type:"material-community",
-           name:"account-circle-outline",
+           name:"at",
            color: "#c2c2c2"
       }}
-      onChange={(e)=>setNewDisplayName(e.nativeEvent.text)}
+      onChange={(e)=>setNewEmail(e.nativeEvent.text)}
       errorMessage={error}
-      defaultValue={displayName || ""}
+      defaultValue={""}
       />
       <Button 
-      title="Cambiar nombre"
+      title="Guardar"
       containerStyle={styles.btnContainer}
       buttonStyle={styles.btnStyle}
       onPress={()=>onSubmit()}
@@ -77,7 +85,7 @@ const styles = StyleSheet.create({
           width:"95%"
      },
      btnStyle:{
-          backgroundColor:colors.PRIMARY_COLOR
+          backgroundColor: colors.PRIMARY_COLOR
      }
 })
 

@@ -20,6 +20,7 @@ export default function Profile() {
     (async () => {
       const user = firebase.auth().currentUser;
       setUserInfo(user);
+      console.log(user)
     })();
     setReloadUserInfo(false);
     console.log(userInfo);

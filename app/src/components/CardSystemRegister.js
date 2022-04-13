@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Dimensions, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import { Button, Overlay, Icon, Input, Divider } from 'react-native-elements'
 
@@ -6,8 +6,8 @@ const toggleOverlay = () => {
     setVisible(!visible);
 };
 
-export default function CardSystemRegister() {
-
+export default function CardSystemRegister(props) {
+    const { addButton } = props;
     const [visible, setVisible] = useState(false);
 
     const toggleOverlay = () => {
@@ -16,7 +16,7 @@ export default function CardSystemRegister() {
 
     return (
         <>
-            <View style={styles.card} onTouchStart={() => toggleOverlay()} >
+            <View style={addButton? styles.cardTrue : styles.cardFalse} onTouchStart={() => toggleOverlay()} >
                 <Icon
                     name="plus"
                     type="material-community"
@@ -86,7 +86,7 @@ export default function CardSystemRegister() {
 }
 
 const styles = StyleSheet.create({
-    card: {
+    cardTrue: {
         backgroundColor: null,
         width: '100%',
         padding: 15,
@@ -96,6 +96,15 @@ const styles = StyleSheet.create({
         borderColor: '#d3d3d3',
         marginBottom: 10,
         alignItems: 'center'
+    },
+    cardFalse:{
+        backgroundColor: null,
+        width: '100%',
+        height: Dimensions.get("window").height - 155,
+        padding: 15,
+        marginBottom: 10,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     text: {
         color: "#d3d3d3",

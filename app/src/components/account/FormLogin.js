@@ -37,7 +37,12 @@ export default function FormLogin(props) {
       // MUCHO OJO: Revisa como estan ordenadas las columnas en la base de datos
       const request = {
         email: "",
-        password: ""
+        id: 0,
+        lastname: "",
+        name: "",
+        password: "",
+        surname: "",
+        username: ""
       } 
 
       // Haces la peticion
@@ -54,26 +59,32 @@ export default function FormLogin(props) {
         // AQUI ES LO IMPORTANTE: Aqui es en donde se procesa la info para asignacion pero como
         // tal, no puedes asignar la variable json directamente. Debes sacarle los datos desde aqui
         request.email = json.data.email
+        request.id = json.data.id
+        request.lastname = json.data.lastname
+        request.name = json.data.name
         request.password = json.data.password
+        request.surname = json.data.surname
+        request.username = json.data.username
       }).catch(e => console.log(e));
+
+      console.log(request)
       
       // Y listo, ya solo harias la validacion en esta parte
       // NOTA: Procura utilizar !== o === para evitar problemas en las validacions
-      setLoading(true)
+      //setLoading(true)
       if(request.email !== "" && request.password !== ""){
-          //FIREBASE 
+          /*//FIREBASE 
           firebase.auth()
           .signInWithEmailAndPassword(formData.email, formData.password)
           .then((response) => {
             setLoading(false)
-            console.log(response);
             navegation.navigate("index")
           })
           .catch((err) => {
             setLoading(false)
             toastRef.current.show("Las credenciales no son correctas");
           });
-          //FIREBASE
+          //FIREBASE*/
       }else{
         setLoading(false)
         toastRef.current.show("El usuario no existe");

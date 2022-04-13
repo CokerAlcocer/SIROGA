@@ -15,11 +15,9 @@ export default function UserInfo(props) {
   } = props;
 
   const changeAvatar = async () => {
-    //     console.log("Cambiar imagen");
     const resultPermission = await Permissions.askAsync(Permissions.CAMERA);
-    //console.log(resultPermission);
+
     const resultPermissionCamera = resultPermission.permissions.camera.status;
-    // console.log(resultPermissionCamera);
 
     if (resultPermissionCamera == "denied") {
       toastRef.current.show("Es necesario otorgar permisos");
@@ -48,11 +46,11 @@ export default function UserInfo(props) {
   const uploadImage = async (uri) => {
     setLoading(true);
     setLoadingText("Cargando Imagen");
-    // console.log(uri);
+
     const response = await fetch(uri);
-    // console.log(JSON.stringify(response));
+
     const blob = await response.blob();
-    // console.log(JSON.stringify(blob));
+
     const ref = firebase.storage().ref().child(`avatar/${uid}`);
     return ref.put(blob);
   };
@@ -64,7 +62,7 @@ export default function UserInfo(props) {
       .ref(`avatar/${uid}`)
       .getDownloadURL()
       .then(async (response) => {
-        // console.log(response);
+ 
         const update = {
           photoURL: response,
         };

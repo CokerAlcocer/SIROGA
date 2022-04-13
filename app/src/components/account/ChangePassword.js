@@ -2,31 +2,30 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useState} from 'react'
 import { Input, Button } from 'react-native-elements'
 import * as firebase from "firebase"
-import colors from '../../utils/colors';
+import colors from '../../utils/colors'
 
-export default function ChangeDisplayNameForm(props) {
-     // console.log(props);
-     const {displayName, toastRef, setShowModal, setReloadUserInfo} = props;
-     const [newDisplayName, setNewDisplayName] = useState(null);
+export default function ChangePassword(props) {
+     
+     const { setShowModal, setReloadUserInfo} = props;
+     const [newPassword, setNewPassword] = useState(null);
      const [error, setError] = useState(null)
      const [loading, setLoading] = useState(false)
+     
 
      const onSubmit =() =>{
-          // console.log(newDisplayName)
+          
           setError(null)
-          if(!newDisplayName){
+          if(!newPassword){
                setError("El campo no puede estar vacio")
-          }else if(displayName===newDisplayName){
-               setError("Los nombres pueden ser iguales")
+         
           }else{
+          
                setLoading(true)
-               const update ={
-                    displayName: newDisplayName
-               }
+               
                firebase
                .auth()
                .currentUser
-               .updateProfile(update)
+               .updatePassword(newPassword)
                .then(()=>{
                     setLoading(false)
                     setReloadUserInfo(true)
@@ -41,19 +40,19 @@ export default function ChangeDisplayNameForm(props) {
   return (
     <View style={styles.view}>
       <Input 
-      placeholder="Nombre y Apellidos"
+      placeholder="Nueva contraseña"
       containerStyle={styles.input}
       rightIcon={{
            type:"material-community",
-           name:"account-circle-outline",
+           name:"key",
            color: "#c2c2c2"
       }}
-      onChange={(e)=>setNewDisplayName(e.nativeEvent.text)}
+      onChange={(e)=>setNewPassword(e.nativeEvent.text)}
       errorMessage={error}
-      defaultValue={displayName || ""}
+      defaultValue={""}
       />
       <Button 
-      title="Cambiar nombre"
+      title="Cambiar contraseña"
       containerStyle={styles.btnContainer}
       buttonStyle={styles.btnStyle}
       onPress={()=>onSubmit()}
@@ -77,7 +76,7 @@ const styles = StyleSheet.create({
           width:"95%"
      },
      btnStyle:{
-          backgroundColor:colors.PRIMARY_COLOR
+          backgroundColor: colors.PRIMARY_COLOR
      }
 })
 

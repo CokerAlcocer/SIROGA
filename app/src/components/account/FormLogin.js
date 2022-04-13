@@ -117,12 +117,9 @@ export default function FormLogin(props) {
         containerStyle={styles.containerBtn}
         buttonStyle={styles.btnLogin}
         onPress={() => onSubmit()}
-      />
-      <Button
-        title={"Datos"}
-        containerStyle={styles.containerBtn}
-        buttonStyle={styles.btnLogin}
-        onPress={() => test()}
+        iconRight={true}
+        
+        icon={<Icon type="material-community" name="arrow-right-circle" iconStyle={{marginLeft:10, color:"white"}}/>}
       />
       <Loading
         isVisible={loading}

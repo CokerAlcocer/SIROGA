@@ -3,8 +3,10 @@ import React, { useState } from 'react';
 import { ListItem } from 'react-native-elements';
 import { map } from "lodash";
 import Modal from '../Modal';
-import ChangeDisplayNameForm from './ChangeDisplayNameForm';
+import ChangePassword from './ChangePassword';
 import {useNavigation} from '@react-navigation/native'
+import ChangeDisplayNameForm from './ChangeDisplayNameForm';
+import ChangeEmail from './ChangeEmail';
 
 
 
@@ -31,11 +33,22 @@ export default function UserOptions(props) {
         setShowModal(true)
         break;
       case "email":
-        setRenderComponent(<Text>Cambiar Correo</Text>)
+        setRenderComponent(
+          <ChangeEmail
+          setShowModal={setShowModal}
+          toastRef={toastRef}
+          setReloadUserInfo={setReloadUserInfo}
+          />
+        )
         setShowModal(true)
         break;
       case "password":
-        setRenderComponent(<Text>Cambiar Contraseña</Text>)
+        setRenderComponent(
+          <ChangePassword
+            setShowModal={setShowModal}
+            setReloadUserInfo={setReloadUserInfo}
+          />
+          )
         setShowModal(true)
         break;
       default:

@@ -4,7 +4,8 @@ import { Divider, Icon, Button, Badge, Overlay } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import colors from "../utils/colors";
 
-export default function CardSystem() {
+export default function CardSystem(props) {
+  const { sistem } = props
   const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
 
@@ -12,20 +13,37 @@ export default function CardSystem() {
     setVisible(!visible);
   };
 
+  const getBadgeColor = (id) => {
+    switch(id){
+      case 1:
+        return(<Badge value=' ' badgeStyle={{alignSelf: 'flex-end', backgroundColor: colors.COLOR_SUCCESS}} />)
+        break;
+      case 2:
+        return(<Badge value=' ' badgeStyle={{alignSelf: 'flex-end', backgroundColor: colors.COLOR_MUTED}} />)
+        break;
+      case 3:
+        return(<Badge value=' ' badgeStyle={{alignSelf: 'flex-end', backgroundColor: colors.COLOR_LINK}} />)
+        break;
+      case 4:
+        return(<Badge value=' ' badgeStyle={{alignSelf: 'flex-end', backgroundColor: colors.COLOR_DANGER}} />)
+        break;
+    }
+  }
+
   return (
     <View style={styles.card}>
       <View style={styles.cardHeader}>
         <View style={styles.cardHeaderContainer}>
-          <Text style={styles.cardTitle} >Nombre</Text>
+          <Text style={styles.cardTitle} >{sistem.broker}</Text>
         </View>
         <View style={styles.cardHeaderContainer}>
-          <Badge value="Regando" badgeStyle={styles.badge} />
+          {getBadgeColor(sistem.status.id)}
         </View>
       </View>
       <Divider style={styles.divider} />
       <View style={styles.cardBody} >
         <Text style={styles.cardSubtitle} >Descripción</Text>
-        <Text style={styles.cardText} >Deshjkfdsahjfdal</Text>
+        <Text style={styles.cardText} >{sistem.description}</Text>
         <View style={styles.buttonsContainer} >
           <View style={styles.buttonContainer}>
             <Button containerStyle={styles.cardBtnL} buttonStyle={styles.cardBtnRemove} title={'Quitar'} onPress={toggleOverlay} />
@@ -104,9 +122,6 @@ const styles = StyleSheet.create({
   },
   cardHeaderContainer: {
     width: '50%'
-  },
-  badge: {
-    alignSelf: 'flex-end'
   },
   cardTitle: {
     fontWeight: 'bold',

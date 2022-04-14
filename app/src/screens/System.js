@@ -1,65 +1,75 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, Button, ScrollView } from "react-native";
+import { View, StyleSheet, Text, ScrollView, AsyncStorageStatic } from "react-native";
+import { Icon, Button } from 'react-native-elements'
 import Colors from '../utils/colors';
 import CardSystem from '../components/CardSystem'
 import CardSystemRegister from '../components/CardSystemRegister'
 import colors from "../utils/colors";
-import { map } from "lodash";
+import { add, map } from "lodash";
+import Loading from "../components/Loading";
 
 
 export default function System(props) {
-    const [valor, setValor] = useState(true)
-    const [renderComponent, setRenderComponent] = useState(null)
-    const [showAddBtn, setShowAddBtn] = useState(true)
-    const [addButton, setAddButton] = useState(false)
-    const [aux, setAux] = useState([])
     const [userSistems, setUserSistems] = useState([])
+    const [loading, setLoading] = useState(false)
 
     const getSistems = async () => {
+        setLoading(true)
         await fetch('http://10.0.0.8:8080/siroga/api/sistem/').then(res => res.json()).then(json => {
-            setAux(json.data)
+            let aux = []
+            for (let i = 0; i < json.data.length; i++) {
+                if (json.data[i].user.id === 1) {
+                    aux.push(json.data[i])
+                }
+            }
+            setUserSistems(aux)
         }).catch(e => console.log(e))
+        setLoading(false)
     }
 
-    useEffect(() => {
-        getSistems()
-        setUserSistems([]);
-        let array = []
-        for(let i = 0; i < aux.length; i++){
-            if(aux[i].user.id === 1){
-                array.push(aux[i])
-            }
-        }
-        setUserSistems(array)
-
-        if(userSistems.length > 0){
-            setAddButton(true)
-            if(userSistems >= 3){
-                setShowAddBtn(false)
-            }
-        }else{
-            setAddButton(false)
-        }
-    }, [])
+    let mapSistems = userSistems
 
     return (
         <>
-            <Text style={styles.viewTitle} >Mis Sistemas</Text>
-            {addButton?
+            <View style={styles.viewHeader}>
+                <View style={{width: '80%'}} >
+                    <Text style={styles.viewTitle} >Mis Sistemas</Text>
+                </View>
+                <View style={{width: '20%'}} >
+                    <Button icon={
+                            <Icon
+                                name="cached"
+                                type="material-community"
+                                color="black"
+                                size={25}
+                            />
+                        }
+                        title=""
+                        onPress={() => getSistems()}
+                        containerStyle={styles.headerBtnCont}
+                        buttonStyle={styles.headerBtn}
+                    />
+                </View>
+            </View>
+            {userSistems.length > 0 ?
                 (
-                    <ScrollView>
-                        <View style={styles.container}>
-                            <CardSystem />
-                            {showAddBtn?(<CardSystemRegister addButton={addButton} />): null}
+                    <ScrollView >
+                        <View style={styles.container} >
+                            {map(mapSistems, (mapSistems, index) => (
+                                <CardSystem key={index} sistem={userSistems[index]} />
+                            ))}
+                            {userSistems.length < 3 ? (<CardSystemRegister addButton={userSistems.length > 0} />) : (null)}
                         </View>
                     </ScrollView>
-                ):
+                ) :
                 (
-                    <View style={styles.container}>
-                        <CardSystemRegister addButton={addButton} />
-                    </View>
+                    <CardSystemRegister addButton={userSistems.length > 0} />
                 )
             }
+            <Loading
+                isVisible={loading}
+                text={"Iniciando Sesión"}
+            />
         </>
     )
 }
@@ -74,12 +84,21 @@ const styles = StyleSheet.create({
     container: {
         padding: 10
     },
-    viewTitle: {
+    viewHeader: {
+        flexDirection: "row",
         backgroundColor: colors.COLOR_BASE,
         paddingTop: 40,
         paddingLeft: 13,
         paddingBottom: 10,
+    },
+    viewTitle: {
         fontWeight: "bold",
         fontSize: 30
+    },
+    headerBtnCont: {
+        alignItems: "flex-end"
+    },
+    headerBtn: {
+        backgroundColor: null
     }
 })

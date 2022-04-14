@@ -19,3 +19,6 @@ if (valor) {
         </ScrollView>
     )
 }
+
+getSistems();
+        

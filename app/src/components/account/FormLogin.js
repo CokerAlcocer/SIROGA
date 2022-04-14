@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, Text, View, AsyncStorage } from "react-native"
 import React, { useState } from "react"
 import { Input, Icon, Button } from "react-native-elements"
 import { isEmpty } from "lodash"
@@ -66,8 +66,6 @@ export default function FormLogin(props) {
         request.surname = json.data.surname
         request.username = json.data.username
       }).catch(e => console.log(e));
-
-      console.log(request)
       
       // Y listo, ya solo harias la validacion en esta parte
       // NOTA: Procura utilizar !== o === para evitar problemas en las validacions

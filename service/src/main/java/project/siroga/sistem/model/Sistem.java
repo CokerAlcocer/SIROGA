@@ -20,6 +20,9 @@ public class Sistem {
     private String broker;
 
     @Column(nullable = false)
+    private String description;
+
+    @Column(nullable = false)
     private double humEarthMin;
 
     @Column(nullable = false)
@@ -62,8 +65,9 @@ public class Sistem {
     public Sistem() {
     }
 
-    public Sistem(String broker, double humEarthMin, double humEarthMax, double humAirMin, double humAirMax, double tempEarthMin, double tempEarthMax, double tempAirMin, double tempAirMax, User user, Status status, List<MeasureHistory> measureHistories, List<OperationHistory> operationHistories) {
+    public Sistem(String broker, String description, double humEarthMin, double humEarthMax, double humAirMin, double humAirMax, double tempEarthMin, double tempEarthMax, double tempAirMin, double tempAirMax, User user, Status status, List<MeasureHistory> measureHistories, List<OperationHistory> operationHistories) {
         this.broker = broker;
+        this.description = description;
         this.humEarthMin = humEarthMin;
         this.humEarthMax = humEarthMax;
         this.humAirMin = humAirMin;
@@ -78,9 +82,10 @@ public class Sistem {
         this.operationHistories = operationHistories;
     }
 
-    public Sistem(long id, String broker, double humEarthMin, double humEarthMax, double humAirMin, double humAirMax, double tempEarthMin, double tempEarthMax, double tempAirMin, double tempAirMax, User user, Status status, List<MeasureHistory> measureHistories, List<OperationHistory> operationHistories) {
+    public Sistem(long id, String broker, String description, double humEarthMin, double humEarthMax, double humAirMin, double humAirMax, double tempEarthMin, double tempEarthMax, double tempAirMin, double tempAirMax, User user, Status status, List<MeasureHistory> measureHistories, List<OperationHistory> operationHistories) {
         this.id = id;
         this.broker = broker;
+        this.description = description;
         this.humEarthMin = humEarthMin;
         this.humEarthMax = humEarthMax;
         this.humAirMin = humAirMin;
@@ -109,6 +114,14 @@ public class Sistem {
 
     public void setBroker(String broker) {
         this.broker = broker;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public double getHumEarthMin() {

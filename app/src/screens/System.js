@@ -15,7 +15,7 @@ export default function System(props) {
 
     const getSistems = async () => {
         setLoading(true)
-        await fetch('http://10.0.0.8:8080/siroga/api/sistem/').then(res => res.json()).then(json => {
+        await fetch('http://192.168.100.138:8080/siroga/api/sistem/').then(res => res.json()).then(json => {
             let aux = []
             for (let i = 0; i < json.data.length; i++) {
                 if (json.data[i].user.id === 1) {
@@ -68,7 +68,7 @@ export default function System(props) {
             }
             <Loading
                 isVisible={loading}
-                text={"Iniciando Sesión"}
+                text={"Refrescando Sistemas"}
             />
         </>
     )

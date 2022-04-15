@@ -50,7 +50,9 @@ export default function CardSystem(props) {
           </View>
           <View style={styles.separator} ></View>
           <View style={styles.buttonContainer}>
-            <Button containerStyle={styles.cardBtnR} buttonStyle={styles.cardBtnMeasure} title={'Mediciones'} onPress={() => navigation.navigate("systemdata")} />
+            <Button containerStyle={styles.cardBtnR} buttonStyle={styles.cardBtnMeasure} title={'Mediciones'} onPress={
+              () => navigation.navigate("systemdata", {sistemId: sistem.id})
+            } />
           </View>
         </View>
       </View>

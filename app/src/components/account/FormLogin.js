@@ -47,7 +47,7 @@ export default function FormLogin(props) {
 
       // Haces la peticion
       // HAY QUE VER COMO OBTENER LA IP SIN NECESIDAD DE CAMBIARLA NOSOTROS
-      await fetch('http://10.0.0.8:8080/siroga/api/user/u', {
+      await fetch('http://192.168.100.138:8080/siroga/api/user/u', {
         method: 'POST',
         body: JSON.stringify(user),
         //Si no te deja hacer el post con esta cabecera, agrega la sig:

@@ -4,25 +4,38 @@ import { Button, ButtonGroup, Icon } from "react-native-elements";
 import * as Progress from "react-native-progress";
 import colors from "../utils/colors";
 
-export default function Mediciones() {
+export default function Mediciones(props) {
+  const { humAirMax, humAirMin, humEarthMax, humEarthMin, tempAirMax, tempAirMin, tempEarthMax, tempEarthMin } = props;
   return (
     <View>
       <Text style={styles.mediciones}>Mediciones</Text>
 
-      <Text style={styles.titulos}>Humedad de la tierra</Text>
-      <Text style={styles.subtitulos}>Min. 30%</Text>
-      <Progress.Bar progress={0.3} width={null} height={12} color={colors.COLOR_LINK} />
-
-      <Text style={styles.titulos}>Humedad de la tierra</Text>
-      <Text style={styles.subtitulos}>Min. 30%</Text>
-      <Progress.Bar progress={0.8} width={null} height={12} color={colors.COLOR_DANGER} />
-
-      <Text style={styles.titulos}>Humedad de la tierra</Text>
-      <Text style={styles.subtitulos}>Min. 30%</Text>
+      <Text style={styles.titulos}>Humedad del aire</Text>
+      <View style={styles.limitsContainers} >
+        <Text style={styles.min} >Min. {humAirMin}%</Text>
+        <Text style={styles.max} >Max. {humAirMax}%</Text>
+      </View>
       <Progress.Bar progress={0.5} width={null} height={12} color={colors.COLOR_LINK} />
 
       <Text style={styles.titulos}>Humedad de la tierra</Text>
-      <Text style={styles.subtitulos}>Min. 30%</Text>
+      <View style={styles.limitsContainers} >
+        <Text style={styles.min} >Min. {humEarthMin}%</Text>
+        <Text style={styles.max} >Max. {humEarthMax}%</Text>
+      </View>
+      <Progress.Bar progress={0.8} width={null} height={12} color={colors.COLOR_DANGER} />
+
+      <Text style={styles.titulos}>Temperatura del aire</Text>
+      <View style={styles.limitsContainers} >
+        <Text style={styles.min} >Min. {tempAirMin} ºC</Text>
+        <Text style={styles.max} >Max. {tempAirMax} ºC</Text>
+      </View>
+      <Progress.Bar progress={0.5} width={null} height={12} color={colors.COLOR_LINK} />
+
+      <Text style={styles.titulos}>Temperatura de la tierra</Text>
+      <View style={styles.limitsContainers} >
+        <Text style={styles.min} >Min. {tempEarthMin} ºC</Text>
+        <Text style={styles.max} >Max. {tempEarthMax} ºC</Text>
+      </View>
       <Progress.Bar progress={0.6} width={null} height={12} color={colors.COLOR_DANGER} />
 
       <View style={styles.botones}>
@@ -65,9 +78,19 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     marginTop: 5,
   },
-  subtitulos: {
+  limitsContainers: {
+    flexDirection: "row"
+  },
+  min: {
+    width: '50%',
     fontSize: 15,
     marginBottom: 10,
+  },
+  max: {
+    width: '50%',
+    fontSize: 15,
+    marginBottom: 10,
+    textAlign: "right"
   },
   btnOption: {
     backgroundColor: "red",

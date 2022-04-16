@@ -1,13 +1,33 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Button, ButtonGroup, Icon } from "react-native-elements";
 import * as Progress from "react-native-progress";
 import colors from "../utils/colors";
 import ipAddress from "../utils/ipAddress";
+import { get } from "lodash";
+import axios from "axios";
 
 export default function Mediciones(props) {
-  const { measure, humAirMax, humAirMin, humEarthMax, humEarthMin, tempAirMax, tempAirMin, tempEarthMax, tempEarthMin } = props;
+  const [measure, setMeasure] = useState({
+    broker: broker,
+    humAir: 0,
+    humEarth: 0,
+    tempAir: 0,
+    tempEarth: 0
+  })
+  const { broker, humAirMax, humAirMin, humEarthMax, humEarthMin, tempAirMax, tempAirMin, tempEarthMax, tempEarthMin } = props;
+  console.log('ULT. MEDICION')
+  console.log(measure)
+  const getMeasures = () => {
+    axios({method: 'GET', url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/mh/'}).then(res => {
+      console.log(res.data.data)
+    }).catch(e => console.log(e))
+  }
 
+  useEffect(() => {
+    getMeasures()
+  }, [])
+  
   return (
     <View>
       <Text style={styles.mediciones}>Mediciones</Text>
@@ -17,28 +37,28 @@ export default function Mediciones(props) {
         <Text style={styles.min} >Min. {humAirMin}%</Text>
         <Text style={styles.max} >Max. {humAirMax}%</Text>
       </View>
-      <Progress.Bar progress={measure.humAir*0.01} width={null} height={12} color={colors.COLOR_LINK} />
+      <Progress.Bar width={Dimensions.get('window').width - 30} height={12} color={colors.COLOR_LINK} />
 
       <Text style={styles.titulos}>Humedad de la tierra</Text>
       <View style={styles.limitsContainers} >
         <Text style={styles.min} >Min. {humEarthMin}%</Text>
         <Text style={styles.max} >Max. {humEarthMax}%</Text>
       </View>
-      <Progress.Bar progress={measure.humEarth*0.01} width={null} height={12} color={colors.COLOR_DANGER} />
+      <Progress.Bar width={Dimensions.get('window').width - 30} height={12} color={colors.COLOR_DANGER} />
 
       <Text style={styles.titulos}>Temperatura del aire</Text>
       <View style={styles.limitsContainers} >
         <Text style={styles.min} >Min. {tempAirMin} ºC</Text>
         <Text style={styles.max} >Max. {tempAirMax} ºC</Text>
       </View>
-      <Progress.Bar progress={measure.tempAir*0.01} width={null} height={12} color={colors.COLOR_LINK} />
+      <Progress.Bar width={Dimensions.get('window').width - 30} height={12} color={colors.COLOR_LINK} />
 
       <Text style={styles.titulos}>Temperatura de la tierra</Text>
       <View style={styles.limitsContainers} >
         <Text style={styles.min} >Min. {tempEarthMin} ºC</Text>
         <Text style={styles.max} >Max. {tempEarthMax} ºC</Text>
       </View>
-      <Progress.Bar progress={0.0} width={null} height={12} color={colors.COLOR_DANGER} />
+      <Progress.Bar width={Dimensions.get('window').width - 30} height={12} color={colors.COLOR_DANGER} />
 
       <View style={styles.botones}>
         <Button

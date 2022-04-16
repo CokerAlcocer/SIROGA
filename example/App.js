@@ -1,22 +1,27 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function App() {
   const [data, setData] = useState({})
   useEffect(() => {
-    console.log(data)
+    axios({method: 'GET', url: 'http://10.0.0.8:8080/siroga/api/mh/'}).then(res => console.log(res.data))
   }, [data])
   
   return (
     <View style={styles.container}>
-      <Button title='Probar Servicio' onPress={() => test()} />
+      <Button title='Probar Servicio' onPress={() => testAxios()} />
       <Button title='Guardar objeto' onPress={() => save()} />
       <Button title='Actualizar objeto' onPress={() => update(1)} /> 
       <Text>Open up App.js to start working on your app!</Text>
       <StatusBar style="auto" />
     </View>
   );
+
+async function testAxios () {
+  
+}
 
   function test() {
     return fetch('http://localhost:4000/measure/')

@@ -1,3 +1,3 @@
 export default {
-    IP_ADDRESS: '192.168.8.67'
+    IP_ADDRESS: '10.0.0.8'
 }

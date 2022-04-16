@@ -5,45 +5,34 @@ import Mediciones from '../components/Mediciones'
 import colors from '../utils/colors'
 import { ScrollView } from 'react-native-gesture-handler'
 import ipAddress from '../utils/ipAddress'
+import axios from 'axios'
 
 export default function SystemData({route}) {
   const { sistemId } = route.params;
-  const [sistem, setSistem] = useState({})
-  const [measure, setMeasure] = useState({})
+  const [sistema, setSistema] = useState({})
 
-  const getMeasures = () => {
-    fetch('http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/sistem/'+sistemId).then(res => res.json()).then(json => {
-      setSistem(json.data);
-    }).catch(e => console.log(e))
-
-    fetch('http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/mh/').then(res => res.json()).then(json => {
-      let aux = {}
-      for(let i = 0; i < json.data.length; i++){
-        aux = json.data[i] //pendienteeee
-      }
-      setMeasure(aux)
+  const getSistem = () => {
+    axios({method: 'GET', url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/sistem/'+sistemId}).then(res => {
+      setSistema(res.data.data)
     }).catch(e => console.log(e))
   }
 
   useEffect(() => {
-    setInterval(() => {
-      getMeasures()
-    }, 5000)
+    getSistem()
   }, [])
-  
 
   return (
     <View >
       <View style={styles.card} >
-        <Text style={styles.cardTitle}  >{sistem.broker}</Text>
+        <Text style={styles.cardTitle}  >{sistema.broker}</Text>
         <View style={styles.cardBody}>
-          <Text style={styles.description} >{sistem.description}</Text>
+          <Text style={styles.description} >{sistema.description}</Text>
           <Mediciones 
-            measure={measure}
-            humAirMax={sistem.humAirMax} humAirMin={sistem.humAirMin} 
-            humEarthMax={sistem.humEarthMax} humEarthMin={sistem.humEarthMin} 
-            tempAirMax={sistem.tempAirMax} tempAirMin={sistem.tempAirMin} 
-            tempEarthMax={sistem.tempEarthMax} tempEarthMin={sistem.tempEarthMin} />
+            broker={sistema.broker}
+            humAirMax={sistema.humAirMax} humAirMin={sistema.humAirMin} 
+            humEarthMax={sistema.humEarthMax} humEarthMin={sistema.humEarthMin} 
+            tempAirMax={sistema.tempAirMax} tempAirMin={sistema.tempAirMin} 
+            tempEarthMax={sistema.tempEarthMax} tempEarthMin={sistema.tempEarthMin} />
         </View>
       </View>
     </View>

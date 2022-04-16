@@ -8,6 +8,7 @@ import colors from "../utils/colors";
 import { add, map } from "lodash";
 import Loading from "../components/Loading";
 import ipAddress from "../utils/ipAddress";
+import axios from 'axios'
 
 
 export default function System(props) {
@@ -16,20 +17,24 @@ export default function System(props) {
 
     const getSistems = async () => {
         setLoading(true)
-        await fetch('http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/sistem/').then(res => res.json()).then(json => {
+        await axios({method: 'GET', url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/sistem/'}).then(res => {
             let aux = []
-            for (let i = 0; i < json.data.length; i++) {
-                if (json.data[i].user.id === 1) {
-                    aux.push(json.data[i])
+            for (let i = 0; i < res.data.data.length; i++) {
+                if (res.data.data[i].user.id === 1) {
+                    aux.push(res.data.data[i])
                 }
             }
             setUserSistems(aux)
-        }).catch(e => console.log(e))
+        }).catch(e => console.log(e));
         setLoading(false)
     }
 
     let mapSistems = userSistems
 
+    useEffect(() => {
+      getSistems()
+    }, [])
+    
     return (
         <>
             <View style={styles.viewHeader}>

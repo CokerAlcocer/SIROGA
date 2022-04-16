@@ -7,6 +7,7 @@ import CardSystemRegister from '../components/CardSystemRegister'
 import colors from "../utils/colors";
 import { add, map } from "lodash";
 import Loading from "../components/Loading";
+import ipAddress from "../utils/ipAddress";
 
 
 export default function System(props) {
@@ -15,7 +16,7 @@ export default function System(props) {
 
     const getSistems = async () => {
         setLoading(true)
-        await fetch('http://192.168.100.138:8080/siroga/api/sistem/').then(res => res.json()).then(json => {
+        await fetch('http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/sistem/').then(res => res.json()).then(json => {
             let aux = []
             for (let i = 0; i < json.data.length; i++) {
                 if (json.data[i].user.id === 1) {

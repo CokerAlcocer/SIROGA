@@ -7,6 +7,7 @@ import firebase from "firebase"
 import { useNavigation } from "@react-navigation/native" //para navegación
 import Loading from "../Loading"
 import colors from "../../utils/colors"
+import ipAddress from '../../utils/ipAddress'
 
 export default function FormLogin(props) {
   const navegation = useNavigation()
@@ -47,7 +48,7 @@ export default function FormLogin(props) {
 
       // Haces la peticion
       // HAY QUE VER COMO OBTENER LA IP SIN NECESIDAD DE CAMBIARLA NOSOTROS
-      await fetch('http://192.168.100.138:8080/siroga/api/user/u', {
+      await fetch('http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/user/u', {
         method: 'POST',
         body: JSON.stringify(user),
         //Si no te deja hacer el post con esta cabecera, agrega la sig:

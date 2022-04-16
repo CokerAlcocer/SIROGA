@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, ButtonGroup, Icon } from "react-native-elements";
 import * as Progress from "react-native-progress";
 import colors from "../utils/colors";
+import ipAddress from "../utils/ipAddress";
 
 export default function Mediciones(props) {
-  const { humAirMax, humAirMin, humEarthMax, humEarthMin, tempAirMax, tempAirMin, tempEarthMax, tempEarthMin } = props;
+  const { measure, humAirMax, humAirMin, humEarthMax, humEarthMin, tempAirMax, tempAirMin, tempEarthMax, tempEarthMin } = props;
+
   return (
     <View>
       <Text style={styles.mediciones}>Mediciones</Text>
@@ -15,28 +17,28 @@ export default function Mediciones(props) {
         <Text style={styles.min} >Min. {humAirMin}%</Text>
         <Text style={styles.max} >Max. {humAirMax}%</Text>
       </View>
-      <Progress.Bar progress={0.5} width={null} height={12} color={colors.COLOR_LINK} />
+      <Progress.Bar progress={measure.humAir*0.01} width={null} height={12} color={colors.COLOR_LINK} />
 
       <Text style={styles.titulos}>Humedad de la tierra</Text>
       <View style={styles.limitsContainers} >
         <Text style={styles.min} >Min. {humEarthMin}%</Text>
         <Text style={styles.max} >Max. {humEarthMax}%</Text>
       </View>
-      <Progress.Bar progress={0.8} width={null} height={12} color={colors.COLOR_DANGER} />
+      <Progress.Bar progress={measure.humEarth*0.01} width={null} height={12} color={colors.COLOR_DANGER} />
 
       <Text style={styles.titulos}>Temperatura del aire</Text>
       <View style={styles.limitsContainers} >
         <Text style={styles.min} >Min. {tempAirMin} ºC</Text>
         <Text style={styles.max} >Max. {tempAirMax} ºC</Text>
       </View>
-      <Progress.Bar progress={0.5} width={null} height={12} color={colors.COLOR_LINK} />
+      <Progress.Bar progress={measure.tempAir*0.01} width={null} height={12} color={colors.COLOR_LINK} />
 
       <Text style={styles.titulos}>Temperatura de la tierra</Text>
       <View style={styles.limitsContainers} >
         <Text style={styles.min} >Min. {tempEarthMin} ºC</Text>
         <Text style={styles.max} >Max. {tempEarthMax} ºC</Text>
       </View>
-      <Progress.Bar progress={0.6} width={null} height={12} color={colors.COLOR_DANGER} />
+      <Progress.Bar progress={0.0} width={null} height={12} color={colors.COLOR_DANGER} />
 
       <View style={styles.botones}>
         <Button

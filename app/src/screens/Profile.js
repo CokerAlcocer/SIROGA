@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   btnCloseSesion: {
     marginTop: 30,
     borderRadius: 1,
-    backgroundColor: "#fcb823",
+    backgroundColor: "#FF0000",
     borderTopWidth: 1,
     borderTopColor: "#E3E3E3",
     borderBottomWidth: 1,

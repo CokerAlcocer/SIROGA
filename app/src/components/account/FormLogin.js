@@ -128,7 +128,6 @@ export default function FormLogin(props) {
         buttonStyle={styles.btnLogin}
         onPress={() => onSubmit()}
         iconRight={true}
-        
         icon={<Icon type="material-community" name="arrow-right-circle" iconStyle={{marginLeft:10, color:"white"}}/>}
       />
       <Loading

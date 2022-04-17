@@ -3,30 +3,24 @@ import React, { useEffect, useState } from "react";
 import { Button, ButtonGroup, Icon } from "react-native-elements";
 import * as Progress from "react-native-progress";
 import colors from "../utils/colors";
-import ipAddress from "../utils/ipAddress";
-import { get } from "lodash";
-import axios from "axios";
 
 export default function Mediciones(props) {
-  const [measure, setMeasure] = useState({
-    broker: broker,
-    humAir: 0,
-    humEarth: 0,
-    tempAir: 0,
-    tempEarth: 0
-  })
-  const { broker, humAirMax, humAirMin, humEarthMax, humEarthMin, tempAirMax, tempAirMin, tempEarthMax, tempEarthMin } = props;
-  console.log('ULT. MEDICION')
-  console.log(measure)
-  const getMeasures = () => {
-    axios({method: 'GET', url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/mh/'}).then(res => {
-      console.log(res.data.data)
-    }).catch(e => console.log(e))
+  const [measure, setMeasure] = useState({})
+  const { measures, broker, humAirMax, humAirMin, humEarthMax, humEarthMin, tempAirMax, tempAirMin, tempEarthMax, tempEarthMin } = props;
+
+  const getLastMeasure = () => {
+    let aux = {}
+    for(let i = 0; i < measures.length; i++){
+      if(measures[i].broker === broker){
+        aux = measures[i]
+      }
+    }
+    setMeasure(aux)
   }
 
   useEffect(() => {
-    getMeasures()
-  }, [])
+    getLastMeasure()
+  }, [measures])
   
   return (
     <View>
@@ -37,7 +31,7 @@ export default function Mediciones(props) {
         <Text style={styles.min} >Min. {humAirMin}%</Text>
         <Text style={styles.max} >Max. {humAirMax}%</Text>
       </View>
-      <Progress.Bar width={Dimensions.get('window').width - 30} height={12} color={colors.COLOR_LINK} />
+      <Progress.Bar progress={measure.humAir} width={Dimensions.get('window').width - 30} height={12} color={colors.COLOR_LINK} />
 
       <Text style={styles.titulos}>Humedad de la tierra</Text>
       <View style={styles.limitsContainers} >
@@ -61,13 +55,24 @@ export default function Mediciones(props) {
       <Progress.Bar width={Dimensions.get('window').width - 30} height={12} color={colors.COLOR_DANGER} />
 
       <View style={styles.botones}>
-        <Button
-          icon={<Icon color={colors.COLOR_BASE} type="material-community" name="power" />}
-          containerStyle={styles.botonOpt}
-          buttonStyle={{ height: 45, backgroundColor: colors.COLOR_DANGER }}
-          title="Reposar"
-          type="solid"
-        />
+        {SVGSwitchElement.status.id == 1 ? 
+          (<Button
+            icon={<Icon color={colors.COLOR_BASE} type="material-community" name="power" />}
+            containerStyle={styles.botonOpt}
+            buttonStyle={{ height: 45, backgroundColor: colors.COLOR_DANGER }}
+            title="Reposar"
+            type="solid"
+            onPress={changeStatus(2)}
+          />):
+          (<Button
+            icon={<Icon color={colors.COLOR_BASE} type="material-community" name="power" />}
+            containerStyle={styles.botonOpt}
+            buttonStyle={{ height: 45, backgroundColor: colors.COLOR_DANGER }}
+            title="Encender"
+            type="solid"
+            onPress={changeStatus(1)}
+          />)
+        }
         <Button
           icon={<Icon type="material-community" name="water-pump" color={colors.COLOR_BASE} />}
           iconLeft={true}
@@ -76,6 +81,7 @@ export default function Mediciones(props) {
           title="Regar"
           type="solid"
           iconPosition={true}
+          onPress={changeStatus(3)}
         />
         <Button
           icon={<Icon type="material-community" name="history" color={colors.COLOR_BASE} />}

@@ -10,13 +10,18 @@ import axios from 'axios'
 export default function SystemData({route}) {
   const { sistemId } = route.params;
   const [sistema, setSistema] = useState({})
+  const [measures, setMeasures] = useState([])
 
   const getSistem = () => {
     axios({method: 'GET', url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/sistem/'+sistemId}).then(res => {
       setSistema(res.data.data)
     }).catch(e => console.log(e))
-  }
 
+    axios({method: 'GET', url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/mh/'}).then(res => {
+      setMeasures(res.data.data)
+    }).catch(e => console.log(e))
+  }
+  
   useEffect(() => {
     getSistem()
   }, [])
@@ -28,7 +33,7 @@ export default function SystemData({route}) {
         <View style={styles.cardBody}>
           <Text style={styles.description} >{sistema.description}</Text>
           <Mediciones 
-            broker={sistema.broker}
+            measures={measures} broker={sistemId.broker}
             humAirMax={sistema.humAirMax} humAirMin={sistema.humAirMin} 
             humEarthMax={sistema.humEarthMax} humEarthMin={sistema.humEarthMin} 
             tempAirMax={sistema.tempAirMax} tempAirMin={sistema.tempAirMin} 

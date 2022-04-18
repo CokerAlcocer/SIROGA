@@ -1,55 +1,52 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react';
-import { ListItem } from 'react-native-elements';
+import { StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { ListItem } from "react-native-elements";
 import { map } from "lodash";
-import Modal from '../Modal';
-import ChangePassword from './ChangePassword';
-import {useNavigation} from '@react-navigation/native'
-import ChangeDisplayNameForm from './ChangeDisplayNameForm';
-import ChangeEmail from './ChangeEmail';
-
-
+import Modal from "../Modal";
+import ChangePassword from "./ChangePassword";
+import { useNavigation } from "@react-navigation/native";
+import ChangeDisplayNameForm from "./ChangeDisplayNameForm";
+import ChangeEmail from "./ChangeEmail";
 
 export default function UserOptions(props) {
-
-  const navigation = useNavigation();
-
-  const {userInfo, toastRef, setReloadUserInfo}= props;
+  const { userInfo, toastRef, setReloadUserInfo } = props;
   const [showModal, setShowModal] = useState(false);
-  const [renderComponent, setRenderComponent] = useState(null)
+  const [renderComponent, setRenderComponent] = useState(null);
 
-  const selectComponent = (key)=>{
-    switch(key){
+  const selectComponent = (key) => {
+    switch (key) {
       case "displayName":
         setRenderComponent(
-        <ChangeDisplayNameForm
-          displayName={userInfo.displayName}
-          setShowModal={setShowModal}
-          toastRef={toastRef}
-          setReloadUserInfo={setReloadUserInfo}
-          
-        />
+          <ChangeDisplayNameForm
+            displayName={userInfo.displayName}
+            setShowModal={setShowModal}
+            toastRef={toastRef}
+            setReloadUserInfo={setReloadUserInfo}
+          />
         );
-        setShowModal(true)
+        setShowModal(true);
         break;
       case "email":
         setRenderComponent(
           <ChangeEmail
-          setShowModal={setShowModal}
-          toastRef={toastRef}
-          setReloadUserInfo={setReloadUserInfo}
+            email={userInfo.email}
+            setShowModal={setShowModal}
+            toastRef={toastRef}
+            setReloadUserInfo={setReloadUserInfo}
           />
-        )
-        setShowModal(true)
+        );
+        setShowModal(true);
         break;
       case "password":
         setRenderComponent(
           <ChangePassword
             setShowModal={setShowModal}
+            email={userInfo.email}
             setReloadUserInfo={setReloadUserInfo}
+            toastRef={toastRef}
           />
-          )
-        setShowModal(true)
+        );
+        setShowModal(true);
         break;
       default:
         break;
@@ -60,66 +57,65 @@ export default function UserOptions(props) {
   // console.log(menuOptions);
   return (
     <View>
-      {map(menuOptions, (menu, index)=>(
-        <ListItem 
-        key={index} 
-        title={menu.title}
-        leftIcon={{
-          type: menu.iconType,
-          name: menu.iconNameL,
-          color: menu.iconColor
-        }}
-        rightIcon={{
-          type: menu.iconType,
-          name: menu.iconNameR,
-          color: menu.iconColor
-        }}
-        containerStyle={styles.menuItem}
-        onPress={menu.onPress}
+      {map(menuOptions, (menu, index) => (
+        <ListItem
+          key={index}
+          title={menu.title}
+          leftIcon={{
+            type: menu.iconType,
+            name: menu.iconNameL,
+            color: menu.iconColor,
+          }}
+          rightIcon={{
+            type: menu.iconType,
+            name: menu.iconNameR,
+            color: menu.iconColor,
+          }}
+          containerStyle={styles.menuItem}
+          onPress={menu.onPress}
         />
       ))}
-      {renderComponent &&( 
+      {renderComponent && (
         <Modal isVisible={showModal} setIsVisible={setShowModal}>
-        {renderComponent}
+          {renderComponent}
         </Modal>
       )}
-      
     </View>
-  )
+  );
 }
 
-function generateOptions(selectComponent){
-  return[
+function generateOptions(selectComponent) {
+  return [
     {
-      title:"Cambiar Nombre y Apellidos",
+      title: "Cambiar Nombre y Apellidos",
       iconType: "material-community",
       iconNameL: "account-circle",
       iconColor: "#ccc",
       iconNameR: "chevron-right",
-      onPress: ()=>selectComponent("displayName")
+      onPress: () => selectComponent("displayName"),
     },
     {
-      title:"Cambiar Correo eléctronico",
+      title: "Cambiar Correo eléctronico",
       iconType: "material-community",
       iconNameL: "at",
       iconColor: "#ccc",
       iconNameR: "chevron-right",
-      onPress: ()=>selectComponent("email")
+      onPress: () => selectComponent("email"),
     },
     {
-      title:"Cambiar Contraseña",
+      title: "Cambiar Contraseña",
       iconType: "material-community",
       iconNameL: "lock-reset",
       iconColor: "#ccc",
       iconNameR: "chevron-right",
-      onPress: ()=>selectComponent("password")
-    }
-  ]
+      onPress: () => selectComponent("password"),
+    },
+  ];
 }
 
 const styles = StyleSheet.create({
-  menuItem:{
+  menuItem: {
     borderBottomWidth: 1,
-    borderBottomColor: "#e3e3e3"
-  }
-})
+    borderBottomColor: "#e3e3e3",
+  },
+});

@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useState, useRef } from 'react'
-import { Button } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
-import UserInfo from '../components/account/UserInfo';
-import UserOptions from '../components/account/UserOptions';
+import { StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState, useRef } from "react";
+import { Button } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import UserInfo from "../components/account/UserInfo";
+import UserOptions from "../components/account/UserOptions";
 import * as firebase from "firebase";
-import Toast from 'react-native-easy-toast';
+import Toast from "react-native-easy-toast";
 import Loading from "../components/Loading";
 
 export default function Profile() {
@@ -14,13 +14,13 @@ export default function Profile() {
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(false);
   const [loadingText, setLoadingText] = useState(null);
-  const [reloadUserInfo, setReloadUserInfo] = useState(false)
+  const [reloadUserInfo, setReloadUserInfo] = useState(false);
 
   useEffect(() => {
     (async () => {
       const user = firebase.auth().currentUser;
       setUserInfo(user);
-      console.log(user)
+      console.log(user);
     })();
     setReloadUserInfo(false);
     console.log(userInfo);
@@ -28,20 +28,22 @@ export default function Profile() {
 
   return (
     <View style={styles.userInfo}>
-      <Text style={styles.viewTitle} >Mi Perfil</Text>
-      {userInfo && <UserInfo
-        userInfo={userInfo}
-        toastRef={toastRef}
-        setLoading={setLoading}
-        setLoadingText={setLoadingText}
-      />}
+      <Text style={styles.viewTitle}>Mi Perfil</Text>
+      {userInfo && (
+        <UserInfo
+          userInfo={userInfo}
+          toastRef={toastRef}
+          setLoading={setLoading}
+          setLoadingText={setLoadingText}
+        />
+      )}
       <UserOptions
         userInfo={userInfo}
         toastRef={toastRef}
         setReloadUserInfo={setReloadUserInfo}
       />
       <Button
-        title='Cerrar sesión'
+        title="Cerrar sesión"
         buttonStyle={styles.btnCloseSesion}
         titleStyle={styles.btnTitle}
         onPress={() => {
@@ -52,13 +54,13 @@ export default function Profile() {
       <Toast ref={toastRef} position="center" opacity={0.9} />
       <Loading isVisible={loading} text={loadingText} />
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   userInfo: {
     minHeight: "100%",
-    backgroundColor: "#F2F2F2"
+    backgroundColor: "#F2F2F2",
   },
   btnCloseSesion: {
     marginTop: 30,
@@ -69,7 +71,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#E3E3E3",
     paddingTop: 10,
-    paddingBottom: 10
+    paddingBottom: 10,
   },
   btnTitle: {
     color: "#FCB823",
@@ -80,6 +82,6 @@ const styles = StyleSheet.create({
     paddingLeft: 13,
     paddingBottom: 10,
     fontWeight: "bold",
-    fontSize: 30
-  }
-})
+    fontSize: 30,
+  },
+});

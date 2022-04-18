@@ -6,7 +6,6 @@ import * as Permissions from "expo-permissions";
 import * as ImagePicker from "expo-image-picker";
 
 export default function UserInfo(props) {
-  // console.log(props);
   const {
     userInfo: { uid, photoURL, displayName, email },
     toastRef,
@@ -62,7 +61,6 @@ export default function UserInfo(props) {
       .ref(`avatar/${uid}`)
       .getDownloadURL()
       .then(async (response) => {
- 
         const update = {
           photoURL: response,
         };
@@ -116,5 +114,4 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     paddingBottom: 5,
   },
-  userEmail: {},
 });

@@ -30,7 +30,8 @@ export default function ChangeDisplayNameForm(props) {
                .then(()=>{
                     setLoading(false)
                     setReloadUserInfo(true)
-                    setShowModal(false)                   
+                    setShowModal(false)    
+                    toastRef.current.show("Nombre actualizado")               
                })
                .catch(()=>{
                     setError("Error al actualizar el nombre")

@@ -6,9 +6,8 @@ import FormLogin from "../components/account/FormLogin";
 import Toast from "react-native-easy-toast";
 import colors from "../utils/colors";
 
-
 export default function Login() {
-  const toastRef = useRef()
+  const toastRef = useRef();
   return (
     <ScrollView>
       <View style={styles.viewContainer}>
@@ -16,19 +15,19 @@ export default function Login() {
           <Text>S</Text>
           <Text>I</Text>
           <Text>R</Text>
-          <Icon type="material-community" name="flower-poppy" iconStyle={styles.icon}/>
+          <Icon
+            type="material-community"
+            name="flower-poppy"
+            iconStyle={styles.icon}
+          />
           <Text>G</Text>
           <Text>A</Text>
         </Text>
-        <Text style={styles.text} >Sistema de Riego Automático</Text>
+        <Text style={styles.text}>Sistema de Riego Automático</Text>
         <FormLogin toastRef={toastRef} />
         <CreateCuenta />
       </View>
-      <Toast
-        ref={toastRef}
-        opacity={0.9}
-        position={"center"}
-      />
+      <Toast ref={toastRef} opacity={0.9} position={"center"} />
     </ScrollView>
   );
 
@@ -38,7 +37,10 @@ export default function Login() {
     return (
       <Text style={styles.textRegister}>
         ¿Aun no tienes cuenta?{" "}
-        <Text style={styles.btnRegistrar} onPress={() => navigation.navigate('register')} >
+        <Text
+          style={styles.btnRegistrar}
+          onPress={() => navigation.navigate("register")}
+        >
           Registrate aquí
         </Text>
       </Text>
@@ -51,7 +53,7 @@ const styles = StyleSheet.create({
     height: 100,
     width: 200,
     alignSelf: "center",
-    marginTop: 50
+    marginTop: 50,
   },
   viewContainer: {
     marginRight: 40,
@@ -61,7 +63,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginLeft: 10,
     marginRight: 10,
-    textAlign: "center"
+    textAlign: "center",
   },
   btnRegistrar: {
     color: colors.COLOR_LINK,
@@ -72,18 +74,17 @@ const styles = StyleSheet.create({
     color: colors.PRIMARY_COLOR,
     marginTop: 130,
     fontSize: 60,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   text: {
     textAlign: "center",
     color: colors.PRIMARY_COLOR,
     marginTop: 0,
-    fontSize: 20
+    fontSize: 20,
   },
   icon: {
     fontSize: 50,
-    
+
     color: "green",
-    
-  }
+  },
 });

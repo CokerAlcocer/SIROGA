@@ -3,38 +3,34 @@ import React, { useState } from "react";
 import { Divider, ButtonGroup, Icon, Text } from "react-native-elements";
 import colors from "../utils/colors";
 import ModalInfo from "./ModalInfo";
-import {useNavigation} from '@react-navigation/native'
-
-
+import { useNavigation } from "@react-navigation/native";
 
 export default function History(props) {
   const { history } = props;
 
   const getDescription = () => {
-    switch(history.operation.id){
+    switch (history.operation.id) {
       case 1:
-        return('Se solicitó regar el huerto')
+        return "Se solicitó regar el huerto";
       case 2:
-        return('Se agregó este nuevo sistema')
+        return "Se agregó este nuevo sistema";
       case 3:
-        return('Se removió este sistema')
+        return "Se removió este sistema";
       case 4:
-        return('El sistema registro anomalías en las mediciones de los sensores')
+        return "El sistema registro anomalías en las mediciones de los sensores";
       case 5:
-        return('Se puso a reposar el sistema')
+        return "Se puso a reposar el sistema";
     }
-  }
+  };
 
   return (
-    <View style={styles.card}> 
-      <View style={styles.cardHeader} >
+    <View style={styles.card}>
+      <View style={styles.cardHeader}>
         <Text style={styles.cardTitle}>{history.sistem.broker}</Text>
       </View>
       <Divider style={styles.divider} />
       <View style={styles.cardBody}>
-        <Text >
-          {getDescription()}
-        </Text>
+        <Text>{getDescription()}</Text>
       </View>
     </View>
   );
@@ -51,15 +47,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   cardTitle: {
-    fontWeight: 'bold',
-    fontSize: 20
+    fontWeight: "bold",
+    fontSize: 20,
   },
   cardHeader: {
-    flexDirection: 'row',
-    width: "100%"
+    flexDirection: "row",
+    width: "100%",
   },
   divider: {
-    marginVertical: 10
+    marginVertical: 10,
   },
-
 });

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Icon } from "react-native-elements";
@@ -10,13 +10,13 @@ import * as firebase from "firebase";
 
 const Tab = createBottomTabNavigator();
 export default function Navigation() {
-  const [header, setHeader] = useState(true)
-  const [login, setLogin] = useState(null)
+  const [header, setHeader] = useState(true);
+  const [login, setLogin] = useState(null);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       !user ? setLogin(false) : setLogin(true);
-    });   
+    });
   }, [login]);
 
   if (login) {
@@ -35,9 +35,9 @@ export default function Navigation() {
           <Tab.Screen
             name="index"
             component={IndexStack}
-            options={{title: 'Inicio'}}
+            options={{ title: "Inicio" }}
           />
-            <Tab.Screen
+          <Tab.Screen
             name="system"
             component={SystemStack}
             options={{ title: "Mis Sistemas" }}
@@ -47,8 +47,6 @@ export default function Navigation() {
             component={ProfileStack}
             options={{ title: "Mi Perfil" }}
           />
-          
-          
         </Tab.Navigator>
       </NavigationContainer>
     );
@@ -72,17 +70,12 @@ export default function Navigation() {
             options={({ route }) => ({
               tabBarVisible: false,
             })}
-         
           />
-          
         </Tab.Navigator>
       </NavigationContainer>
     );
   }
-
- 
 }
-
 
 function screenOption(route, color) {
   let icono;
@@ -97,7 +90,7 @@ function screenOption(route, color) {
     case "profile":
       icono = "account-outline";
       break;
-      case "system":
+    case "system":
       icono = "barrel";
       break;
     default:

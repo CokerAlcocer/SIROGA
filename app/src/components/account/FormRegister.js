@@ -5,15 +5,12 @@ import { validateEmail } from "../../utils/validations";
 import { isEmpty, size } from "lodash";
 import firebase from "firebase";
 import { useNavigation } from "@react-navigation/native";
-import Loading from '../Loading'
+import Loading from "../Loading";
 import colors from "../../utils/colors";
 import axios from "axios";
-import ipAddress from '../../utils/ipAddress'
-
+import ipAddress from "../../utils/ipAddress";
 
 export default function FormRegister(props) {
-
-
   const navigation = useNavigation();
   const { toastRef } = props;
   const [showPass, setShowPass] = useState(false);
@@ -22,61 +19,52 @@ export default function FormRegister(props) {
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async () => {
-
-    if (isEmpty(formData.email) || isEmpty(formData.password) || isEmpty(formData.passwordR)) {
-      toastRef.current.show("Ingresa el correo y las contraseñas")
+    if (
+      isEmpty(formData.email) ||
+      isEmpty(formData.password) ||
+      isEmpty(formData.passwordR)
+    ) {
+      toastRef.current.show("Ingresa el correo y las contraseñas");
     } else if (!validateEmail(formData.email)) {
-      toastRef.current.show("El email es invalido")
+      toastRef.current.show("El email es invalido");
     } else if (size(formData.password) < 6) {
-      toastRef.current.show("Deben ser al menos 6 digitos en la contraseña")
+      toastRef.current.show("Deben ser al menos 6 digitos en la contraseña");
     } else if (formData.password != formData.passwordR) {
-      toastRef.current.show("Las contraseñas no coinciden")
+      toastRef.current.show("Las contraseñas no coinciden");
     } else {
-      setLoading(true)
+      setLoading(true);
       axios({
-        method: 'POST',
-        url:'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/user/',
+        method: "POST",
+        url: "http://" + ipAddress.IP_ADDRESS + ":8080/siroga/api/user/",
         data: JSON.stringify(formData),
         headers: {
-          'Content-Type':'application/json'
-        }})
-        .then(res => {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
           firebase
-          .auth()
-          .createUserWithEmailAndPassword(formData.email, formData.password)
-          .then((response) => {
-            setLoading(false)
-            toastRef.current.show("Registrado con Exito");
-            navigation.navigate("index")
-          })
-          .catch((error) => {
-            setLoading(false)
-            toastRef.current.show("Utilice otro correo");
-          });
+            .auth()
+            .createUserWithEmailAndPassword(formData.email, formData.password)
+            .then((response) => {
+              setLoading(false);
+              toastRef.current.show("Registrado con Exito");
+              navigation.navigate("index");
+            })
+            .catch((error) => {
+              setLoading(false);
+              toastRef.current.show("Utilice otro correo");
+            });
         })
-        .catch(error => {
-          setLoading(false)
-          console.log(error) //USAR EL TOAST
+        .catch((error) => {
+          setLoading(false);
+          console.log(error); //USAR EL TOAST
         });
     }
-  }
-
-  // setLoading(true)
-  // firebase
-  //   .auth()
-  //   .createUserWithEmailAndPassword(formData.email, formData.passwordR)
-  //   .then(response => {
-  //     setLoading(false)
-  //     navigation.navigate("index")
-  //   })
-  //   .catch(err => {
-  //     setLoading(false)
-  //     toastRef.current.show(err)
-  //   })
+  };
 
   const capturarDatos = (e, type) => {
-    setFormData({ ...formData, [type]: e.nativeEvent.text })
-  }
+    setFormData({ ...formData, [type]: e.nativeEvent.text });
+  };
 
   return (
     <View style={styles.formContainer}>
@@ -85,7 +73,11 @@ export default function FormRegister(props) {
         placeholder="Usuario"
         containerStyle={styles.formContainer}
         rightIcon={
-          <Icon type="material-community" name="account-circle" iconStyle={styles.icon} />
+          <Icon
+            type="material-community"
+            name="account-circle"
+            iconStyle={styles.icon}
+          />
         }
       />
       <Input
@@ -93,7 +85,11 @@ export default function FormRegister(props) {
         placeholder="Nombre"
         containerStyle={styles.formContainer}
         rightIcon={
-          <Icon type="material-community" name="account" iconStyle={styles.icon} />
+          <Icon
+            type="material-community"
+            name="account"
+            iconStyle={styles.icon}
+          />
         }
       />
       <Input
@@ -101,7 +97,11 @@ export default function FormRegister(props) {
         placeholder="Apellido"
         containerStyle={styles.formContainer}
         rightIcon={
-          <Icon type="material-community" name="account-multiple-outline" iconStyle={styles.icon} />
+          <Icon
+            type="material-community"
+            name="account-multiple-outline"
+            iconStyle={styles.icon}
+          />
         }
       />
       <Input
@@ -109,7 +109,11 @@ export default function FormRegister(props) {
         placeholder="Segundo Apellido"
         containerStyle={styles.formContainer}
         rightIcon={
-          <Icon type="material-community" name="account-multiple" iconStyle={styles.icon} />
+          <Icon
+            type="material-community"
+            name="account-multiple"
+            iconStyle={styles.icon}
+          />
         }
       />
       <Input
@@ -171,7 +175,7 @@ function defaultFormValues() {
     name: "",
     surname: "",
     lastname: "",
-  }
+  };
 }
 
 const styles = StyleSheet.create({

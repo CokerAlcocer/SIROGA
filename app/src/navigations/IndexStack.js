@@ -10,17 +10,17 @@ import Login from "../screens/Login";
 const Stack = createStackNavigator();
 
 export default function IndexStack(props) {
-  const {navigation} = props;
-  console.log(props)
+  const { navigation } = props;
+  console.log(props);
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="index"
         component={Index}
-        options={{ 
-             title: "Inicio",
-             headerShown:false,
-            }  }
+        options={{
+          title: "Inicio",
+          headerShown: false,
+        }}
       />
       <Stack.Screen
         name="system"
@@ -35,10 +35,9 @@ export default function IndexStack(props) {
       <Stack.Screen
         name="register"
         component={Register}
-        options={{ 
-             title: "Registrate"
-          }}
-          
+        options={{
+          title: "Registrate",
+        }}
       />
     </Stack.Navigator>
   );

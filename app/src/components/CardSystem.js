@@ -7,105 +7,161 @@ import ipAddress from "../utils/ipAddress";
 import Mediciones from "./Mediciones";
 
 export default function CardSystem(props) {
-  const { sistem } = props
+  const { sistem } = props;
   const [visible, setVisible] = useState(false);
-  const [showMeasures, setShowMeasures] = useState(false)
-  const [measures, setMeasures] = useState([])
-  let aux = []
+  const [showMeasures, setShowMeasures] = useState(false);
+  const [measures, setMeasures] = useState([]);
+  let aux = [];
 
   const toggleOverlay = () => {
-    setVisible(!visible)
+    setVisible(!visible);
   };
 
   const toggleMeasures = () => {
-    getAllMeasures()
+    getAllMeasures();
     setShowMeasures(!showMeasures);
   };
 
   const setAux = (array) => {
-    setMeasures(array)
-  }
+    setMeasures(array);
+  };
 
   const getAllMeasures = () => {
-    axios({method: 'GET', url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/mh/'}).then(res => {
-      for(let i = 0; i < res.data.data.length; i++){
-        if(res.data.data[i].broker == sistem.broker){
-          aux.push(res.data.data[i])
+    axios({
+      method: "GET",
+      url: "http://" + ipAddress.IP_ADDRESS + ":8080/siroga/api/mh/",
+    })
+      .then((res) => {
+        for (let i = 0; i < res.data.data.length; i++) {
+          if (res.data.data[i].broker == sistem.broker) {
+            aux.push(res.data.data[i]);
+          }
         }
-      }
-      setAux(aux)
-    }).catch(e => console.log(e))
-  }
+        setAux(aux);
+      })
+      .catch((e) => console.log(e));
+  };
 
   const removeSistem = () => {
     let remove = sistem;
-    remove.broker = '---'
-    remove.user = null
+    remove.broker = "---";
+    remove.user = null;
     axios({
-      method: 'PUT',
-      url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/sistem/',
+      method: "PUT",
+      url: "http://" + ipAddress.IP_ADDRESS + ":8080/siroga/api/sistem/",
       data: JSON.stringify(remove),
       headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(res => {
-      console.log('removido')
-    }).catch(e => console.log(e))
-  }
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        console.log("removido");
+      })
+      .catch((e) => console.log(e));
+  };
 
   const getBadgeColor = (id) => {
-    switch(id){
+    switch (id) {
       case 1:
-        return(<Badge value=' ' badgeStyle={{alignSelf: 'flex-end', backgroundColor: colors.COLOR_SUCCESS}} />)
+        return (
+          <Badge
+            value=" "
+            badgeStyle={{
+              alignSelf: "flex-end",
+              backgroundColor: colors.COLOR_SUCCESS,
+            }}
+          />
+        );
         break;
       case 2:
-        return(<Badge value=' ' badgeStyle={{alignSelf: 'flex-end', backgroundColor: colors.COLOR_MUTED}} />)
+        return (
+          <Badge
+            value=" "
+            badgeStyle={{
+              alignSelf: "flex-end",
+              backgroundColor: colors.COLOR_MUTED,
+            }}
+          />
+        );
         break;
       case 3:
-        return(<Badge value=' ' badgeStyle={{alignSelf: 'flex-end', backgroundColor: colors.COLOR_LINK}} />)
+        return (
+          <Badge
+            value=" "
+            badgeStyle={{
+              alignSelf: "flex-end",
+              backgroundColor: colors.COLOR_LINK,
+            }}
+          />
+        );
         break;
       case 4:
-        return(<Badge value=' ' badgeStyle={{alignSelf: 'flex-end', backgroundColor: colors.COLOR_DANGER}} />)
+        return (
+          <Badge
+            value=" "
+            badgeStyle={{
+              alignSelf: "flex-end",
+              backgroundColor: colors.COLOR_DANGER,
+            }}
+          />
+        );
         break;
     }
-  }
+  };
 
   useEffect(() => {
-    getAllMeasures()
-  }, [])
-  
+    getAllMeasures();
+  }, []);
 
   return (
     <View style={styles.card}>
       <View style={styles.cardHeader}>
         <View style={styles.cardHeaderContainer}>
-          <Text style={styles.cardTitle} >{sistem.broker}</Text>
+          <Text style={styles.cardTitle}>{sistem.broker}</Text>
         </View>
         <View style={styles.cardHeaderContainer}>
           {getBadgeColor(sistem.status.id)}
         </View>
       </View>
       <Divider style={styles.divider} />
-      <View style={styles.cardBody} >
-        <Text style={styles.cardSubtitle} >Descripción</Text>
-        <Text style={styles.cardText} >{sistem.description}</Text>
-        <View style={{flexDirection: "row-reverse", alignItems: "flex-end", marginTop: 20}} >
-            <Button disabled={ sistem.status.id == 4? true : false} buttonStyle={styles.cardBtn} icon={<Icon type="material-community" name='chart-bar' size={27}></Icon>} onPress={toggleMeasures} />
-            <Button containerStyle={{marginRight: 15}} buttonStyle={styles.cardBtn} title={''} icon={<Icon type="material-community" name={'delete'} size={27}></Icon>} onPress={toggleOverlay} />
+      <View style={styles.cardBody}>
+        <Text style={styles.cardSubtitle}>Descripción</Text>
+        <Text style={styles.cardText}>{sistem.description}</Text>
+        <View
+          style={{
+            flexDirection: "row-reverse",
+            alignItems: "flex-end",
+            marginTop: 20,
+          }}
+        >
+          <Button
+            disabled={sistem.status.id == 4 ? true : false}
+            buttonStyle={styles.cardBtn}
+            icon={
+              <Icon type="material-community" name="chart-bar" size={27}></Icon>
+            }
+            onPress={toggleMeasures}
+          />
+          <Button
+            containerStyle={{ marginRight: 15 }}
+            buttonStyle={styles.cardBtn}
+            title={""}
+            icon={
+              <Icon type="material-community" name={"delete"} size={27}></Icon>
+            }
+            onPress={toggleOverlay}
+          />
         </View>
       </View>
-      <Overlay
-        isVisible={visible}
-        onBackdropPress={toggleOverlay}
-        height={185}
-      >
-        <Text style={styles.cardTitle} >Aviso</Text>
+      <Overlay isVisible={visible} onBackdropPress={toggleOverlay} height={185}>
+        <Text style={styles.cardTitle}>Aviso</Text>
         <Divider style={styles.divider} />
         <Text style={styles.textPrimary}>
-          ¿Estas securo de eliminar el sistema? Esta opción no se puede deshacer si confirmas...
+          ¿Estas securo de eliminar el sistema? Esta opción no se puede deshacer
+          si confirmas...
         </Text>
-        <View style={styles.buttonsContainer} >
-          <View style={styles.buttonContainer} >
+        <View style={styles.buttonsContainer}>
+          <View style={styles.buttonContainer}>
             <Button
               icon={
                 <Icon
@@ -122,8 +178,8 @@ export default function CardSystem(props) {
               buttonStyle={styles.cardBtnRemove}
             />
           </View>
-          <View style={styles.separator} ></View>
-          <View style={styles.buttonContainer} >
+          <View style={styles.separator}></View>
+          <View style={styles.buttonContainer}>
             <Button
               containerStyle={styles.cardBtnR}
               icon={
@@ -149,12 +205,12 @@ export default function CardSystem(props) {
         onBackdropPress={toggleMeasures}
         height={565}
       >
-        <Text style={styles.cardTitle} >Mediciones del Sistema</Text>
+        <Text style={styles.cardTitle}>Mediciones del Sistema</Text>
         <Divider style={styles.divider} />
-        <Text style={styles.cardTitle}  >{sistem.broker}</Text>
+        <Text style={styles.cardTitle}>{sistem.broker}</Text>
         <View style={styles.cardBody}>
-          <Text style={styles.description} >{sistem.description}</Text>
-          <Mediciones sistem={sistem} measures={measures}/>
+          <Text style={styles.description}>{sistem.description}</Text>
+          <Mediciones sistem={sistem} measures={measures} />
         </View>
       </Overlay>
     </View>
@@ -172,52 +228,52 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   cardHeader: {
-    flexDirection: 'row',
-    width: "100%"
+    flexDirection: "row",
+    width: "100%",
   },
   cardHeaderContainer: {
-    width: '50%'
+    width: "50%",
   },
   cardTitle: {
-    fontWeight: 'bold',
-    fontSize: 20
+    fontWeight: "bold",
+    fontSize: 20,
   },
   cardSubtitle: {
-    fontWeight: 'bold',
-    fontSize: 15
+    fontWeight: "bold",
+    fontSize: 15,
   },
   cardText: {
-    marginTop: 5
+    marginTop: 5,
   },
   divider: {
-    marginVertical: 10
+    marginVertical: 10,
   },
   buttonsContainer: {
     marginTop: 30,
-    flexDirection: 'row',
-    width: "100%"
+    flexDirection: "row",
+    width: "100%",
   },
   separator: {
-    width: '5%'
+    width: "5%",
   },
   buttonContainer: {
-    flexDirection: 'row',
-    width: "47.5%"
+    flexDirection: "row",
+    width: "47.5%",
   },
   cardBtn: {
     backgroundColor: null,
     padding: 0,
   },
   cardBtnL: {
-    width: '100%',
+    width: "100%",
   },
   cardBtnR: {
-    width: '100%',
+    width: "100%",
   },
   cardBtnRemove: {
-    backgroundColor: colors.COLOR_DANGER
+    backgroundColor: colors.COLOR_DANGER,
   },
   cardBtnCancel: {
-    backgroundColor: 'grey'
-  }
+    backgroundColor: "grey",
+  },
 });

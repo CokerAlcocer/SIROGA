@@ -18,11 +18,11 @@ export default function ChangeEmail(props) {
     setError(null);
     if (!newEmail) {
       setError("El campo no puede estar vacio");
-    }else if(!validateEmail(newEmail)){ 
-     setError("Debes ingresar un correo válido")
-    }else {
+    } else if (!validateEmail(newEmail)) {
+      setError("Debes ingresar un correo válido");
+    } else {
       setLoading(true);
-      console.log("Listo")
+      console.log("Listo");
 
       firebase
         .auth()
@@ -35,7 +35,7 @@ export default function ChangeEmail(props) {
         })
         .catch(() => {
           setError("Error al actualizar el correo");
-          setLoading(false)
+          setLoading(false);
         });
     }
   };

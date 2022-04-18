@@ -10,7 +10,7 @@ const firebaseConfig = {
   projectId: "siroga-29a5f",
   storageBucket: "siroga-29a5f.appspot.com",
   messagingSenderId: "1084994650577",
-  appId: "1:1084994650577:web:f9c5714047d27a676460f0"
+  appId: "1:1084994650577:web:f9c5714047d27a676460f0",
 };
 
 // Initialize Firebase

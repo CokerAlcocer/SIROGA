@@ -20,7 +20,7 @@ export default function System(props) {
         await axios({method: 'GET', url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/sistem/'}).then(res => {
             let aux = []
             for (let i = 0; i < res.data.data.length; i++) {
-                if (res.data.data[i].user.id === 1) {
+                if (res.data.data[i].user?.id === 1) {
                     aux.push(res.data.data[i])
                 }
             }
@@ -62,7 +62,7 @@ export default function System(props) {
                     <ScrollView >
                         <View style={styles.container} >
                             {map(mapSistems, (mapSistems, index) => (
-                                <CardSystem key={index} sistem={userSistems[index]} />
+                                <CardSystem key={index} sistem={userSistems[index]} getSistems={getSistems} />
                             ))}
                             {userSistems.length < 3 ? (<CardSystemRegister addButton={userSistems.length > 0} />) : (null)}
                         </View>

@@ -1,17 +1,57 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Divider, Icon, Button, Badge, Overlay } from "react-native-elements";
-import { useNavigation } from "@react-navigation/native";
 import colors from "../utils/colors";
+import axios from "axios";
+import ipAddress from "../utils/ipAddress";
+import Mediciones from "./Mediciones";
 
 export default function CardSystem(props) {
   const { sistem } = props
-  const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
+  const [showMeasures, setShowMeasures] = useState(false)
+  const [measures, setMeasures] = useState([])
+  let aux = []
 
   const toggleOverlay = () => {
-    setVisible(!visible);
+    setVisible(!visible)
   };
+
+  const toggleMeasures = () => {
+    getAllMeasures()
+    setShowMeasures(!showMeasures);
+  };
+
+  const setAux = (array) => {
+    setMeasures(array)
+  }
+
+  const getAllMeasures = () => {
+    axios({method: 'GET', url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/mh/'}).then(res => {
+      for(let i = 0; i < res.data.data.length; i++){
+        if(res.data.data[i].broker == sistem.broker){
+          aux.push(res.data.data[i])
+        }
+      }
+      setAux(aux)
+    }).catch(e => console.log(e))
+  }
+
+  const removeSistem = () => {
+    let remove = sistem;
+    remove.broker = '---'
+    remove.user = null
+    axios({
+      method: 'PUT',
+      url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/sistem/',
+      data: JSON.stringify(remove),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(res => {
+      console.log('removido')
+    }).catch(e => console.log(e))
+  }
 
   const getBadgeColor = (id) => {
     switch(id){
@@ -30,6 +70,11 @@ export default function CardSystem(props) {
     }
   }
 
+  useEffect(() => {
+    getAllMeasures()
+  }, [])
+  
+
   return (
     <View style={styles.card}>
       <View style={styles.cardHeader}>
@@ -44,16 +89,9 @@ export default function CardSystem(props) {
       <View style={styles.cardBody} >
         <Text style={styles.cardSubtitle} >Descripción</Text>
         <Text style={styles.cardText} >{sistem.description}</Text>
-        <View style={styles.buttonsContainer} >
-          <View style={styles.buttonContainer}>
-            <Button containerStyle={styles.cardBtnL} buttonStyle={styles.cardBtnRemove} title={'Quitar'} onPress={toggleOverlay} />
-          </View>
-          <View style={styles.separator} ></View>
-          <View style={styles.buttonContainer}>
-            <Button disabled={ sistem.status.id == 4? true : false} containerStyle={styles.cardBtnR} buttonStyle={styles.cardBtnMeasure} title={'Mediciones'} onPress={
-              () => navigation.navigate("systemdata", {sistemId: sistem.id})
-            } />
-          </View>
+        <View style={{flexDirection: "row-reverse", alignItems: "flex-end", marginTop: 20}} >
+            <Button disabled={ sistem.status.id == 4? true : false} buttonStyle={styles.cardBtn} icon={<Icon type="material-community" name='chart-bar' size={27}></Icon>} onPress={toggleMeasures} />
+            <Button containerStyle={{marginRight: 15}} buttonStyle={styles.cardBtn} title={''} icon={<Icon type="material-community" name={'delete'} size={27}></Icon>} onPress={toggleOverlay} />
         </View>
       </View>
       <Overlay
@@ -79,7 +117,7 @@ export default function CardSystem(props) {
                 />
               }
               title="Eliminar"
-              onPress={toggleOverlay}
+              onPress={removeSistem}
               containerStyle={styles.cardBtnR}
               buttonStyle={styles.cardBtnRemove}
             />
@@ -102,6 +140,21 @@ export default function CardSystem(props) {
               onPress={toggleOverlay}
             />
           </View>
+        </View>
+      </Overlay>
+
+      {/*CARD DE MEDICIONES*/}
+      <Overlay
+        isVisible={showMeasures}
+        onBackdropPress={toggleMeasures}
+        height={565}
+      >
+        <Text style={styles.cardTitle} >Mediciones del Sistema</Text>
+        <Divider style={styles.divider} />
+        <Text style={styles.cardTitle}  >{sistem.broker}</Text>
+        <View style={styles.cardBody}>
+          <Text style={styles.description} >{sistem.description}</Text>
+          <Mediciones sistem={sistem} measures={measures}/>
         </View>
       </Overlay>
     </View>
@@ -150,6 +203,10 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     width: "47.5%"
+  },
+  cardBtn: {
+    backgroundColor: null,
+    padding: 0,
   },
   cardBtnL: {
     width: '100%',

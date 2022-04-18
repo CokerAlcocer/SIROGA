@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, LogBox, ScrollView } from "react-native";
+import { View, StyleSheet, LogBox, ScrollView, Dimensions } from "react-native";
 import axios from 'axios'
 import { Text } from 'react-native-elements'
 import Login from "../screens/Login";
@@ -21,7 +21,7 @@ export default function Index(props) {
     axios({method: 'GET', url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/sistem/'}).then(res => {
       let auxIds = []
       for(let i = 0; i < res.data.data.length; i++){
-        if(res.data.data[i].user.id === 1){
+        if(res.data.data[i].user?.id === 1){
           auxIds.push(res.data.data[i].id)
         }
       }
@@ -74,7 +74,9 @@ export default function Index(props) {
               </View>
             </ScrollView>
           ):(
-            <Text >No hay operaciones</Text>
+            <View style={styles.containerEmpty}>
+                <Text style={styles.textEmpty}>Sin movimientos</Text>
+            </View>
           )
         }
         <Loading
@@ -103,6 +105,11 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 100
   },
+  textEmpty: {
+    textAlign: "center",
+    color: colors.COLOR_MUTED,
+    fontSize: 25
+  },
   viewTitle: {
     backgroundColor: colors.COLOR_BASE,
     paddingTop: 40,
@@ -113,5 +120,11 @@ const styles = StyleSheet.create({
   },
   container: {
     padding: 10
+  },
+  containerEmpty: {
+    height: Dimensions.get("window").height - 155,
+    padding: 10,
+    justifyContent: "center",
+    alignContent: "center"
   },
 });

@@ -29,11 +29,7 @@ export default function SystemData({route}) {
   return (
     <View >
       <View style={styles.card} >
-        <Text style={styles.cardTitle}  >{sistem.broker}</Text>
-        <View style={styles.cardBody}>
-          <Text style={styles.description} >{sistem.description}</Text>
-          <Mediciones sistem={sistem} />
-        </View>
+        
       </View>
     </View>
   )

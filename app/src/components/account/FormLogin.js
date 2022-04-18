@@ -20,6 +20,7 @@ export default function FormLogin(props) {
     // Aqui estan las validaciones de los inputs
     if (isEmpty(formData.email) || isEmpty(formData.password)) {
       toastRef.current.show("Todos los campos son requeridos")
+      setLoading(false0)
     } else if (!validateEmail(formData.email)) {
       toastRef.current.show("Correo inválido");
     } else {

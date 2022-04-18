@@ -1,7 +1,7 @@
 export default {
-    IP_ADDRESS: '192.168.100.138'
+    //IP_ADDRESS: '192.168.100.138'
     //Angel
-    //IP_ADDRESS: '10.0.0.8'
+    IP_ADDRESS: '10.0.0.8'
     //Nahum
     //IP_ADDRESS: '192.168.0.11'
 }

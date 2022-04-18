@@ -21,8 +21,6 @@ export default function FormRegister(props) {
   const [formData, setFormData] = useState(defaultFormValues());
   const [loading, setLoading] = useState(false);
 
-
-
   const onSubmit = async () => {
 
     if (isEmpty(formData.email) || isEmpty(formData.password) || isEmpty(formData.passwordR)) {
@@ -43,12 +41,22 @@ export default function FormRegister(props) {
           'Content-Type':'application/json'
         }})
         .then(res => {
-          setLoading(false)
-          navigation.navigate("index")
+          firebase
+          .auth()
+          .createUserWithEmailAndPassword(formData.email, formData.password)
+          .then((response) => {
+            setLoading(false)
+            toastRef.current.show("Registrado con Exito");
+            navigation.navigate("index")
+          })
+          .catch((error) => {
+            setLoading(false)
+            toastRef.current.show("Utilice otro correo");
+          });
         })
         .catch(error => {
           setLoading(false)
-          console.log(error)
+          console.log(error) //USAR EL TOAST
         });
     }
   }

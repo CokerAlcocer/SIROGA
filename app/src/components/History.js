@@ -7,19 +7,33 @@ import {useNavigation} from '@react-navigation/native'
 
 
 
-export default function History() {
-  
+export default function History(props) {
+  const { history } = props;
 
+  const getDescription = () => {
+    switch(history.operation.id){
+      case 1:
+        return('Se solicitó regar el huerto')
+      case 2:
+        return('Se agregó este nuevo sistema')
+      case 3:
+        return('Se removió este sistema')
+      case 4:
+        return('El sistema registro anomalías en las mediciones de los sensores')
+      case 5:
+        return('Se puso a reposar el sistema')
+    }
+  }
 
   return (
     <View style={styles.card}> 
       <View style={styles.cardHeader} >
-        <Text style={styles.cardTitle}>Nombre del sistema</Text>
+        <Text style={styles.cardTitle}>{history.sistem.broker}</Text>
       </View>
       <Divider style={styles.divider} />
       <View style={styles.cardBody}>
         <Text >
-          El huerto tal ha alcanzado una temperatura de más de X grados
+          {getDescription()}
         </Text>
       </View>
     </View>

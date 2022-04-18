@@ -1,76 +1,82 @@
 import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import React, { useEffect, useState } from "react";
-import { Button, ButtonGroup, Icon } from "react-native-elements";
+import { Button, Icon } from "react-native-elements";
 import * as Progress from "react-native-progress";
 import colors from "../utils/colors";
+import { Overlay, Divider } from "react-native-elements";
+import Loading from "./Loading";
 
 export default function Mediciones(props) {
   const [measure, setMeasure] = useState({})
-  const { measures, broker, humAirMax, humAirMin, humEarthMax, humEarthMin, tempAirMax, tempAirMin, tempEarthMax, tempEarthMin } = props;
+  const [visible, setVisible] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const { sistem } = props;
 
-  const getLastMeasure = () => {
-    let aux = {}
-    for(let i = 0; i < measures.length; i++){
-      if(measures[i].broker === broker){
-        aux = measures[i]
-      }
-    }
-    setMeasure(aux)
+  const toggleOverlay = () => {
+    setVisible(!visible);
+  };
+
+  const changeStatus = (id) => {
+    console.log(id)
+  }
+
+  const getAllMeasures = () => {
+    toggleOverlay(true)
   }
 
   useEffect(() => {
-    getLastMeasure()
-  }, [measures])
-  
+  }, [])
+
   return (
     <View>
       <Text style={styles.mediciones}>Mediciones</Text>
 
       <Text style={styles.titulos}>Humedad del aire</Text>
       <View style={styles.limitsContainers} >
-        <Text style={styles.min} >Min. {humAirMin}%</Text>
-        <Text style={styles.max} >Max. {humAirMax}%</Text>
+        <Text style={styles.min} >Min. {sistem.humAirMin}%</Text>
+        <Text style={styles.max} >Max. {sistem.humAirMax}%</Text>
       </View>
-      <Progress.Bar progress={measure.humAir} width={Dimensions.get('window').width - 30} height={12} color={colors.COLOR_LINK} />
+      <Progress.Bar width={Dimensions.get('window').width - 30} height={12} color={colors.COLOR_LINK} />
 
       <Text style={styles.titulos}>Humedad de la tierra</Text>
       <View style={styles.limitsContainers} >
-        <Text style={styles.min} >Min. {humEarthMin}%</Text>
-        <Text style={styles.max} >Max. {humEarthMax}%</Text>
+        <Text style={styles.min} >Min. {sistem.humEarthMin}%</Text>
+        <Text style={styles.max} >Max. {sistem.humEarthMax}%</Text>
       </View>
       <Progress.Bar width={Dimensions.get('window').width - 30} height={12} color={colors.COLOR_DANGER} />
 
       <Text style={styles.titulos}>Temperatura del aire</Text>
       <View style={styles.limitsContainers} >
-        <Text style={styles.min} >Min. {tempAirMin} ºC</Text>
-        <Text style={styles.max} >Max. {tempAirMax} ºC</Text>
+        <Text style={styles.min} >Min. {sistem.tempAirMin} ºC</Text>
+        <Text style={styles.max} >Max. {sistem.tempAirMax} ºC</Text>
       </View>
       <Progress.Bar width={Dimensions.get('window').width - 30} height={12} color={colors.COLOR_LINK} />
 
       <Text style={styles.titulos}>Temperatura de la tierra</Text>
       <View style={styles.limitsContainers} >
-        <Text style={styles.min} >Min. {tempEarthMin} ºC</Text>
-        <Text style={styles.max} >Max. {tempEarthMax} ºC</Text>
+        <Text style={styles.min} >Min. {sistem.tempEarthMin} ºC</Text>
+        <Text style={styles.max} >Max. {sistem.tempEarthMax} ºC</Text>
       </View>
       <Progress.Bar width={Dimensions.get('window').width - 30} height={12} color={colors.COLOR_DANGER} />
 
       <View style={styles.botones}>
-        {SVGSwitchElement.status.id == 1 ? 
+        {0 == 1 ?
           (<Button
             icon={<Icon color={colors.COLOR_BASE} type="material-community" name="power" />}
             containerStyle={styles.botonOpt}
             buttonStyle={{ height: 45, backgroundColor: colors.COLOR_DANGER }}
             title="Reposar"
             type="solid"
-            onPress={changeStatus(2)}
-          />):
+            onPress={() => changeStatus(2)}
+          />) :
           (<Button
             icon={<Icon color={colors.COLOR_BASE} type="material-community" name="power" />}
             containerStyle={styles.botonOpt}
             buttonStyle={{ height: 45, backgroundColor: colors.COLOR_DANGER }}
             title="Encender"
             type="solid"
-            onPress={changeStatus(1)}
+            onPress={() => changeStatus(1)}
           />)
         }
         <Button
@@ -81,15 +87,52 @@ export default function Mediciones(props) {
           title="Regar"
           type="solid"
           iconPosition={true}
-          onPress={changeStatus(3)}
+          onPress={() => changeStatus(3)}
         />
         <Button
           icon={<Icon type="material-community" name="history" color={colors.COLOR_BASE} />}
           buttonStyle={{ backgroundColor: colors.COLOR_SUCCESS, height: 45 }}
           containerStyle={styles.botonOpt}
           title="Historial"
+          onPress={() => getAllMeasures()}
         />
       </View>
+      <Overlay
+        isVisible={visible}
+        height={405}
+      >
+        <Text style={styles.cardTitle} >Historial de mediciones</Text>
+        <Divider style={styles.divider} />
+
+        <ScrollView >
+          <Text style={styles.cardLabel} >Broker</Text>
+
+        </ScrollView>
+
+        <View style={styles.buttonsContainer} >
+          <View style={styles.buttonContainer} >
+            <Button
+              containerStyle={styles.cardBtnR}
+              icon={
+                <Icon
+                  name="arrow-left"
+                  type="material-community"
+                  color="white"
+                  size={25}
+                  iconStyle={{ marginRight: 10 }}
+                />
+              }
+              buttonStyle={styles.cardBtnCancel}
+              title="Regresar"
+              onPress={toggleOverlay}
+            />
+          </View>
+        </View>
+      </Overlay>
+      <Loading
+        isVisible={loading}
+        text={"Guardando Sistema"}
+      />
     </View>
   );
 }
@@ -131,4 +174,11 @@ const styles = StyleSheet.create({
     width: "31.5%",
     marginRight: 10
   },
+  cardTitle: {
+    fontWeight: 'bold',
+    fontSize: 20
+  },
+  divider: {
+    marginVertical: 10
+},
 });

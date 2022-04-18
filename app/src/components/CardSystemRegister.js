@@ -22,6 +22,7 @@ export default function CardSystemRegister(props) {
     };
 
     const saveSistem = () => {
+        setVisible(false)
         setLoading(true)
         axios({
             method: 'POST', 
@@ -30,16 +31,14 @@ export default function CardSystemRegister(props) {
             headers: {
                 "Content-Type": "application/json"
             }
-        }).then(res => {
-            console.log(res);
-        }).catch(e => console.log(e))
+        }).then(res => res).catch(e => console.log(e))
         setLoading(false)
     }
 
     const captureData = (event, type) => {
         setData({ ...data, [type]: event.nativeEvent.text });
     }
-     console.log(data)
+
     return (
         <>
             <View style={addButton? styles.cardTrue : styles.cardFalse} onTouchStart={() => toggleOverlay()} >
@@ -150,7 +149,7 @@ export default function CardSystemRegister(props) {
                 id: 1
             },
             user: {
-                id: 2
+                id: 1
             },
             description: ''
         }

@@ -16,7 +16,7 @@ export default function FormLogin(props) {
   const [formData, setFormData] = useState(defaultFormValues())
   const [loading, setLoading] = useState(false)
   const onSubmit = async () => {
-    
+    setLoading(true)
     // Aqui estan las validaciones de los inputs
     if (isEmpty(formData.email) || isEmpty(formData.password)) {
       toastRef.current.show("Todos los campos son requeridos")
@@ -128,7 +128,7 @@ export default function FormLogin(props) {
         buttonStyle={styles.btnLogin}
         onPress={() => onSubmit()}
         iconRight={true}
-        icon={<Icon type="material-community" name="arrow-right-circle" iconStyle={{marginLeft:10, color:"white"}}/>}
+        icon={<Icon type="material-community" name="arrow-right" iconStyle={{marginLeft:10, color:"white"}}/>}
       />
       <Loading
         isVisible={loading}

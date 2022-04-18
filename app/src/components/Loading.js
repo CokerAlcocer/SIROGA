@@ -25,11 +25,9 @@ export default function Loading(props) {
 const styles = StyleSheet.create({
 
     overlay:{   
-        height:100,
-        width:200,
+        height:150,
+        width:250,
         backgroundColor: "#ffff",
-        borderColor: colors.PRIMARY_COLOR,
-        borderWidth: 3,
         borderRadius: 10
     },
 
@@ -39,8 +37,8 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     texto:{
-        color: "#5d5e60",
-        textTransform: "uppercase",
+        color: '#000',
+        fontSize: 20,
         marginTop: 10
     }
 

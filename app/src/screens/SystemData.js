@@ -1,19 +1,35 @@
 import { StyleSheet, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Divider, Text } from 'react-native-elements'
 import Mediciones from '../components/Mediciones'
 import colors from '../utils/colors'
 import { ScrollView } from 'react-native-gesture-handler'
+import ipAddress from '../utils/ipAddress'
+import axios from 'axios'
 
-export default function SystemData() {
+export default function SystemData({route}) {
+  const { sistemId } = route.params;
+  const [sistem, setSistem] = useState({})
+  const [measures, setMeasures] = useState([])
+
+  const getSistem = () => {
+    axios({method: 'GET', url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/sistem/'+sistemId}).then(res => {
+      setSistem(res.data.data)
+    }).catch(e => console.log(e))
+
+    axios({method: 'GET', url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/mh/'}).then(res => {
+      setMeasures(res.data.data)
+    }).catch(e => console.log(e))
+  }
+  
+  useEffect(() => {
+    getSistem()
+  }, [])
+
   return (
     <View >
       <View style={styles.card} >
-        <Text style={styles.cardTitle}  >Nombre del sistema</Text>
-        <View style={styles.cardBody}>
-          <Text>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis cumque quis.</Text>
-          <Mediciones />
-        </View>
+        
       </View>
     </View>
   )
@@ -40,8 +56,6 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   description: {
-    fontWeight: 'bold',
-    marginBottom: 2,
-    fontSize: 26
+    textAlign: 'center'
   },
 })

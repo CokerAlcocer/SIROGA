@@ -1,42 +1,81 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, Button, ScrollView } from "react-native";
+import { View, StyleSheet, Text, ScrollView, AsyncStorageStatic } from "react-native";
+import { Icon, Button } from 'react-native-elements'
 import Colors from '../utils/colors';
 import CardSystem from '../components/CardSystem'
 import CardSystemRegister from '../components/CardSystemRegister'
 import colors from "../utils/colors";
+import { add, map } from "lodash";
+import Loading from "../components/Loading";
+import ipAddress from "../utils/ipAddress";
+import axios from 'axios'
 
 
 export default function System(props) {
-    const [valor, setValor] = useState(true)
-    const [renderComponent, setRenderComponent] = useState(null)
-    const [data, setData] = useState([])
-    const [sistems, setSistems] = useState([])
+    const [userSistems, setUserSistems] = useState([])
+    const [loading, setLoading] = useState(false)
 
     const getSistems = async () => {
-        setData(fetch('http://10.0.0.8:8080/siroga/api/sistem/').then(res => res.json()).then(json => json).catch(e => console.log(e)));
-        for (let i = 0; i < data._W.data.length; i++) {
-            console.log(data._W.data[i].user.id)
-            if (data._W.data[i].user.id === 1) {
-                setSistems([...sistems, data._W.data[i]])
+        setLoading(true)
+        await axios({method: 'GET', url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/sistem/'}).then(res => {
+            let aux = []
+            for (let i = 0; i < res.data.data.length; i++) {
+                if (res.data.data[i].user?.id === 1) {
+                    aux.push(res.data.data[i])
+                }
             }
-        }
+            setUserSistems(aux)
+        }).catch(e => console.log(e));
+        setLoading(false)
     }
 
-
+    let mapSistems = userSistems
 
     useEffect(() => {
+      getSistems()
     }, [])
-
-
+    
     return (
         <>
-            <Text style={styles.viewTitle} >Mis Sistemas</Text>
-            <ScrollView>
-                <View style={styles.container}>
-                    <CardSystem />
-                    <CardSystemRegister />
+            <View style={styles.viewHeader}>
+                <View style={{width: '80%'}} >
+                    <Text style={styles.viewTitle} >Mis Sistemas</Text>
                 </View>
-            </ScrollView>
+                <View style={{width: '20%'}} >
+                    <Button icon={
+                            <Icon
+                                name="cached"
+                                type="material-community"
+                                color="black"
+                                size={25}
+                            />
+                        }
+                        title=""
+                        onPress={() => getSistems()}
+                        containerStyle={styles.headerBtnCont}
+                        buttonStyle={styles.headerBtn}
+                    />
+                </View>
+            </View>
+            {userSistems.length > 0 ?
+                (
+                    <ScrollView >
+                        <View style={styles.container} >
+                            {map(mapSistems, (mapSistems, index) => (
+                                <CardSystem key={index} sistem={userSistems[index]} getSistems={getSistems} />
+                            ))}
+                            {userSistems.length < 3 ? (<CardSystemRegister addButton={userSistems.length > 0} />) : (null)}
+                        </View>
+                    </ScrollView>
+                ) :
+                (
+                    <CardSystemRegister addButton={userSistems.length > 0} />
+                )
+            }
+            <Loading
+                isVisible={loading}
+                text={"Refrescando Sistemas"}
+            />
         </>
     )
 }
@@ -51,12 +90,21 @@ const styles = StyleSheet.create({
     container: {
         padding: 10
     },
-    viewTitle: {
+    viewHeader: {
+        flexDirection: "row",
         backgroundColor: colors.COLOR_BASE,
         paddingTop: 40,
         paddingLeft: 13,
         paddingBottom: 10,
+    },
+    viewTitle: {
         fontWeight: "bold",
         fontSize: 30
+    },
+    headerBtnCont: {
+        alignItems: "flex-end"
+    },
+    headerBtn: {
+        backgroundColor: null
     }
 })

@@ -32,6 +32,7 @@ public class SistemController {
     public ResponseEntity<Message> saveSistem(@RequestBody SistemDTO sistemDTO){
         return sistemService.save(new Sistem(
                 sistemDTO.getBroker(),
+                sistemDTO.getDescription(),
                 sistemDTO.getHumEarthMin(),
                 sistemDTO.getHumEarthMax(),
                 sistemDTO.getHumAirMin(),
@@ -52,6 +53,7 @@ public class SistemController {
         return sistemService.update(new Sistem(
                 sistemDTO.getId(),
                 sistemDTO.getBroker(),
+                sistemDTO.getDescription(),
                 sistemDTO.getHumEarthMin(),
                 sistemDTO.getHumEarthMax(),
                 sistemDTO.getHumAirMin(),

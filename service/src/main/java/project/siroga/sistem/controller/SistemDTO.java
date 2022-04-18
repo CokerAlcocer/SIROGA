@@ -5,7 +5,7 @@ import project.siroga.user.model.User;
 
 public class SistemDTO {
     private long id;
-    private String broker;
+    private String broker, description;
     private double humEarthMin, humEarthMax, humAirMin, humAirMax, tempEarthMin, tempEarthMax, tempAirMin, tempAirMax;
     private User user;
     private Status status;
@@ -13,8 +13,9 @@ public class SistemDTO {
     public SistemDTO() {
     }
 
-    public SistemDTO(String broker, double humEarthMin, double humEarthMax, double humAirMin, double humAirMax, double tempEarthMin, double tempEarthMax, double tempAirMin, double tempAirMax, User user, Status status) {
+    public SistemDTO(String broker, String description, double humEarthMin, double humEarthMax, double humAirMin, double humAirMax, double tempEarthMin, double tempEarthMax, double tempAirMin, double tempAirMax, User user, Status status) {
         this.broker = broker;
+        this.description = description;
         this.humEarthMin = humEarthMin;
         this.humEarthMax = humEarthMax;
         this.humAirMin = humAirMin;
@@ -27,9 +28,10 @@ public class SistemDTO {
         this.status = status;
     }
 
-    public SistemDTO(long id, String broker, double humEarthMin, double humEarthMax, double humAirMin, double humAirMax, double tempEarthMin, double tempEarthMax, double tempAirMin, double tempAirMax, User user, Status status) {
+    public SistemDTO(long id, String broker, String description, double humEarthMin, double humEarthMax, double humAirMin, double humAirMax, double tempEarthMin, double tempEarthMax, double tempAirMin, double tempAirMax, User user, Status status) {
         this.id = id;
         this.broker = broker;
+        this.description = description;
         this.humEarthMin = humEarthMin;
         this.humEarthMax = humEarthMax;
         this.humAirMin = humAirMin;
@@ -56,6 +58,14 @@ public class SistemDTO {
 
     public void setBroker(String broker) {
         this.broker = broker;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public double getHumEarthMin() {

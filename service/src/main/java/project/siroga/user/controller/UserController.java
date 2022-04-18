@@ -23,6 +23,14 @@ public class UserController {
         return userService.findById(id);
     }
 
+    @PostMapping("/u")
+    public ResponseEntity<Message> getByMailAndPassword(@RequestBody UserDTO userDTO) {
+        return userService.findByEmailAndPassword(new User(
+                userDTO.getEmail(),
+                userDTO.getPassword()
+        ));
+    }
+
     @PostMapping("/")
     public ResponseEntity<Message> saveUser(@RequestBody UserDTO userDTO){
         return userService.save(new User(

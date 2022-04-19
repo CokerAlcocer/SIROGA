@@ -11,7 +11,7 @@ export default function History(props) {
   const getDescription = () => {
     switch (history.operation.id) {
       case 1:
-        return "Se solicitó regar el huerto";
+        return "Se regó el huerto";
       case 2:
         return "Se agregó este nuevo sistema";
       case 3:

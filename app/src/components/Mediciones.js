@@ -103,72 +103,6 @@ export default function Mediciones(props) {
         }
       />
 
-      <View style={styles.botones}>
-        {0 == 1 ? (
-          <Button
-            icon={
-              <Icon
-                color={colors.COLOR_BASE}
-                size={10}
-                type="material-community"
-                name="power"
-              />
-            }
-            containerStyle={styles.botonOpt}
-            buttonStyle={{
-              fontSize: 10,
-              height: 45,
-              backgroundColor: colors.COLOR_DANGER,
-            }}
-            type="solid"
-            onPress={() => changeStatus(2)}
-          />
-        ) : (
-          <Button
-            icon={
-              <Icon
-                color={colors.COLOR_BASE}
-                type="material-community"
-                name="power"
-              />
-            }
-            containerStyle={styles.botonOpt}
-            buttonStyle={{
-              fontSize: 10,
-              height: 45,
-              backgroundColor: colors.COLOR_DANGER,
-            }}
-            title=""
-            onPress={() => changeStatus(1)}
-          />
-        )}
-        <Button
-          icon={
-            <Icon
-              type="material-community"
-              name="water-pump"
-              color={colors.COLOR_BASE}
-            />
-          }
-          iconLeft={true}
-          buttonStyle={{ backgroundColor: colors.COLOR_LINK, height: 45 }}
-          containerStyle={styles.botonOpt}
-          iconPosition={true}
-          onPress={() => changeStatus(3)}
-        />
-        <Button
-          icon={
-            <Icon
-              type="material-community"
-              name="history"
-              color={colors.COLOR_BASE}
-            />
-          }
-          buttonStyle={{ backgroundColor: colors.COLOR_SUCCESS, height: 45 }}
-          containerStyle={styles.botonOpt}
-          onPress={() => getAllMeasures()}
-        />
-      </View>
       <Overlay isVisible={visible} height={405}>
         <Text style={styles.cardTitle}>Historial de mediciones</Text>
         <Divider style={styles.divider} />
@@ -227,14 +161,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginBottom: 10,
     textAlign: "right",
-  },
-  botones: {
-    flexDirection: "row",
-  },
-  botonOpt: {
-    marginTop: 30,
-    width: "31%",
-    marginRight: 10,
   },
   cardTitle: {
     fontWeight: "bold",

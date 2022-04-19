@@ -5,11 +5,13 @@ import colors from "../utils/colors";
 import axios from "axios";
 import ipAddress from "../utils/ipAddress";
 import Mediciones from "./Mediciones";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function CardSystem(props) {
   const { sistem } = props;
   const [visible, setVisible] = useState(false);
   const [showMeasures, setShowMeasures] = useState(false);
+  const [showMeasureHistory, setShowMeasureHistory] = useState(true)
   const [measures, setMeasures] = useState([]);
   let aux = [];
 
@@ -20,6 +22,7 @@ export default function CardSystem(props) {
   const toggleMeasures = () => {
     getAllMeasures();
     setShowMeasures(!showMeasures);
+    setShowMeasureHistory(true)
   };
 
   const setAux = (array) => {
@@ -153,6 +156,7 @@ export default function CardSystem(props) {
           />
         </View>
       </View>
+
       <Overlay isVisible={visible} onBackdropPress={toggleOverlay} height={185}>
         <Text style={styles.cardTitle}>Aviso</Text>
         <Divider style={styles.divider} />
@@ -205,13 +209,108 @@ export default function CardSystem(props) {
         onBackdropPress={toggleMeasures}
         height={565}
       >
-        <Text style={styles.cardTitle}>Mediciones del Sistema</Text>
-        <Divider style={styles.divider} />
-        <Text style={styles.cardTitle}>{sistem.broker}</Text>
-        <View style={styles.cardBody}>
-          <Text style={styles.description}>{sistem.description}</Text>
-          <Mediciones sistem={sistem} measures={measures} />
-        </View>
+        {showMeasureHistory ? 
+          (
+            <>
+              <Text style={styles.cardTitle}>Mediciones del Sistema</Text>
+              <Divider style={styles.divider} />
+              <Text style={styles.cardTitle}>{sistem.broker}</Text>
+              <View style={styles.cardBody}>
+                <Text style={styles.description}>{sistem.description}</Text>
+                <Mediciones sistem={sistem} measures={measures} />
+                <View style={styles.botones}>
+                  {0 == 1 ? (
+                    <Button
+                      icon={
+                        <Icon
+                          color={colors.COLOR_BASE}
+                          size={10}
+                          type="material-community"
+                          name="power"
+                        />
+                      }
+                      containerStyle={styles.botonOpt}
+                      buttonStyle={{
+                        fontSize: 10,
+                        height: 45,
+                        backgroundColor: colors.COLOR_DANGER,
+                      }}
+                      type="solid"
+                      onPress={() => changeStatus(2)}
+                    />
+                  ) : (
+                    <Button
+                      icon={
+                        <Icon
+                          color={colors.COLOR_BASE}
+                          type="material-community"
+                          name="power"
+                        />
+                      }
+                      containerStyle={styles.botonOpt}
+                      buttonStyle={{
+                        fontSize: 10,
+                        height: 45,
+                        backgroundColor: colors.COLOR_DANGER,
+                      }}
+                      title=""
+                      onPress={() => changeStatus(1)}
+                    />
+                  )}
+                  <Button
+                    icon={
+                      <Icon
+                        type="material-community"
+                        name="water-pump"
+                        color={colors.COLOR_BASE}
+                      />
+                    }
+                    iconLeft={true}
+                    buttonStyle={{ backgroundColor: colors.COLOR_LINK, height: 45 }}
+                    containerStyle={styles.botonOpt}
+                    iconPosition={true}
+                    onPress={() => changeStatus(3)}
+                  />
+                  <Button
+                    icon={
+                      <Icon
+                        type="material-community"
+                        name="history"
+                        color={colors.COLOR_BASE}
+                      />
+                    }
+                    buttonStyle={{ backgroundColor: colors.COLOR_SUCCESS, height: 45 }}
+                    containerStyle={styles.botonOpt}
+                    onPress={() => setShowMeasureHistory(!showMeasureHistory)}
+                  />
+                </View>
+              </View>
+            </>
+          ):
+          (
+            <>
+              <Text style={styles.cardTitle}>Historial de Mediciones</Text>
+              <Divider style={styles.divider} />
+              <ScrollView >
+
+              </ScrollView>
+              <View style={styles.botones}>
+                <Button
+                  icon={
+                    <Icon
+                      type="material-community"
+                      name="history"
+                      color={colors.COLOR_BASE}
+                    />
+                  }
+                  buttonStyle={{ backgroundColor: colors.COLOR_LINK, height: 45 }}
+                  containerStyle={{width: '100%'}}
+                  onPress={() => setShowMeasureHistory(!showMeasureHistory)}
+                />
+              </View>
+            </>
+          )
+        }
       </Overlay>
     </View>
   );
@@ -275,5 +374,13 @@ const styles = StyleSheet.create({
   },
   cardBtnCancel: {
     backgroundColor: "grey",
+  },
+  botones: {
+    flexDirection: "row",
+  },
+  botonOpt: {
+    marginTop: 30,
+    width: "31%",
+    marginRight: 10,
   },
 });

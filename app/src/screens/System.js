@@ -7,7 +7,7 @@ import {
   AsyncStorageStatic,
 } from "react-native";
 import { Icon, Button } from "react-native-elements";
-import Colors from "../utils/colors";
+import firebase from "firebase";
 import CardSystem from "../components/CardSystem";
 import CardSystemRegister from "../components/CardSystemRegister";
 import colors from "../utils/colors";
@@ -17,8 +17,29 @@ import ipAddress from "../utils/ipAddress";
 import axios from "axios";
 
 export default function System(props) {
+  const [user, setUser] = useState({})
   const [userSistems, setUserSistems] = useState([]);
   const [loading, setLoading] = useState(false);
+  let aux = {};
+
+  const setAux = (data) => {
+    setUser(data)
+    console.log(user)
+  }
+
+  const getUser = async () => {
+    await axios({
+      method: 'POST', 
+      url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/user/e',
+      data: JSON.stringify({email: firebase.auth().currentUser.email}),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(res => {
+      aux = res.data.data
+      setAux(aux)
+    }).catch(e => console.log(e))
+  }
 
   const getSistems = async () => {
     setLoading(true);
@@ -29,7 +50,8 @@ export default function System(props) {
       .then((res) => {
         let aux = [];
         for (let i = 0; i < res.data.data.length; i++) {
-          if (res.data.data[i].user?.id === 1) {
+          console.log(res.data.data[i].user?.id == user.id)
+          if (res.data.data[i].user?.id == user.id) {
             aux.push(res.data.data[i]);
           }
         }
@@ -42,8 +64,12 @@ export default function System(props) {
   let mapSistems = userSistems;
 
   useEffect(() => {
+    getUser()
+  }, [])
+  
+  useEffect(() => {
     getSistems();
-  }, []);
+  }, [user]);
 
   return (
     <>
@@ -79,12 +105,12 @@ export default function System(props) {
               />
             ))}
             {userSistems.length < 3 ? (
-              <CardSystemRegister addButton={userSistems.length > 0} />
+              <CardSystemRegister addButton={userSistems.length > 0} userId={user.id} />
             ) : null}
           </View>
         </ScrollView>
       ) : (
-        <CardSystemRegister addButton={userSistems.length > 0} />
+        <CardSystemRegister addButton={userSistems.length > 0} userId={user.id} />
       )}
       <Loading isVisible={loading} text={"Refrescando Sistemas"} />
     </>

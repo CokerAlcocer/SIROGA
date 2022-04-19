@@ -13,8 +13,29 @@ import { map } from "lodash";
 export default function Index(props) {
   const { navigation } = props;
   const [login, setLogin] = useState(null); //guardar el estado de la sesión
+  const [user, setUser] = useState({})
   const [loading, setLoading] = useState(true);
   const [histories, setHistories] = useState([]);
+  let aux = {};
+  let auxIds = [];
+
+  const setAux = (data) => {
+    setUser(data)
+  }
+
+  const getUser = async () => {
+    await axios({
+      method: 'POST', 
+      url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/user/e',
+      data: JSON.stringify({email: firebase.auth().currentUser.email}),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(res => {
+      aux = res.data.data
+      setAux(aux)
+    }).catch(e => console.log(e))
+  }
 
   const getHistory = () => {
     setLoading(true);
@@ -23,9 +44,8 @@ export default function Index(props) {
       url: "http://" + ipAddress.IP_ADDRESS + ":8080/siroga/api/sistem/",
     })
       .then((res) => {
-        let auxIds = [];
         for (let i = 0; i < res.data.data.length; i++) {
-          if (res.data.data[i].user?.id === 1) {
+          if (res.data.data[i].user?.id == user.id) {
             auxIds.push(res.data.data[i].id);
           }
         }
@@ -58,6 +78,11 @@ export default function Index(props) {
   let auxMap = histories;
 
   useEffect(() => {
+    getUser();
+  }, [login])
+  
+
+  useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       !user ? setLogin(false) : setLogin(true);
 
@@ -65,7 +90,7 @@ export default function Index(props) {
         getHistory();
       }
     });
-  }, [login]);
+  }, [login, user]);
 
   if (login === null) return <Loading isVisible={true} text={"Cargando"} />;
 

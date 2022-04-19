@@ -31,6 +31,13 @@ public class UserController {
         ));
     }
 
+    @PostMapping("/e")
+    public ResponseEntity<Message> getByEmail(@RequestBody UserDTO userDTO){
+        return userService.findByEmail(new User(
+                userDTO.getEmail()
+        ));
+    }
+
     @PostMapping("/")
     public ResponseEntity<Message> saveUser(@RequestBody UserDTO userDTO){
         return userService.save(new User(

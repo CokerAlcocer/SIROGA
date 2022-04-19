@@ -12,7 +12,7 @@ const toggleOverlay = () => {
 };
 
 export default function CardSystemRegister(props) {
-  const { addButton } = props;
+  const { addButton, userId } = props;
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState(initialValues());
   const [loading, setLoading] = useState(false);
@@ -40,6 +40,8 @@ export default function CardSystemRegister(props) {
   const captureData = (event, type) => {
     setData({ ...data, [type]: event.nativeEvent.text });
   };
+
+  console.log(data)
 
   return (
     <>
@@ -194,7 +196,7 @@ export default function CardSystemRegister(props) {
         id: 1,
       },
       user: {
-        id: 1,
+        id: userId,
       },
       description: "",
     };

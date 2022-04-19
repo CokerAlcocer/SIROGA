@@ -33,6 +33,15 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
+    public ResponseEntity<Message> findByEmail(User user){
+        if(userRepository.existsByEmail(user.getEmail())){
+            return new ResponseEntity<>(new Message("OK", false, userRepository.findByEmail(user.getEmail())), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(new Message("Usuario no encontrado", true, null), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Transactional(readOnly = true)
     public ResponseEntity<Message> findByEmailAndPassword(User user){
         if(userRepository.existsByEmailAndPassword(user.getEmail(), user.getPassword())){
             return new ResponseEntity<>(new Message("OK", false, userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword())), HttpStatus.OK);

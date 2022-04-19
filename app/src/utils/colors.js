@@ -6,4 +6,5 @@ export default {
   COLOR_BASE: "#fff",
   COLOR_DANGER: "#f55",
   COLOR_SUCCESS: "#6a6",
+  COLOR_ICON: "#777"
 };

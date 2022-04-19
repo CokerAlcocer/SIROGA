@@ -6,6 +6,7 @@ import axios from "axios";
 import ipAddress from "../utils/ipAddress";
 import Mediciones from "./Mediciones";
 import { ScrollView } from "react-native-gesture-handler";
+import { map } from "lodash";
 
 export default function CardSystem(props) {
   const { sistem } = props;
@@ -14,6 +15,7 @@ export default function CardSystem(props) {
   const [showMeasureHistory, setShowMeasureHistory] = useState(true)
   const [measures, setMeasures] = useState([]);
   let aux = [];
+  let auxMeasures = measures;
 
   const toggleOverlay = () => {
     setVisible(!visible);
@@ -141,7 +143,7 @@ export default function CardSystem(props) {
             disabled={sistem.status.id == 4 ? true : false}
             buttonStyle={styles.cardBtn}
             icon={
-              <Icon type="material-community" name="chart-bar" size={27}></Icon>
+              <Icon type="material-community" name="chart-bar" size={27} ></Icon>
             }
             onPress={toggleMeasures}
           />
@@ -150,7 +152,7 @@ export default function CardSystem(props) {
             buttonStyle={styles.cardBtn}
             title={""}
             icon={
-              <Icon type="material-community" name={"delete"} size={27}></Icon>
+              <Icon type="material-community" name={"delete"} size={27} ></Icon>
             }
             onPress={toggleOverlay}
           />
@@ -207,7 +209,7 @@ export default function CardSystem(props) {
       <Overlay
         isVisible={showMeasures}
         onBackdropPress={toggleMeasures}
-        height={565}
+        height={showMeasureHistory ? 565 : 400}
       >
         {showMeasureHistory ? 
           (
@@ -292,7 +294,19 @@ export default function CardSystem(props) {
               <Text style={styles.cardTitle}>Historial de Mediciones</Text>
               <Divider style={styles.divider} />
               <ScrollView >
-
+                {measures.length > 0 ? 
+                    map(auxMeasures, (auxMeasures, index) => (
+                      <>
+                        <Text index={index} style={styles.cardSubtitle} >Aqui la fecha</Text>
+                        <Text index={index} >Humedad del aire: {measures[index].humAir}</Text>
+                        <Text index={index} >Humedad de la tierra: {measures[index].humEarth}</Text>
+                        <Text index={index} >Temperatura del aire: {measures[index].tempAir}</Text>
+                        <Text index={index} style={{marginBottom: 10}} >Temperatura de la tierra: {measures[index].tempEarth}</Text>
+                      </>
+                    ))
+                  :
+                  <Text >Sin mediciones</Text>
+                }
               </ScrollView>
               <View style={styles.botones}>
                 <Button

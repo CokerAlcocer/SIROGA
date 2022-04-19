@@ -11,9 +11,15 @@ import ipAddress from "../utils/ipAddress";
 
 export default function Mediciones(props) {
   const { sistem, measures } = props;
+  const [measure, setMeasure] = useState({
+    humAir: measures[measures.length - 1] !== undefined ? measures[measures.length - 1].humAir : 0,
+    humEarth: measures[measures.length - 1] !== undefined  ? measures[measures.length - 1].humEarth : 0,
+    tempAir: measures[measures.length - 1] !== undefined ? measures[measures.length - 1].tempAir : 0,
+    tempEarth: measures[measures.length - 1] !== undefined ? measures[measures.length - 1].tempEarth : 0,
+  })
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  
   const toggleOverlay = () => {
     setVisible(!visible);
   };
@@ -26,36 +32,24 @@ export default function Mediciones(props) {
     <View>
       <Text style={styles.mediciones}>Mediciones</Text>
 
-      <Text style={styles.titulos}>
-        Humedad del aire:{" "}
-        {measures[measures.length - 1]
-          ? measures[measures.length - 1]?.tempAir
-          : 0}
-        %
-      </Text>
+      <Text style={styles.titulos}>Humedad del aire: {measure.humAir}%</Text>
       <View style={styles.limitsContainers}>
         <Text style={styles.min}>Min. {sistem.humAirMin}%</Text>
         <Text style={styles.max}>Max. {sistem.humAirMax}%</Text>
       </View>
       <Progress.Bar
         style={{ marginBottom: 10 }}
-        progress={
-          measures[measures.length - 1]
-            ? measures[measures.length - 1]?.humAir * 0.01
-            : 0
-        }
+        progress={measure.humAir * 0.01}
         width={Dimensions.get("window").width - 100}
         height={12}
         color={
-          measures[measures.length - 1]?.humAir >= sistem.humAirMin &&
-          measures[measures.length - 1]?.humAir <= sistem.humAirMax
+          measure.humAir >= sistem.humAirMin && measure.humAir <= sistem.humAirMax
             ? colors.COLOR_LINK
             : colors.COLOR_DANGER
         }
       />
 
-      <Text style={styles.titulos}>
-        Humedad de la tierra: {measures[measures.length - 1]?.humEarth}%
+      <Text style={styles.titulos}>Humedad de la tierra: {measure.humEarth}%
       </Text>
       <View style={styles.limitsContainers}>
         <Text style={styles.min}>Min. {sistem.humEarthMin}%</Text>
@@ -63,19 +57,17 @@ export default function Mediciones(props) {
       </View>
       <Progress.Bar
         style={{ marginBottom: 10 }}
-        progress={measures[measures.length - 1]?.humEarth * 0.01}
+        progress={measure.humEarth * 0.01}
         width={Dimensions.get("window").width - 100}
         height={12}
         color={
-          measures[measures.length - 1]?.humEarth >= sistem.humEarthMin &&
-          measures[measures.length - 1]?.humEarth <= sistem.humEarthMax
+          measure.humEarth >= sistem.humEarthMin && measure.humEarth <= sistem.humEarthMax
             ? colors.COLOR_LINK
             : colors.COLOR_DANGER
         }
       />
 
-      <Text style={styles.titulos}>
-        Temperatura del aire: {measures[measures.length - 1]?.tempAir} ºC
+      <Text style={styles.titulos}>Temperatura del aire: {measure.tempAir} ºC
       </Text>
       <View style={styles.limitsContainers}>
         <Text style={styles.min}>Min. {sistem.tempAirMin} ºC</Text>
@@ -83,19 +75,17 @@ export default function Mediciones(props) {
       </View>
       <Progress.Bar
         style={{ marginBottom: 10 }}
-        progress={measures[measures.length - 1]?.tempAir * 0.01}
+        progress={measure.tempAir * 0.01}
         width={Dimensions.get("window").width - 100}
         height={12}
         color={
-          measures[measures.length - 1]?.tempAir >= sistem.tempAirMin &&
-          measures[measures.length - 1]?.tempAir <= sistem.tempAirMax
+          measure.tempAir >= sistem.tempAirMin && measure.tempAir <= sistem.tempAirMax
             ? colors.COLOR_LINK
             : colors.COLOR_DANGER
         }
       />
 
-      <Text style={styles.titulos}>
-        Temperatura de la tierra: {measures[measures.length - 1]?.tempEarth} ºC
+      <Text style={styles.titulos}>Temperatura de la tierra: {measure.tempEarth} ºC
       </Text>
       <View style={styles.limitsContainers}>
         <Text style={styles.min}>Min. {sistem.tempEarthMin} ºC</Text>
@@ -103,12 +93,11 @@ export default function Mediciones(props) {
       </View>
       <Progress.Bar
         style={{ marginBottom: 10 }}
-        progress={measures[measures.length - 1]?.tempEarth * 0.01}
+        progress={measure.tempEarth * 0.01}
         width={Dimensions.get("window").width - 100}
         height={12}
         color={
-          measures[measures.length - 1]?.tempEarth >= sistem.tempEarthMin &&
-          measures[measures.length - 1]?.tempEarth <= sistem.tempEarthMax
+          measure.tempEarth >= sistem.tempEarthMin && measure.tempEarth <= sistem.tempEarthMax
             ? colors.COLOR_LINK
             : colors.COLOR_DANGER
         }

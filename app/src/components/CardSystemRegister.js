@@ -41,8 +41,6 @@ export default function CardSystemRegister(props) {
     setData({ ...data, [type]: event.nativeEvent.text });
   };
 
-  console.log(data)
-
   return (
     <>
       <View

@@ -45,20 +45,21 @@ export default function FormRegister(props) {
           firebase
             .auth()
             .createUserWithEmailAndPassword(formData.email, formData.password)
-            .then((response) => {
+            .then(() => {
               setLoading(false);
               toastRef.current.show("Registrado con Exito");
               navigation.navigate("index");
             })
-            .catch((error) => {
+            .catch(() => {
               setLoading(false);
               toastRef.current.show("Utilice otro correo");
             });
         })
-        .catch((error) => {
+        .catch(() => {
           setLoading(false);
-          console.log(error); //USAR EL TOAST
+          toastRef.current.show("No se ha podido crear la cuenta, por favor mande mensaje a soporte tecnico");
         });
+
     }
   };
 

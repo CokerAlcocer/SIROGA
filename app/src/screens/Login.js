@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   icon: {
-    fontSize: 50,
+    fontSize: 52, 
 
     color: "green",
   },

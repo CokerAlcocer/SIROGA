@@ -9,7 +9,7 @@ import project.siroga.utils.Message;
 @RestController
 @RequestMapping("/siroga/api/user")
 @CrossOrigin(origins = {"*"})
-public class UserController {
+public class    UserController {
     @Autowired
     UserService userService;
 

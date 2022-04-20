@@ -4,6 +4,8 @@ import { Input, Button, Icon } from "react-native-elements";
 import * as firebase from "firebase";
 import colors from "../../utils/colors";
 import { validateEmail } from "../../utils/validations";
+import axios from "axios";
+import ipAddress from "../../utils/ipAddress";
 
 export default function ChangeEmail(props) {
   const { email, toastRef, setShowModal, setReloadUserInfo } = props;
@@ -13,18 +15,32 @@ export default function ChangeEmail(props) {
   const [loading, setLoading] = useState(false);
   const [logged, setLogged] = useState(false);
   const [showPass, setshowPass] = useState(false);
+  const [user, setUser] = useState({})
+  let aux = {};
+  const setAux = (data) => {setUser(data)}
 
-  const onSubmit = () => {
-    setError(null);
-    if (!newEmail) {
-      setError("El campo no puede estar vacio");
-    } else if (!validateEmail(newEmail)) {
-      setError("Debes ingresar un correo válido");
-    } else {
-      setLoading(true);
-      console.log("Listo");
+  //----------------ACTUALIZAR EMAIL-----------------//
 
-      firebase
+  const updateEmail = async() =>{
+    setLoading(true);
+    await axios({
+      method: 'PUT', 
+      url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/user/',
+      data: JSON.stringify({
+        "id": user.id,
+        "username" : user.username,
+        "email": newEmail,
+        "password" : user.password,
+        "name": user.name,
+        "surname": user.surname,
+        "lastname": user.lastname
+
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(() => {
+        firebase
         .auth()
         .currentUser.updateEmail(newEmail)
         .then(() => {
@@ -37,6 +53,40 @@ export default function ChangeEmail(props) {
           setError("Error al actualizar el correo");
           setLoading(false);
         });
+      
+    }).catch(e => console.log(e))
+  }
+
+ //---------------------OBTENER INFORMACIÓN DEL USUARIO---------------------//
+  const getUser = async () => {
+    await axios({
+      method: 'POST', 
+      url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/user/e',
+      data: JSON.stringify({email: firebase.auth().currentUser.email}),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(res => {
+      aux = res.data.data
+      setAux(aux)
+    }).catch(e => console.log(e))
+  }
+  useEffect(() => {
+    getUser()
+   
+  }, [])
+
+  
+//-----------MANDAR LOS DATOS A DATABASE Y FIREBASE---------------------------//
+
+  const onSubmit = () => {
+    setError(null);
+    if (!newEmail) {
+      setError("El campo no puede estar vacio");
+    } else if (!validateEmail(newEmail)) {
+      setError("Debes ingresar un correo válido");
+    } else {
+      updateEmail()
     }
   };
 
@@ -66,6 +116,7 @@ export default function ChangeEmail(props) {
   };
 
   if (logged) {
+    
     return (
       <View style={styles.view}>
         <Input

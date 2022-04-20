@@ -7,6 +7,8 @@ import UserOptions from "../components/account/UserOptions";
 import * as firebase from "firebase";
 import Toast from "react-native-easy-toast";
 import Loading from "../components/Loading";
+import axios from "axios";
+import ipAddress from "../utils/ipAddress";
 
 export default function Profile() {
   const toastRef = useRef();
@@ -15,15 +17,16 @@ export default function Profile() {
   const [loading, setLoading] = useState(false);
   const [loadingText, setLoadingText] = useState(null);
   const [reloadUserInfo, setReloadUserInfo] = useState(false);
+  
+
 
   useEffect(() => {
     (async () => {
       const user = firebase.auth().currentUser;
       setUserInfo(user);
-      console.log(user);
     })();
     setReloadUserInfo(false);
-    console.log(userInfo);
+
   }, [reloadUserInfo]);
 
   return (

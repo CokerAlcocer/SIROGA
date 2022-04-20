@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.COLOR_SUCCESS,
   },
   cardBtnCancel: {
-    backgroundColor: "grey",
+    backgroundColor: "red",
   },
   cardInputContainer: {
     width: "100%",

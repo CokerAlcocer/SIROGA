@@ -81,6 +81,31 @@ export default function Index(props) {
     getUser();
   }, [login])
   
+  // const userName =() =>{
+  //   const update = {
+  //     displayName: user.username
+  //   }
+  //   firebase
+  //      .auth()
+  //      .currentUser.updateProfile(update)
+  //      .then(() => {
+        
+  //        toastRef.current.show("Bienvenido " + user.username);
+  //      })
+  //      .catch(() => {
+         
+         
+  //      });
+  //  }
+  
+
+  // const username = firebase.auth().currentUser;
+  //       if(username.displayName === null){
+  //         userName()
+  //       }
+  
+  
+  
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -88,6 +113,7 @@ export default function Index(props) {
 
       if (login) {
         getHistory();
+        
       }
     });
   }, [login, user]);

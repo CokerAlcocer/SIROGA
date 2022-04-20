@@ -24,7 +24,7 @@ export default function System(props) {
 
   const setAux = (data) => {
     setUser(data)
-    console.log(user)
+    
   }
 
   const getUser = async () => {

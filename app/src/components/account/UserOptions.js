@@ -87,7 +87,7 @@ export default function UserOptions(props) {
 function generateOptions(selectComponent) {
   return [
     {
-      title: "Cambiar Nombre y Apellidos",
+      title: "Cambiar Nombre de Usuario",
       iconType: "material-community",
       iconNameL: "account-circle",
       iconColor: "#ccc",

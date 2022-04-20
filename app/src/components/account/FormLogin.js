@@ -56,6 +56,7 @@ export default function FormLogin(props) {
         // Accept: "aplication/json"
         headers: {
           "Content-Type": "application/json",
+          
         }
       }).then(res => res.json()).then(json => {
         // AQUI ES LO IMPORTANTE: Aqui es en donde se procesa la info para asignacion pero como

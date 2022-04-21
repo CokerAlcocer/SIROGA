@@ -42,9 +42,8 @@ export default function CardSystemRegister(props) {
   };
 
   useEffect(() => {
-    initialValues()
-  }, [userId])
-  
+    initialValues();
+  }, [userId]);
 
   return (
     <>

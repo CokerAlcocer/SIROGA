@@ -129,3 +129,29 @@ DEFAULT CHARACTER SET = latin1;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+INSERT INTO operation (description)
+VALUES ("Regar");
+INSERT INTO operation (description)
+VALUES ("Agregar");
+INSERT INTO operation (description)
+VALUES ("Remover");
+INSERT INTO operation (description)
+VALUES ("Alerta");
+INSERT INTO operation (description)
+VALUES ("Reposar");
+
+
+
+INSERT INTO status (description)
+VALUES("Activo");
+INSERT INTO status (description)
+VALUES("Reposo");
+INSERT INTO status (description)
+VALUES("Regando");
+
+
+
+
+INSERT INTO sistem (broker_link, hum_air, hum_earth, temp_air, temp_earth)
+VALUES("Test","10","10","10","10")

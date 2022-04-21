@@ -57,9 +57,10 @@ export default function FormRegister(props) {
         })
         .catch(() => {
           setLoading(false);
-          toastRef.current.show("No se ha podido crear la cuenta, por favor mande mensaje a soporte tecnico");
+          toastRef.current.show(
+            "No se ha podido crear la cuenta, por favor mande mensaje a soporte tecnico"
+          );
         });
-
     }
   };
 

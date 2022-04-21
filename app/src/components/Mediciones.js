@@ -9,17 +9,29 @@ import Loading from "./Loading";
 
 export default function Mediciones(props) {
   const { sistem, measures } = props;
-  const [measure, setMeasure] = useState(setMeasures)
+  const [measure, setMeasure] = useState(setMeasures);
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-  
-  function setMeasures () {
-    return{
-      humAir: measures[measures.length - 1] !== undefined ? measures[measures.length - 1].humAir : 0,
-      humEarth: measures[measures.length - 1] !== undefined  ? measures[measures.length - 1].humEarth : 0,
-      tempAir: measures[measures.length - 1] !== undefined ? measures[measures.length - 1].tempAir : 0,
-      tempEarth: measures[measures.length - 1] !== undefined ? measures[measures.length - 1].tempEarth : 0,
-    }
+
+  function setMeasures() {
+    return {
+      humAir:
+        measures[measures.length - 1] !== undefined
+          ? measures[measures.length - 1].humAir
+          : 0,
+      humEarth:
+        measures[measures.length - 1] !== undefined
+          ? measures[measures.length - 1].humEarth
+          : 0,
+      tempAir:
+        measures[measures.length - 1] !== undefined
+          ? measures[measures.length - 1].tempAir
+          : 0,
+      tempEarth:
+        measures[measures.length - 1] !== undefined
+          ? measures[measures.length - 1].tempEarth
+          : 0,
+    };
   }
 
   const toggleOverlay = () => {
@@ -31,9 +43,8 @@ export default function Mediciones(props) {
   };
 
   useEffect(() => {
-    setMeasure(setMeasures())
-  }, [measures])
-  
+    setMeasure(setMeasures());
+  }, [measures]);
 
   return (
     <View>
@@ -50,13 +61,15 @@ export default function Mediciones(props) {
         width={Dimensions.get("window").width - 100}
         height={12}
         color={
-          measure.humAir >= sistem.humAirMin && measure.humAir <= sistem.humAirMax
+          measure.humAir >= sistem.humAirMin &&
+          measure.humAir <= sistem.humAirMax
             ? colors.COLOR_LINK
             : colors.COLOR_DANGER
         }
       />
 
-      <Text style={styles.titulos}>Humedad de la tierra: {measure.humEarth}%
+      <Text style={styles.titulos}>
+        Humedad de la tierra: {measure.humEarth}%
       </Text>
       <View style={styles.limitsContainers}>
         <Text style={styles.min}>Min. {sistem.humEarthMin}%</Text>
@@ -68,13 +81,15 @@ export default function Mediciones(props) {
         width={Dimensions.get("window").width - 100}
         height={12}
         color={
-          measure.humEarth >= sistem.humEarthMin && measure.humEarth <= sistem.humEarthMax
+          measure.humEarth >= sistem.humEarthMin &&
+          measure.humEarth <= sistem.humEarthMax
             ? colors.COLOR_LINK
             : colors.COLOR_DANGER
         }
       />
 
-      <Text style={styles.titulos}>Temperatura del aire: {measure.tempAir} ºC
+      <Text style={styles.titulos}>
+        Temperatura del aire: {measure.tempAir} ºC
       </Text>
       <View style={styles.limitsContainers}>
         <Text style={styles.min}>Min. {sistem.tempAirMin} ºC</Text>
@@ -86,13 +101,15 @@ export default function Mediciones(props) {
         width={Dimensions.get("window").width - 100}
         height={12}
         color={
-          measure.tempAir >= sistem.tempAirMin && measure.tempAir <= sistem.tempAirMax
+          measure.tempAir >= sistem.tempAirMin &&
+          measure.tempAir <= sistem.tempAirMax
             ? colors.COLOR_LINK
             : colors.COLOR_DANGER
         }
       />
 
-      <Text style={styles.titulos}>Temperatura de la tierra: {measure.tempEarth} ºC
+      <Text style={styles.titulos}>
+        Temperatura de la tierra: {measure.tempEarth} ºC
       </Text>
       <View style={styles.limitsContainers}>
         <Text style={styles.min}>Min. {sistem.tempEarthMin} ºC</Text>
@@ -104,7 +121,8 @@ export default function Mediciones(props) {
         width={Dimensions.get("window").width - 100}
         height={12}
         color={
-          measure.tempEarth >= sistem.tempEarthMin && measure.tempEarth <= sistem.tempEarthMax
+          measure.tempEarth >= sistem.tempEarthMin &&
+          measure.tempEarth <= sistem.tempEarthMax
             ? colors.COLOR_LINK
             : colors.COLOR_DANGER
         }

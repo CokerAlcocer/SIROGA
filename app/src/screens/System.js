@@ -17,29 +17,30 @@ import ipAddress from "../utils/ipAddress";
 import axios from "axios";
 
 export default function System(props) {
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({});
   const [userSistems, setUserSistems] = useState([]);
   const [loading, setLoading] = useState(false);
   let aux = {};
 
   const setAux = (data) => {
-    setUser(data)
-    
-  }
+    setUser(data);
+  };
 
   const getUser = async () => {
     await axios({
-      method: 'POST', 
-      url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/user/e',
-      data: JSON.stringify({email: firebase.auth().currentUser.email}),
+      method: "POST",
+      url: "http://" + ipAddress.IP_ADDRESS + ":8080/siroga/api/user/e",
+      data: JSON.stringify({ email: firebase.auth().currentUser.email }),
       headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(res => {
-      aux = res.data.data
-      setAux(aux)
-    }).catch(e => console.log(e))
-  }
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        aux = res.data.data;
+        setAux(aux);
+      })
+      .catch((e) => console.log(e));
+  };
 
   const getSistems = async () => {
     setLoading(true);
@@ -50,7 +51,7 @@ export default function System(props) {
       .then((res) => {
         let aux = [];
         for (let i = 0; i < res.data.data.length; i++) {
-          console.log(res.data.data[i].user?.id == user.id)
+          console.log(res.data.data[i].user?.id == user.id);
           if (res.data.data[i].user?.id == user.id) {
             aux.push(res.data.data[i]);
           }
@@ -64,9 +65,9 @@ export default function System(props) {
   let mapSistems = userSistems;
 
   useEffect(() => {
-    getUser()
-  }, [])
-  
+    getUser();
+  }, []);
+
   useEffect(() => {
     getSistems();
   }, [user]);
@@ -105,12 +106,18 @@ export default function System(props) {
               />
             ))}
             {userSistems.length < 3 ? (
-              <CardSystemRegister addButton={userSistems.length > 0} userId={user.id} />
+              <CardSystemRegister
+                addButton={userSistems.length > 0}
+                userId={user.id}
+              />
             ) : null}
           </View>
         </ScrollView>
       ) : (
-        <CardSystemRegister addButton={userSistems.length > 0} userId={user.id} />
+        <CardSystemRegister
+          addButton={userSistems.length > 0}
+          userId={user.id}
+        />
       )}
       <Loading isVisible={loading} text={"Refrescando Sistemas"} />
     </>

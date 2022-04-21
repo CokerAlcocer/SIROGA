@@ -14,75 +14,78 @@ export default function ChangePassword(props) {
   const [logged, setLogged] = useState(false);
   const [showPass, setshowPass] = useState(false);
   const [password, setPassword] = useState(null);
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({});
   let aux = {};
-  const setAux = (data) => {setUser(data)}
+  const setAux = (data) => {
+    setUser(data);
+  };
 
   //------------------------ACTUALIZAR CONTRASEÑA-------------------//
 
-  const updatePassword = async() =>{
+  const updatePassword = async () => {
     setLoading(true);
     await axios({
-      method: 'PUT', 
-      url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/user/',
+      method: "PUT",
+      url: "http://" + ipAddress.IP_ADDRESS + ":8080/siroga/api/user/",
       data: JSON.stringify({
-        "id": user.id,
-        "username" : user.username,
-        "email": user.email,
-        "password" : newPassword,
-        "name": user.name,
-        "surname": user.surname,
-        "lastname": user.lastname
-
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        password: newPassword,
+        name: user.name,
+        surname: user.surname,
+        lastname: user.lastname,
       }),
       headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(() => {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(() => {
         firebase
-        .auth()
-        .currentUser.updatePassword(newPassword)
-        .then(() => {
-          setLoading(false);
-          setReloadUserInfo(true);
-          setShowModal(false);
-          toastRef.current.show("Contraseña actualizada");
-        })
-        .catch(() => {
-          setError("Error al actualizar la contraseña");
-          setLoading(false);
-        });
-      
-    }).catch(e => console.log(e))
-  }
+          .auth()
+          .currentUser.updatePassword(newPassword)
+          .then(() => {
+            setLoading(false);
+            setReloadUserInfo(true);
+            setShowModal(false);
+            toastRef.current.show("Contraseña actualizada");
+          })
+          .catch(() => {
+            setError("Error al actualizar la contraseña");
+            setLoading(false);
+          });
+      })
+      .catch((e) => console.log(e));
+  };
 
- //----------------------OBTENER LA INFORMACIÓN DEL USUARIO-------------------//
+  //----------------------OBTENER LA INFORMACIÓN DEL USUARIO-------------------//
   const getUser = async () => {
     await axios({
-      method: 'POST', 
-      url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/user/e',
-      data: JSON.stringify({email: firebase.auth().currentUser.email}),
+      method: "POST",
+      url: "http://" + ipAddress.IP_ADDRESS + ":8080/siroga/api/user/e",
+      data: JSON.stringify({ email: firebase.auth().currentUser.email }),
       headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(res => {
-      aux = res.data.data
-      setAux(aux)
-    }).catch(e => console.log(e))
-  }
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        aux = res.data.data;
+        setAux(aux);
+      })
+      .catch((e) => console.log(e));
+  };
   useEffect(() => {
-    getUser()
-   
-  }, [])
+    getUser();
+  }, []);
 
-//-----------MANDAR LOS DATOS A DATABASE Y FIREBASE---------------------------//
+  //-----------MANDAR LOS DATOS A DATABASE Y FIREBASE---------------------------//
   const onSubmit = () => {
     setError(null);
     if (!newPassword) {
       setError("El campo no puede estar vacio");
     } else {
       setLoading(true);
-      updatePassword()
+      updatePassword();
     }
   };
 

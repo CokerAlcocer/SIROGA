@@ -11,72 +11,72 @@ export default function ChangeDisplayNameForm(props) {
   const [newDisplayName, setNewDisplayName] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({});
   let aux = {};
-  const setAux = (data) => {setUser(data)}
+  const setAux = (data) => {
+    setUser(data);
+  };
 
   //------------------------ACTUALIZAR CONTRASEÑA-------------------//
 
-  const updateUserName = async() =>{
+  const updateUserName = async () => {
     setLoading(true);
     await axios({
-      method: 'PUT', 
-      url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/user/',
+      method: "PUT",
+      url: "http://" + ipAddress.IP_ADDRESS + ":8080/siroga/api/user/",
       data: JSON.stringify({
-        "id": user.id,
-        "username" : newDisplayName,
-        "email": user.email,
-        "password" : user.password,
-        "name": user.name,
-        "surname": user.surname,
-        "lastname": user.lastname
-
+        id: user.id,
+        username: newDisplayName,
+        email: user.email,
+        password: user.password,
+        name: user.name,
+        surname: user.surname,
+        lastname: user.lastname,
       }),
       headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(() => {
-      const update = {
-        displayName: newDisplayName,
-      };
-      firebase
-        .auth()
-        .currentUser.updateProfile(update)
-        .then(() => {
-          setLoading(false);
-          setReloadUserInfo(true);
-          setShowModal(false);
-          toastRef.current.show("Nombre actualizado");
-        })
-        .catch(() => {
-          setError("Error al actualizar el nombre");
-          setLoading(false);
-        });
-      
-    }).catch(e => console.log(e))
-  }
+        "Content-Type": "application/json",
+      },
+    })
+      .then(() => {
+        const update = {
+          displayName: newDisplayName,
+        };
+        firebase
+          .auth()
+          .currentUser.updateProfile(update)
+          .then(() => {
+            setLoading(false);
+            setReloadUserInfo(true);
+            setShowModal(false);
+            toastRef.current.show("Nombre actualizado");
+          })
+          .catch(() => {
+            setError("Error al actualizar el nombre");
+            setLoading(false);
+          });
+      })
+      .catch((e) => console.log(e));
+  };
 
- //----------------------OBTENER LA INFORMACIÓN DEL USUARIO-------------------//
+  //----------------------OBTENER LA INFORMACIÓN DEL USUARIO-------------------//
   const getUser = async () => {
     await axios({
-      method: 'POST', 
-      url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/user/e',
-      data: JSON.stringify({email: firebase.auth().currentUser.email}),
+      method: "POST",
+      url: "http://" + ipAddress.IP_ADDRESS + ":8080/siroga/api/user/e",
+      data: JSON.stringify({ email: firebase.auth().currentUser.email }),
       headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(res => {
-      aux = res.data.data
-      setAux(aux)
-    }).catch(e => console.log(e))
-  }
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        aux = res.data.data;
+        setAux(aux);
+      })
+      .catch((e) => console.log(e));
+  };
   useEffect(() => {
-    getUser()
-   
-  }, [])
-
-
-  
+    getUser();
+  }, []);
 
   const onSubmit = () => {
     setError(null);
@@ -85,10 +85,10 @@ export default function ChangeDisplayNameForm(props) {
     } else if (displayName === newDisplayName) {
       setError("Los nombres pueden ser iguales");
     } else {
-      updateUserName()
+      updateUserName();
     }
   };
-  
+
   return (
     <View style={styles.view}>
       <Input

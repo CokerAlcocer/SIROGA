@@ -12,7 +12,7 @@ export default function CardSystem(props) {
   const { sistem } = props;
   const [visible, setVisible] = useState(false);
   const [showMeasures, setShowMeasures] = useState(false);
-  const [showMeasureHistory, setShowMeasureHistory] = useState(true)
+  const [showMeasureHistory, setShowMeasureHistory] = useState(true);
   const [measures, setMeasures] = useState([]);
   let aux = [];
   let auxMeasures = measures;
@@ -24,7 +24,7 @@ export default function CardSystem(props) {
   const toggleMeasures = () => {
     getAllMeasures();
     setShowMeasures(!showMeasures);
-    setShowMeasureHistory(true)
+    setShowMeasureHistory(true);
   };
 
   const setAux = (array) => {
@@ -117,7 +117,7 @@ export default function CardSystem(props) {
   useEffect(() => {
     getAllMeasures();
     setInterval(() => {
-      getAllMeasures()
+      getAllMeasures();
     }, 30000);
   }, []);
 
@@ -146,7 +146,7 @@ export default function CardSystem(props) {
             disabled={sistem.status.id == 4 ? true : false}
             buttonStyle={styles.cardBtn}
             icon={
-              <Icon type="material-community" name="chart-bar" size={27} ></Icon>
+              <Icon type="material-community" name="chart-bar" size={27}></Icon>
             }
             onPress={toggleMeasures}
           />
@@ -155,7 +155,7 @@ export default function CardSystem(props) {
             buttonStyle={styles.cardBtn}
             title={""}
             icon={
-              <Icon type="material-community" name={"delete"} size={27} ></Icon>
+              <Icon type="material-community" name={"delete"} size={27}></Icon>
             }
             onPress={toggleOverlay}
           />
@@ -214,104 +214,70 @@ export default function CardSystem(props) {
         onBackdropPress={toggleMeasures}
         height={showMeasureHistory ? 565 : 400}
       >
-        {showMeasureHistory ? 
-          (
-            <>
-              <Text style={styles.cardTitle}>Mediciones del Sistema</Text>
-              <Divider style={styles.divider} />
-              <Text style={styles.cardTitle}>{sistem.broker}</Text>
-              <View style={styles.cardBody}>
-                <Text style={styles.description}>{sistem.description}</Text>
-                <Mediciones sistem={sistem} measures={measures} />
-                <View style={styles.botones}>
-                  {0 == 1 ? (
-                    <Button
-                      icon={
-                        <Icon
-                          color={colors.COLOR_BASE}
-                          size={10}
-                          type="material-community"
-                          name="power"
-                        />
-                      }
-                      containerStyle={styles.botonOpt}
-                      buttonStyle={{
-                        fontSize: 10,
-                        height: 45,
-                        backgroundColor: colors.COLOR_DANGER,
-                      }}
-                      type="solid"
-                      onPress={() => changeStatus(2)}
-                    />
-                  ) : (
-                    <Button
-                      icon={
-                        <Icon
-                          color={colors.COLOR_BASE}
-                          type="material-community"
-                          name="power"
-                        />
-                      }
-                      containerStyle={styles.botonOpt}
-                      buttonStyle={{
-                        fontSize: 10,
-                        height: 45,
-                        backgroundColor: colors.COLOR_DANGER,
-                      }}
-                      title=""
-                      onPress={() => changeStatus(1)}
-                    />
-                  )}
-                  <Button
-                    icon={
-                      <Icon
-                        type="material-community"
-                        name="water-pump"
-                        color={colors.COLOR_BASE}
-                      />
-                    }
-                    iconLeft={true}
-                    buttonStyle={{ backgroundColor: colors.COLOR_LINK, height: 45 }}
-                    containerStyle={styles.botonOpt}
-                    iconPosition={true}
-                    onPress={() => changeStatus(3)}
-                  />
-                  <Button
-                    icon={
-                      <Icon
-                        type="material-community"
-                        name="history"
-                        color={colors.COLOR_BASE}
-                      />
-                    }
-                    buttonStyle={{ backgroundColor: colors.COLOR_SUCCESS, height: 45 }}
-                    containerStyle={styles.botonOpt}
-                    onPress={() => setShowMeasureHistory(!showMeasureHistory)}
-                  />
-                </View>
-              </View>
-            </>
-          ):
-          (
-            <>
-              <Text style={styles.cardTitle}>Historial de Mediciones</Text>
-              <Divider style={styles.divider} />
-              <ScrollView >
-                {measures.length > 0 ? 
-                    map(auxMeasures, (auxMeasures, index) => (
-                      <>
-                        <Text index={index} style={styles.cardSubtitle} >Aqui la fecha</Text>
-                        <Text index={index} >Humedad del aire: {measures[index].humAir}</Text>
-                        <Text index={index} >Humedad de la tierra: {measures[index].humEarth}</Text>
-                        <Text index={index} >Temperatura del aire: {measures[index].tempAir}</Text>
-                        <Text index={index} style={{marginBottom: 10}} >Temperatura de la tierra: {measures[index].tempEarth}</Text>
-                      </>
-                    ))
-                  :
-                  <Text >Sin mediciones</Text>
-                }
-              </ScrollView>
+        {showMeasureHistory ? (
+          <>
+            <Text style={styles.cardTitle}>Mediciones del Sistema</Text>
+            <Divider style={styles.divider} />
+            <Text style={styles.cardTitle}>{sistem.broker}</Text>
+            <View style={styles.cardBody}>
+              <Text style={styles.description}>{sistem.description}</Text>
+              <Mediciones sistem={sistem} measures={measures} />
               <View style={styles.botones}>
+                {0 == 1 ? (
+                  <Button
+                    icon={
+                      <Icon
+                        color={colors.COLOR_BASE}
+                        size={10}
+                        type="material-community"
+                        name="power"
+                      />
+                    }
+                    containerStyle={styles.botonOpt}
+                    buttonStyle={{
+                      fontSize: 10,
+                      height: 45,
+                      backgroundColor: colors.COLOR_DANGER,
+                    }}
+                    type="solid"
+                    onPress={() => changeStatus(2)}
+                  />
+                ) : (
+                  <Button
+                    icon={
+                      <Icon
+                        color={colors.COLOR_BASE}
+                        type="material-community"
+                        name="power"
+                      />
+                    }
+                    containerStyle={styles.botonOpt}
+                    buttonStyle={{
+                      fontSize: 10,
+                      height: 45,
+                      backgroundColor: colors.COLOR_DANGER,
+                    }}
+                    title=""
+                    onPress={() => changeStatus(1)}
+                  />
+                )}
+                <Button
+                  icon={
+                    <Icon
+                      type="material-community"
+                      name="water-pump"
+                      color={colors.COLOR_BASE}
+                    />
+                  }
+                  iconLeft={true}
+                  buttonStyle={{
+                    backgroundColor: colors.COLOR_LINK,
+                    height: 45,
+                  }}
+                  containerStyle={styles.botonOpt}
+                  iconPosition={true}
+                  onPress={() => changeStatus(3)}
+                />
                 <Button
                   icon={
                     <Icon
@@ -320,14 +286,61 @@ export default function CardSystem(props) {
                       color={colors.COLOR_BASE}
                     />
                   }
-                  buttonStyle={{ backgroundColor: colors.COLOR_LINK, height: 45 }}
-                  containerStyle={{width: '100%'}}
+                  buttonStyle={{
+                    backgroundColor: colors.COLOR_SUCCESS,
+                    height: 45,
+                  }}
+                  containerStyle={styles.botonOpt}
                   onPress={() => setShowMeasureHistory(!showMeasureHistory)}
                 />
               </View>
-            </>
-          )
-        }
+            </View>
+          </>
+        ) : (
+          <>
+            <Text style={styles.cardTitle}>Historial de Mediciones</Text>
+            <Divider style={styles.divider} />
+            <ScrollView>
+              {measures.length > 0 ? (
+                map(auxMeasures, (auxMeasures, index) => (
+                  <>
+                    <Text index={index} style={styles.cardSubtitle}>
+                      Aqui la fecha
+                    </Text>
+                    <Text index={index}>
+                      Humedad del aire: {measures[index].humAir}
+                    </Text>
+                    <Text index={index}>
+                      Humedad de la tierra: {measures[index].humEarth}
+                    </Text>
+                    <Text index={index}>
+                      Temperatura del aire: {measures[index].tempAir}
+                    </Text>
+                    <Text index={index} style={{ marginBottom: 10 }}>
+                      Temperatura de la tierra: {measures[index].tempEarth}
+                    </Text>
+                  </>
+                ))
+              ) : (
+                <Text>Sin mediciones</Text>
+              )}
+            </ScrollView>
+            <View style={styles.botones}>
+              <Button
+                icon={
+                  <Icon
+                    type="material-community"
+                    name="history"
+                    color={colors.COLOR_BASE}
+                  />
+                }
+                buttonStyle={{ backgroundColor: colors.COLOR_LINK, height: 45 }}
+                containerStyle={{ width: "100%" }}
+                onPress={() => setShowMeasureHistory(!showMeasureHistory)}
+              />
+            </View>
+          </>
+        )}
       </Overlay>
     </View>
   );

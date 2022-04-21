@@ -42,7 +42,7 @@ export default function CardSystem(props) {
             id: watering ? 6 : 1
           }
         }
-        console.log(obj)
+
         axios({
           method: 'POST',
           url: 'http://' + ipAddress.IP_ADDRESS + ':8080/siroga/api/oh/',
@@ -81,7 +81,7 @@ export default function CardSystem(props) {
             id: sleep ? 6 : 5
           }
         }
-        console.log(obj)
+
         axios({
           method: 'POST',
           url: 'http://' + ipAddress.IP_ADDRESS + ':8080/siroga/api/oh/',
@@ -141,7 +141,7 @@ export default function CardSystem(props) {
       },
     })
       .then((res) => {
-        console.log("removido");
+        getSistems()
       })
       .catch((e) => console.log(e));
   };
@@ -263,7 +263,7 @@ export default function CardSystem(props) {
                 />
               }
               title="Eliminar"
-              onPress={removeSistem}
+              onPress={() => removeSistem()}
               containerStyle={styles.cardBtnR}
               buttonStyle={styles.cardBtnRemove}
             />

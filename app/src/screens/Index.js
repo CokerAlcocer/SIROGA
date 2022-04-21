@@ -40,6 +40,7 @@ export default function Index(props) {
   };
 
   const getHistory = () => {
+    setHistories([])
     setLoading(true);
     axios({
       method: "GET",

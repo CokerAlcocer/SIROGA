@@ -32,6 +32,7 @@ export default function CardSystem(props) {
   };
 
   const getAllMeasures = () => {
+    setMeasures([])
     axios({
       method: "GET",
       url: "http://" + ipAddress.IP_ADDRESS + ":8080/siroga/api/mh/",

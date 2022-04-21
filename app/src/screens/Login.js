@@ -12,16 +12,13 @@ export default function Login() {
     <ScrollView>
       <View style={styles.viewContainer}>
         <Text style={styles.title}>
-          <Text>S</Text>
-          <Text>I</Text>
-          <Text>R</Text>
+        SIR
           <Icon
             type="material-community"
             name="flower-poppy"
             iconStyle={styles.icon}
           />
-          <Text>G</Text>
-          <Text>A</Text>
+          GA
         </Text>
         <Text style={styles.text}>Sistema de Riego Automático</Text>
         <FormLogin toastRef={toastRef} />

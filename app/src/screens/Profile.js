@@ -17,16 +17,56 @@ export default function Profile() {
   const [loading, setLoading] = useState(false);
   const [loadingText, setLoadingText] = useState(null);
   const [reloadUserInfo, setReloadUserInfo] = useState(false);
-  
+  const [user, setUser] = useState({});
+  let aux = {};
+  const setAux = (data) => {
+    setUser(data);
+  };
 
+  //----------------------OBTENER LA INFORMACIÓN DEL USUARIO-------------------//
+  const getUser = async () => {
+    await axios({
+      method: "POST",
+      url: "http://" + ipAddress.IP_ADDRESS + ":8080/siroga/api/user/e",
+      data: JSON.stringify({ email: firebase.auth().currentUser.email }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        aux = res.data.data;
+        setAux(aux);
+      })
+      .catch((e) => console.log(e));
+  };
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const userName = () => {
+    const update = {
+      displayName: user.username,
+    };
+    firebase
+      .auth()
+      .currentUser.updateProfile(update)
+      .then(() => {
+        console.log("Listo");
+        setReloadUserInfo(true);
+      })
+      .catch(() => {});
+  };
 
   useEffect(() => {
     (async () => {
       const user = firebase.auth().currentUser;
       setUserInfo(user);
+
+      if (user.displayName === null) {
+        userName();
+      }
     })();
     setReloadUserInfo(false);
-
   }, [reloadUserInfo]);
 
   return (

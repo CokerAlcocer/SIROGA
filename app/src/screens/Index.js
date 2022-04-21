@@ -13,29 +13,31 @@ import { map } from "lodash";
 export default function Index(props) {
   const { navigation } = props;
   const [login, setLogin] = useState(null); //guardar el estado de la sesión
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
   const [histories, setHistories] = useState([]);
   let aux = {};
   let auxIds = [];
 
   const setAux = (data) => {
-    setUser(data)
-  }
+    setUser(data);
+  };
 
   const getUser = async () => {
     await axios({
-      method: 'POST', 
-      url: 'http://'+ipAddress.IP_ADDRESS+':8080/siroga/api/user/e',
-      data: JSON.stringify({email: firebase.auth().currentUser.email}),
+      method: "POST",
+      url: "http://" + ipAddress.IP_ADDRESS + ":8080/siroga/api/user/e",
+      data: JSON.stringify({ email: firebase.auth().currentUser.email }),
       headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(res => {
-      aux = res.data.data
-      setAux(aux)
-    }).catch(e => console.log(e))
-  }
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        aux = res.data.data;
+        setAux(aux);
+      })
+      .catch((e) => console.log(e));
+  };
 
   const getHistory = () => {
     setLoading(true);
@@ -79,33 +81,7 @@ export default function Index(props) {
 
   useEffect(() => {
     getUser();
-  }, [login])
-  
-  // const userName =() =>{
-  //   const update = {
-  //     displayName: user.username
-  //   }
-  //   firebase
-  //      .auth()
-  //      .currentUser.updateProfile(update)
-  //      .then(() => {
-        
-  //        toastRef.current.show("Bienvenido " + user.username);
-  //      })
-  //      .catch(() => {
-         
-         
-  //      });
-  //  }
-  
-
-  // const username = firebase.auth().currentUser;
-  //       if(username.displayName === null){
-  //         userName()
-  //       }
-  
-  
-  
+  }, [login]);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -113,7 +89,6 @@ export default function Index(props) {
 
       if (login) {
         getHistory();
-        
       }
     });
   }, [login, user]);

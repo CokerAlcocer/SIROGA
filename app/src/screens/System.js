@@ -51,7 +51,6 @@ export default function System(props) {
       .then((res) => {
         let aux = [];
         for (let i = 0; i < res.data.data.length; i++) {
-          console.log(res.data.data[i].user?.id == user.id);
           if (res.data.data[i].user?.id == user.id) {
             aux.push(res.data.data[i]);
           }

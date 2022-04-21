@@ -1,6 +1,6 @@
 const mqtt = require('mqtt')
 const pool = require('../database.js');
-const ip = '44.201.116.134';
+const ip = '54.86.11.108';
 const client = mqtt.connect('mqtt://' + ip + ':1883', { clientId: 'node_client', username: 'root', password: 'root' });
 const topics = ["measure/hum_air", "measure/hum_earth", "measure/temp_air", "measure/temp_earth", "operation/id"];
 let objects = [], brokers = [];
@@ -17,7 +17,7 @@ client.on('connect', async () => {
                     hum_earth: '0',
                     temp_air: '0',
                     temp_earth: '0',
-                    sistem_id: brokers[i].id
+                    sistem_id: brokers[i]?.id
                 })
                 for(let j = 0; j < topics.length; j++) {
                     client.subscribe(brokers[i]?.broker+'/'+topics[j]);
@@ -99,5 +99,14 @@ setInterval(async () => {
         }
     }
 }, 120000);
+
+setInterval(async () => {
+    for(let i = 0; i < brokers.length; i++){
+        let msj = await pool.query('SELECT * FROM operation_history WHERE sistem_id = ? ORDER BY id DESC LIMIT 1', [brokers[i]?.id])
+        if(msj[0]?.operation_id !== undefined && brokers[i] != "---"){
+            client.publish(brokers[i].broker+"/"+topics[4], msj[0]?.operation_id+"")
+        }
+    }
+}, 30000);
 
 module.exports = getValues;

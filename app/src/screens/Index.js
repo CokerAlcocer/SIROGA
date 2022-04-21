@@ -51,7 +51,7 @@ export default function Index(props) {
             auxIds.push(res.data.data[i].id);
           }
         }
-
+        
         if (auxIds.length > 0) {
           axios({
             method: "GET",
@@ -61,7 +61,7 @@ export default function Index(props) {
               let auxHistory = [];
               for (let i = 0; i < auxIds.length; i++) {
                 for (let j = 0; j < res.data.data.length; j++) {
-                  if (res.data.data[j].sistem.id === auxIds[i]) {
+                  if (res.data.data[j].sistem?.id === auxIds[i]) {
                     auxHistory.push(res.data.data[j]);
                   }
                 }

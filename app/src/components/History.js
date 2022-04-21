@@ -18,6 +18,8 @@ export default function History(props) {
         return "El sistema registro anomalías en las mediciones de los sensores";
       case 5:
         return "Se puso a reposar el sistema";
+      case 6:
+        return "Sistema activo y en espera"
     }
   };
 

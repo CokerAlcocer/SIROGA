@@ -116,6 +116,9 @@ export default function CardSystem(props) {
 
   useEffect(() => {
     getAllMeasures();
+    setInterval(() => {
+      getAllMeasures()
+    }, 30000);
   }, []);
 
   return (

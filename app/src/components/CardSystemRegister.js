@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Overlay, Icon, Input, Divider } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import colors from "../utils/colors";
@@ -14,8 +14,9 @@ const toggleOverlay = () => {
 export default function CardSystemRegister(props) {
   const { addButton, userId } = props;
   const [visible, setVisible] = useState(false);
-  const [data, setData] = useState(initialValues());
+  const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
+  console.log(data)
 
   const toggleOverlay = () => {
     setVisible(!visible);
@@ -40,6 +41,11 @@ export default function CardSystemRegister(props) {
   const captureData = (event, type) => {
     setData({ ...data, [type]: event.nativeEvent.text });
   };
+
+  useEffect(() => {
+    initialValues()
+  }, [userId])
+  
 
   return (
     <>
@@ -180,7 +186,7 @@ export default function CardSystemRegister(props) {
   );
 
   function initialValues() {
-    return {
+    setData({
       broker: "",
       humAirMax: 0,
       humAirMin: 0,
@@ -197,7 +203,7 @@ export default function CardSystemRegister(props) {
         id: userId,
       },
       description: "",
-    };
+    });
   }
 }
 

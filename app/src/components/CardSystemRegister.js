@@ -16,7 +16,6 @@ export default function CardSystemRegister(props) {
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
-  console.log(data)
 
   const toggleOverlay = () => {
     setVisible(!visible);

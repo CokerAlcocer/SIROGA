@@ -6,20 +6,22 @@ import * as Progress from "react-native-progress";
 import colors from "../utils/colors";
 import { Overlay, Divider } from "react-native-elements";
 import Loading from "./Loading";
-import axios from "axios";
-import ipAddress from "../utils/ipAddress";
 
 export default function Mediciones(props) {
   const { sistem, measures } = props;
-  const [measure, setMeasure] = useState({
-    humAir: measures[measures.length - 1] !== undefined ? measures[measures.length - 1].humAir : 0,
-    humEarth: measures[measures.length - 1] !== undefined  ? measures[measures.length - 1].humEarth : 0,
-    tempAir: measures[measures.length - 1] !== undefined ? measures[measures.length - 1].tempAir : 0,
-    tempEarth: measures[measures.length - 1] !== undefined ? measures[measures.length - 1].tempEarth : 0,
-  })
+  const [measure, setMeasure] = useState(setMeasures)
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   
+  function setMeasures () {
+    return{
+      humAir: measures[measures.length - 1] !== undefined ? measures[measures.length - 1].humAir : 0,
+      humEarth: measures[measures.length - 1] !== undefined  ? measures[measures.length - 1].humEarth : 0,
+      tempAir: measures[measures.length - 1] !== undefined ? measures[measures.length - 1].tempAir : 0,
+      tempEarth: measures[measures.length - 1] !== undefined ? measures[measures.length - 1].tempEarth : 0,
+    }
+  }
+
   const toggleOverlay = () => {
     setVisible(!visible);
   };
@@ -27,6 +29,11 @@ export default function Mediciones(props) {
   const changeStatus = (id) => {
     console.log(id);
   };
+
+  useEffect(() => {
+    setMeasure(setMeasures())
+  }, [measures])
+  
 
   return (
     <View>

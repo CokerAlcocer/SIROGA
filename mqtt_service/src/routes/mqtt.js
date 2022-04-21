@@ -1,6 +1,6 @@
 const mqtt = require('mqtt')
 const pool = require('../database.js');
-const ip = '54.204.145.21';
+const ip = '44.201.116.134';
 const client = mqtt.connect('mqtt://' + ip + ':1883', { clientId: 'node_client', username: 'root', password: 'root' });
 const topics = ["measure/hum_air", "measure/hum_earth", "measure/temp_air", "measure/temp_earth", "operation/id"];
 let objects = [], brokers = [];

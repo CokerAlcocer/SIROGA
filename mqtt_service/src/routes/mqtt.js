@@ -1,45 +1,84 @@
 const mqtt = require('mqtt')
-const ip = '3.86.223.117';
+const pool = require('../database.js');
+const ip = '54.204.145.21';
 const client = mqtt.connect('mqtt://' + ip + ':1883', { clientId: 'node_client', username: 'root', password: 'root' });
 const topics = ["measure/hum_air", "measure/hum_earth", "measure/temp_air", "measure/temp_earth", "operation/id"];
-let hum_earth, hum_air, temp_earth, temp_air;
-let broker_link = 'ESP8266';
-let connected = false;
+let objects = [], brokers = [];
 let values = {};
 
-if (!connected) {
-    client.on('connect', () => {
-        if (client.connected) {
-            for (let i = 0; i < topics.length-1; i++) {
-                client.subscribe(topics[i], { qos: 0 });
+client.on('connect', async () => {
+    if (client.connected) {
+        brokers = await pool.query('SELECT broker, id FROM sistem');
+        for(let i = 0; i < brokers.length; i++) {
+            if(brokers[i]?.broker !== "---"){
+                objects.push({
+                    broker: brokers[i]?.broker,
+                    hum_air: '0',
+                    hum_earth: '0',
+                    temp_air: '0',
+                    temp_earth: '0',
+                    sistem_id: brokers[i].id
+                })
+                for(let j = 0; j < topics.length; j++) {
+                    client.subscribe(brokers[i]?.broker+'/'+topics[j]);
+                    client.publish(brokers[i]?.broker+'/'+topics[topics.length - 1], '0');
+                }
             }
-            console.log('mqtt_connected');
-            client.publish(topics[4], "0");
         }
-        
-        connected = true;
-    });
-}
+        console.log('mqtt_concectado')
+    }
+});
 
 client.on('message', (topic, payload) => {
-    console.log(payload+"");
-    switch (topic) {
+    let broker_link = '', broker = ''
+    let flag = false
+
+    for(let i = 0; i < topic.length; i++) {
+        if(topic.charAt(i) === '/' && !flag){
+            broker = topic.substring(0, i)
+            flag = true
+        }
+    }
+
+    for(let i = 0; i < topic.length; i++) {
+        if(topic.charAt(i) === '/' && flag){
+            broker_link = topic.substring(i+1)
+            flag = false;
+        }
+    }
+
+    let obj = {};
+    for(let i = 0; i < objects.length; i++){
+        if(objects[i].broker === broker){
+            obj = objects[i];
+        }
+    }
+
+    switch (broker_link) {
         case topics[0]:
-            parseInt(payload) != undefined ? hum_earth = payload+"" : "";
+            parseInt(payload) != undefined ? obj.hum_air = payload+"" : "";
             break;
         case topics[1]:
-            parseInt(payload) != undefined ? hum_air = payload+"" : "";
+            parseInt(payload) != undefined ? obj.hum_earth = payload+"" : "";
             break;
         case topics[2]:
-            parseInt(payload) != undefined ? temp_earth = payload+"" : "";
+            parseInt(payload) != undefined ? obj.temp_air = payload+"" : "";
             break;
         case topics[3]:
-            parseInt(payload) != undefined ? temp_air = payload+"" : "";
+            parseInt(payload) != undefined ? obj.temp_earth = payload+"" : "";
+            break;
+        case topics[4]:
+            null
             break;
         default:
             console.log('Topico no encontrado...');
     }
-    values = { broker_link, hum_earth, hum_air, temp_earth, temp_air };
+
+    for(let i = 0; i < objects.length; i++){
+        if(objects[i].broker === broker){
+            objects[i] = obj;
+        }
+    }
 })
 
 client.on('error', (error) => {
@@ -52,5 +91,13 @@ const getValues = () => {
     let response = values;
     return response;
 }
+
+setInterval(async () => {
+    for(let i = 0; i < objects.length; i++){
+        if(parseInt(objects[i].hum_air) != 0 || parseInt(objects[i].hum_earth) != 0 || parseInt(objects[i].temp_air) != 0 || parseInt(objects[i].temp_earth) != 0){
+            await pool.query('INSERT INTO measure_history SET ?', [objects[i]]);
+        }
+    }
+}, 120000);
 
 module.exports = getValues;

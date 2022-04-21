@@ -33,7 +33,7 @@ export default function Login() {
 
     return (
       <Text style={styles.textRegister}>
-        ¿Aun no tienes cuenta?{" "}
+        ¿Aún no tienes cuenta?{" "}
         <Text
           style={styles.btnRegistrar}
           onPress={() => navigation.navigate("register")}

@@ -1,9 +1,7 @@
 import { Button, StyleSheet, View } from "react-native";
 import React, { useState } from "react";
 import { Divider, ButtonGroup, Icon, Text } from "react-native-elements";
-import colors from "../utils/colors";
-import ModalInfo from "./ModalInfo";
-import { useNavigation } from "@react-navigation/native";
+
 
 export default function History(props) {
   const { history } = props;

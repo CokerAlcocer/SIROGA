@@ -1,6 +1,6 @@
 const mqtt = require('mqtt')
 const pool = require('../database.js');
-const ip = '54.86.11.108';
+const ip = '35.170.192.173';
 const client = mqtt.connect('mqtt://' + ip + ':1883', { clientId: 'node_client', username: 'root', password: 'root' });
 const topics = ["measure/hum_air", "measure/hum_earth", "measure/temp_air", "measure/temp_earth", "operation/id"];
 let objects = [], brokers = [];
@@ -98,7 +98,7 @@ setInterval(async () => {
             await pool.query('INSERT INTO measure_history SET ?', [objects[i]]);
         }
     }
-}, 120000);
+}, 10000);
 
 setInterval(async () => {
     for(let i = 0; i < brokers.length; i++){

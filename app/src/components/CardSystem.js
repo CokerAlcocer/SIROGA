@@ -199,7 +199,7 @@ export default function CardSystem(props) {
     getAllMeasures();
     setInterval(() => {
       getAllMeasures();
-    }, 120000);
+    }, 10000);
   }, []);
 
   return (

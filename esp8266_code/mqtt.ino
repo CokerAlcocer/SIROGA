@@ -5,15 +5,15 @@
 #include <DHT.h>
 
 // --- Configuración del WiFi
-const char* ssid = "UTEZ"; // Nombre de la red
-const char* password = ""; // Contarseña de la red
+const char* ssid = "NOMBRE_DE_LA_RED"; // Nombre de la red
+const char* password = "CONTRASEÑA_DE_LA_RED"; // Contarseña de la red
 
 // --- Configuración del cliente mqtt
 WiFiClient espClient;
 PubSubClient client(espClient);
-const char mqtt_url[] = "35.170.192.173"; // Url del servidor de mqtt
-const String broker = "PlantasCasa"; // Nombre del broker en donde se publicarán y escucharán los tópicos
-const String clientId = "client"; // Id dela cliente (Este puede ser cualquier nombre)
+const char mqtt_url[] = "IP_DEL_SERVIDOR_MQTT"; // Url del servidor de mqtt
+const String broker = "NOMBRE_DEL_BROKER"; // Nombre del broker en donde se publicarán y escucharán los tópicos
+const String clientId = "NOMBRE_DEL_CLIENTE"; // Id del cliente (Este puede ser cualquier nombre)
 const String topics[] = {"measure/hum_air", "measure/hum_earth", "measure/temp_air", "measure/temp_earth", "operation/id"}; // Tópicos de operación
 
 // --- Declarción de los pines
